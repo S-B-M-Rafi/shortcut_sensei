@@ -1,0 +1,2946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Shortcuts - Shortcut Sensei</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <style>
+        /* Base styles with CSS variables for easier theming */
+        :root {
+            --primary-color: #06a3be;
+            --primary-hover: #048ea6;
+            --secondary-color: #8a2be2;
+            --secondary-hover: #7a1dc5;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #f4f4f4;
+            --light-bg: #f4f4f4;
+            --light-card: #ffffff;
+            --light-text: #333;
+            --header-footer-bg: #000000;
+            --selection-color: rgba(6, 163, 190, 0.2);
+            --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+        
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        ::selection {
+            background-color: var(--selection-color);
+        }
+        
+        /* Header styles - sticky with shadow */
+        header {
+            background-color: var(--header-footer-bg);
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .main-nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: all var(--transition-speed) ease;
+            border-radius: var(--border-radius);
+        }
+
+        .main-nav ul li a:hover {
+            background-color: #444;
+        }
+        
+        .main-nav ul li a.active {
+            background-color: var(--primary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8em;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .search-container {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 25px;
+            padding: 5px 15px;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            transition: all var(--transition-speed);
+        }
+        
+        .dark-mode .search-container {
+            background-color: #333;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .search-container input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 16px;
+            outline: none;
+            background-color: transparent;
+            color: var(--light-text);
+            transition: color var(--transition-speed);
+        }
+        
+        .dark-mode .search-container input[type="text"] {
+            color: var(--dark-text);
+        }
+        
+        .search-container input[type="text"]::placeholder {
+            color: #888;
+        }
+
+        .search-container button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            outline: none;
+            transition: background-color var(--transition-speed);
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .search-container button:hover {
+            background-color: var(--secondary-hover);
+        }
+        
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: 15px;
+            position: relative;
+            user-select: none;
+        }
+        
+        .dark-mode-toggle i {
+            font-size: 24px;
+            transition: transform 0.4s ease;
+        }
+        
+        /* Main content */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .intro-container {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        
+        .dark-mode .intro-container {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .featured-image-container {
+            position: relative;
+            width: 100%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .featured-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .dark-mode .featured-image {
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .featured-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .section-title:hover::after {
+            width: 100px;
+        }
+        
+        .section-description {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Actions toolbar */
+        .actions-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color var(--transition-speed), transform 0.2s;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .action-button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        
+        .action-button i {
+            margin-right: 8px;
+        }
+        
+        /* Filter section with improved styling */
+        .filter-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: var(--light-card);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        
+        .dark-mode .filter-section {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .filter-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .filter-container {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color var(--transition-speed), background-color var(--transition-speed);
+            outline: none;
+        }
+        
+        .filter-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(6, 163, 190, 0.2);
+        }
+        
+        .dark-mode .filter-input {
+            background-color: #333;
+            border-color: #555;
+            color: var(--dark-text);
+        }
+        
+        /* Category filter */
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .category-btn {
+            background-color: #eee;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        .dark-mode .category-btn {
+            background-color: #333;
+            color: var(--dark-text);
+        }
+        
+        .category-btn:hover {
+            background-color: #ddd;
+            transform: translateY(-2px);
+        }
+        
+        .dark-mode .category-btn:hover {
+            background-color: #444;
+        }
+        
+        .category-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Empty state message */
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .dark-mode .empty-state {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+        
+        /* Table styles with enhanced design */
+        .table-container {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+            overflow: hidden;
+        }
+        
+        .dark-mode .table-container {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .dark-mode td {
+            border-bottom: 1px solid #444;
+        }
+        
+        tbody tr {
+            transition: background-color var(--transition-speed);
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .dark-mode tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        
+        tbody tr:hover {
+            background-color: rgba(6, 163, 190, 0.08);
+        }
+        
+        /* Copy button for shortcuts */
+        .actions-cell {
+            white-space: nowrap;
+        }
+        
+        .copy-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            transition: all var(--transition-speed);
+        }
+        
+        .copy-btn:hover {
+            color: var(--secondary-color);
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark-mode .copy-btn:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Tooltip for copied message */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 80px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -40px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(10px);
+            font-size: 0.8rem;
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
+        }
+        
+        .tooltip .tooltiptext.visible {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Key combination styling */
+        .key-combo {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .key {
+            display: inline-block;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-family: monospace;
+            font-size: 0.9em;
+            box-shadow: 0 2px 0 #ccc;
+            transition: all var(--transition-speed);
+        }
+        
+        .dark-mode .key {
+            background-color: #333;
+            border-color: #555;
+            box-shadow: 0 2px 0 #222;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-speed), visibility var(--transition-speed), background-color var(--transition-speed), transform 0.2s;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-5px);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Footer styles with enhanced design */
+        footer {
+            background-color: var(--header-footer-bg);
+            color: #fff;
+            padding: 40px 0 20px;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-links, .social-icons {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links li a, .social-icons li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all var(--transition-speed);
+            display: inline-block;
+        }
+
+        .footer-links li a:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons li a {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-speed);
+        }
+
+        .social-icons li a:hover {
+            color: #fff;
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .subscribe-form input[type="email"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            font-size: 1em;
+        }
+
+        .subscribe-form button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color var(--transition-speed);
+            white-space: nowrap;
+        }
+
+        .subscribe-form button:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1100;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Print styles */
+        @media print {
+            header, footer, .actions-toolbar, .filter-section, .copy-btn, .back-to-top {
+                display: none !important;
+            }
+            
+            body {
+                background-color: white;
+                color: black;
+            }
+            
+            .content-wrapper {
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            .table-container, .intro-container {
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            table {
+                border: 1px solid #ddd;
+            }
+            
+            th {
+                background-color: #f2f2f2 !important;
+                color: black !important;
+            }
+            
+            .page-title {
+                color: black;
+            }
+            
+            @page {
+                margin: 1.5cm;
+            }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .footer-column {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--header-footer-bg);
+                width: 100%;
+                z-index: 10;
+                flex-direction: column;
+                gap: 0;
+                padding: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .main-nav ul.show {
+                display: flex;
+            }
+            
+            .search-container {
+                margin-right: 10px;
+            }
+            
+            .search-container input[type="text"] {
+                width: 120px;
+            }
+            
+            .search-container button {
+                padding: 8px 12px;
+            }
+            
+            .category-filter {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+            }
+            
+            .category-btn {
+                scroll-snap-align: start;
+                flex: 0 0 auto;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+            
+            .table-container {
+                padding: 10px;
+                overflow-x: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .logo a {
+                font-size: 1.5em;
+            }
+            
+            .dark-mode-toggle i {
+                font-size: 20px;
+            }
+            
+            .search-container {
+                display: none;
+            }
+            
+            .actions-toolbar {
+                flex-direction: column;
+            }
+            
+            .action-button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .key-combo {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+    <script src="assets/js/global.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="logo">
+            <a href="../../home-page.html"><i class="fas fa-keyboard logo-icon"></i> Shortcut Sensei</a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../blogs/blogs.html">Blogs</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="../../About.htm">About</a></li>
+            </ul>
+            <span class="menu-toggle"><i class="fas fa-bars"></i></span>
+        </nav>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button type="button"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="dark-mode-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </div>
+    </div>
+</header>
+
+
+<div class="content-wrapper">
+    <h1 class="page-title">Top 88 Discord Shortcuts</h1>
+    
+    <div class="intro-container">
+        <p class="intro-text">
+            Master these essential keyboard shortcuts to navigate and manage Discord efficiently. Whether you're messaging friends, managing servers, or participating in voice channels, these shortcuts will help you work faster and more productively.
+        </p>
+        
+        <div class="featured-image-container">
+            <img src="./discord.jpg" alt="Discord Interface" class="featured-image">
+        </div>
+        
+        <div class="actions-toolbar">
+            <button class="action-button" id="print-btn">
+                <i class="fas fa-print"></i> Print Guide
+            </button>
+            <button class="action-button" id="download-btn">
+                <i class="fas fa-download"></i> Download PDF
+            </button>
+            <button class="action-button" id="share-btn">
+                <i class="fas fa-share-alt"></i> Share
+            </button>
+            <button class="action-button" id="bookmark-btn">
+                <i class="fas fa-bookmark"></i> Bookmark
+            </button>
+        </div>
+    </div>
+    
+    <div class="filter-section">
+        <div class="filter-container">
+            <div class="filter-title">Search Shortcuts</div>
+            <input type="text" id="shortcut-filter" class="filter-input" placeholder="Type to search for shortcuts...">
+        </div>
+        
+        <div class="filter-title">Filter by Category</div>
+        <div class="category-filter">
+            <button class="category-btn active" data-category="all">All Shortcuts</button>
+            <button class="category-btn" data-category="general">General</button>
+            <button class="category-btn" data-category="messaging">Messaging</button>
+            <button class="category-btn" data-category="navigation">Navigation</button>
+            <button class="category-btn" data-category="voice">Voice Channels</button>
+            <button class="category-btn" data-category="calls">Calls</button>
+            <button class="category-btn" data-category="ui">User Interface</button>
+            <button class="category-btn" data-category="editing">Editing</button>
+            <button class="category-btn" data-category="search">Search</button>
+            <button class="category-btn" data-category="developer">Developer Tools</button>
+            <button class="category-btn" data-category="media">Media & Attachments</button>
+            <button class="category-btn" data-category="user">User & Role Interactions</button>
+            <button class="category-btn" data-category="misc">Miscellaneous</button>
+        </div>
+    </div>
+    
+    <div class="empty-state" id="no-results">
+        <i class="fas fa-search"></i>
+        <h3>No shortcuts found</h3>
+        <p>Try adjusting your search or filter criteria.</p>
+    </div>
+
+    <div class="table-container">
+        <h2 class="section-title" id="general-shortcuts">General Shortcuts</h2>
+        <p class="section-description">
+            Essential shortcuts to quickly access Discord's basic functions and features.
+        </p>
+
+        <table id="general-table" data-category="general">
+            <thead>
+                <tr>
+                    <th width="30%">Key Combination</th>
+                    <th>Description</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">/</span>
+                        </div>
+                    </td>
+                    <td>Show keyboard shortcuts</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + /">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">P</span>
+                        </div>
+                    </td>
+                    <td>Toggle the pin messages window</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + P">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">,</span>
+                        </div>
+                    </td>
+                    <td>Open user settings</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + ,">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2 class="section-title" id="messaging-shortcuts">Messaging Shortcuts</h2>
+        <p class="section-description">
+            Shortcuts that enhance your messaging experience, allowing for more efficient communication.
+        </p>
+
+        <table id="messaging-table" data-category="messaging">
+            <thead>
+                <tr>
+                    <th width="30%">Key Combination</th>
+                    <th>Description</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Enter</span>
+                        </div>
+                    </td>
+                    <td>Send a message</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Enter">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Shift</span> + <span class="key">Enter</span>
+                        </div>
+                    </td>
+                    <td>Create a new line without sending the message</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Shift + Enter">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">K</span>
+                        </div>
+                    </td>
+                    <td>Open the Quick Switcher</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + K">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="table-container">
+        <h2 class="section-title" id="navigation-shortcuts">Navigation Shortcuts</h2>
+        <p class="section-description">
+            Shortcuts for quickly moving between different servers, channels, and conversations.
+        </p>
+
+        <table id="navigation-table" data-category="navigation">
+            <thead>
+                <tr>
+                    <th width="30%">Key Combination</th>
+                    <th>Description</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">1</span>
+                        </div>
+                    </td>
+                    <td>Jump to direct messages</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + 1">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">2</span>
+                        </div>
+                    </td>
+                    <td>Jump to the first server</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + 2">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">↑</span>
+                        </div>
+                    </td>
+                    <td>Go to the previous server</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Arrow Up">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">↓</span>
+                        </div>
+                    </td>
+                    <td>Go to the next server</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Arrow Down">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">←</span>
+                        </div>
+                    </td>
+                    <td>Go back through channels visited</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Arrow Left">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">→</span>
+                        </div>
+                    </td>
+                    <td>Go forward through channels visited</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Arrow Right">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="table-container">
+        <h2 class="section-title" id="voice-shortcuts">Voice Channels Shortcuts</h2>
+        <p class="section-description">
+            Shortcuts for navigating and controlling voice channel features.
+        </p>
+
+        <table id="voice-table" data-category="voice">
+            <thead>
+                <tr>
+                    <th width="30%">Key Combination</th>
+                    <th>Description</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">T</span>
+                        </div>
+                    </td>
+                    <td>Show Text Channel</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + T">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">I</span>
+                        </div>
+                    </td>
+                    <td>Show Channel Info</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + I">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">B</span>
+                        </div>
+                    </td>
+                    <td>Toggle the member list</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + B">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">J</span>
+                        </div>
+                    </td>
+                    <td>Join a server</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + J">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="table-container">
+        <h2 class="section-title" id="calls-shortcuts">Calls Shortcuts</h2>
+        <p class="section-description">
+            Shortcuts for managing voice calls and audio settings in Discord.
+        </p>
+
+        <table id="calls-table" data-category="calls">
+            <thead>
+                <tr>
+                    <th width="30%">Key Combination</th>
+                    <th>Description</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">D</span>
+                        </div>
+                    </td>
+                    <td>Disconnect from a voice channel</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + D">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">/</span>
+                        </div>
+                    </td>
+                    <td>Toggle deafen</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + /">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">M</span>
+                        </div>
+                    </td>
+                    <td>Toggle mute</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + M">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">C</span>
+                        </div>
+                    </td>
+                    <td>Decline incoming call</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + C">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">A</span>
+                        </div>
+                    </td>
+                    <td>Answer incoming call</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + A">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- USER INTERFACE SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="ui-shortcuts">User Interface Shortcuts</h2>
+    <p class="section-description">
+        Shortcuts for navigating and controlling Discord's interface.
+    </p>
+    <table id="ui-table" data-category="ui">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">U</span>
+                    </div>
+                </td>
+                <td>Toggle the user list</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + U">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Esc</span>
+                    </div>
+                </td>
+                <td>Close any open windows or escape focus</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Esc">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F11</span>
+                    </div>
+                </td>
+                <td>Toggle fullscreen mode</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F11">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">=</span> (Equal)
+                    </div>
+                </td>
+                <td>Zoom in</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + =">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">-</span> (Minus)
+                    </div>
+                </td>
+                <td>Zoom out</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + -">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- EDITING SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="editing-shortcuts">Editing Shortcuts</h2>
+    <p class="section-description">
+        Shortcuts for formatting and editing text in Discord.
+    </p>
+    <table id="editing-table" data-category="editing">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">B</span>
+                    </div>
+                </td>
+                <td>Bold text</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + B">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">I</span>
+                    </div>
+                </td>
+                <td>Italicize text</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + I">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">U</span>
+                    </div>
+                </td>
+                <td>Underline text</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + U">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">X</span>
+                    </div>
+                </td>
+                <td>Strikethrough text</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + X">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">C</span>
+                    </div>
+                </td>
+                <td>Copy text</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + C">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">X</span>
+                    </div>
+                </td>
+                <td>Cut text</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + X">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">V</span>
+                    </div>
+                </td>
+                <td>Paste text</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + V">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Z</span>
+                    </div>
+                </td>
+                <td>Undo</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Z">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Y</span>
+                    </div>
+                </td>
+                <td>Redo</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Y">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">A</span>
+                    </div>
+                </td>
+                <td>Select all text</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + A">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- CHANNEL NAVIGATION SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="channel-navigation-shortcuts">Channel Navigation Shortcuts</h2>
+    <p class="section-description">
+        Shortcuts for navigating between different channels in Discord.
+    </p>
+    <table id="navigation-table" data-category="navigation">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + <span class="key">↑</span>
+                    </div>
+                </td>
+                <td>Previous channel</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + Up Arrow">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + <span class="key">↓</span>
+                    </div>
+                </td>
+                <td>Next channel</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + Down Arrow">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">N</span>
+                    </div>
+                </td>
+                <td>Mark server as read</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + N">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">R</span>
+                    </div>
+                </td>
+                <td>Refresh Discord</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + R">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SEARCH SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="search-shortcuts">Search Shortcuts</h2>
+    <p class="section-description">
+        Shortcuts for finding content and navigating to specific channels in Discord.
+    </p>
+    <table id="search-table" data-category="search">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">F</span>
+                    </div>
+                </td>
+                <td>Find in current channel</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + F">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">T</span>
+                    </div>
+                </td>
+                <td>Jump to specific channel or direct message</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + T">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- DEVELOPER TOOLS SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="developer-tools-shortcuts">Developer Tools Shortcuts</h2>
+    <p class="section-description">
+        Shortcuts for accessing developer features and tools in Discord.
+    </p>
+    <table id="developer-table" data-category="developer">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">I</span>
+                    </div>
+                </td>
+                <td>Open Developer Tools (Inspector)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + I">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">C</span>
+                    </div>
+                </td>
+                <td>Toggle Console</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + C">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">E</span>
+                    </div>
+                </td>
+                <td>Toggle Element Inspector</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + E">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- MEDIA AND ATTACHMENTS SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="media-attachments-shortcuts">Media and Attachments Shortcuts</h2>
+    <p class="section-description">
+        Shortcuts for managing media files and attachments in Discord.
+    </p>
+    <table id="media-table" data-category="media">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">U</span>
+                    </div>
+                </td>
+                <td>Upload a file</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + U">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">I</span>
+                    </div>
+                </td>
+                <td>Toggle the GIF picker</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + I">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">P</span>
+                    </div>
+                </td>
+                <td>Toggle the pin messages window</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + P">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SHORTCUT COMBINATIONS -->
+<div class="table-container">
+    <h2 class="section-title" id="shortcut-combinations">Shortcut Combinations</h2>
+    <p class="section-description">
+        Advanced combinations of keys for specialized actions in Discord.
+    </p>
+    <table id="combinations-table" data-category="combinations">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">1-9</span>
+                    </div>
+                </td>
+                <td>Jump to specific servers (1-9)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + 1-9">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Alt</span> + <span class="key">↑/↓</span>
+                    </div>
+                </td>
+                <td>Move current line up/down</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Alt + Arrow Up/Down">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- NOTIFICATION MANAGEMENT SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="notification-management-shortcuts">Notification Management Shortcuts</h2>
+    <p class="section-description">
+        Shortcuts for controlling notifications and read status in Discord.
+    </p>
+    <table id="notifications-table" data-category="notifications">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Esc</span>
+                    </div>
+                </td>
+                <td>Mark current channel as read</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Esc">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">A</span>
+                    </div>
+                </td>
+                <td>Toggle the notification list</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + A">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- USER AND ROLE INTERACTIONS SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="user-role-interactions-shortcuts">User and Role Interactions Shortcuts</h2>
+    <p class="section-description">
+        Shortcuts for interacting with users and roles in Discord.
+    </p>
+    <table id="user-interactions-table" data-category="user-interactions">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + <span class="key">Click on Username</span>
+                    </div>
+                </td>
+                <td>Message a user directly</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + Click on Username">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">U</span>
+                    </div>
+                </td>
+                <td>Upload a file from your computer</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + U">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">@</span>
+                    </div>
+                </td>
+                <td>Mention someone in a chat</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + @">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- EMOJI AND REACTIONS SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="emoji-reactions-shortcuts">Emoji and Reactions Shortcuts</h2>
+    <p class="section-description">
+        Shortcuts for using emojis and reactions in Discord.
+    </p>
+    <table id="emoji-table" data-category="emoji">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">E</span>
+                    </div>
+                </td>
+                <td>Open emoji picker</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + E">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">E</span>
+                    </div>
+                </td>
+                <td>Open the recent emoji picker</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + E">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- TEXT FORMATTING SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="text-formatting-shortcuts">Text Formatting Shortcuts</h2>
+    <p class="section-description">
+        These shortcuts streamline basic text formatting tasks in Discord.
+    </p>
+    <table id="text-formatting-table" data-category="text">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span>
+                    </div>
+                </td>
+                <td>Insert Markdown link</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Arrow Up</span>
+                    </div>
+                </td>
+                <td>Edit last message typed in chat</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Arrow Up">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Arrow Down</span>
+                    </div>
+                </td>
+                <td>Go to next message for editing</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Arrow Down">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">```</span> (Three backticks)
+                    </div>
+                </td>
+                <td>Wrap text in code block (multiline)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="``` (Three backticks)">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- MISC INTERFACE SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="misc-interface-shortcuts">Misc Interface Shortcuts</h2>
+    <p class="section-description">
+        These shortcuts help you navigate and control Discord's interface.
+    </p>
+    <table id="interface-table" data-category="interface">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">N</span>
+                    </div>
+                </td>
+                <td>Open the add a server dialog</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + N">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Esc</span>
+                    </div>
+                </td>
+                <td>Dismiss any active overlay or pop-up</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Esc">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Space</span>
+                    </div>
+                </td>
+                <td>Toggle the selected message as read/unread</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Space">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- TEXT INPUT CONTROL SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="text-input-control-shortcuts">Text Input Control Shortcuts</h2>
+    <p class="section-description">
+        These shortcuts help you control text input in Discord.
+    </p>
+    <table id="text-input-table" data-category="text-input">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">U</span>
+                    </div>
+                </td>
+                <td>Upload a file</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + U">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Up Arrow</span>
+                    </div>
+                </td>
+                <td>Edit your last message sent (if editing is available)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Up Arrow">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Up Arrow</span> / <span class="key">Down Arrow</span>
+                    </div>
+                </td>
+                <td>Select text in the message input box</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Up Arrow / Down Arrow">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- USER MANAGEMENT SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="user">User Management Shortcuts</h2>
+    <p class="section-description">
+        These shortcuts help you manage users and your display settings in Discord.
+    </p>
+    <table id="user-management-table" data-category="user">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + Click on a Username
+                    </div>
+                </td>
+                <td>Mention the user directly in the chat</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + Click on a Username">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">V</span>
+                    </div>
+                </td>
+                <td>Toggle streamer mode</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + V">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">+</span> (Plus)
+                    </div>
+                </td>
+                <td>Zoom in</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + + (Plus)">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">-</span> (Minus)
+                    </div>
+                </td>
+                <td>Zoom out</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + - (Minus)">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">0</span> (Zero)
+                    </div>
+                </td>
+                <td>Reset zoom level</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + 0 (Zero)">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- QUICK ACTIONS SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="quick-actions-shortcuts">Quick Actions Shortcuts</h2>
+    <p class="section-description">
+        These shortcuts provide quick access to common actions in Discord.
+    </p>
+    <table id="quick-actions-table" data-category="quick">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Enter</span>
+                    </div>
+                </td>
+                <td>Predictive text, suggest words</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Enter">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- APPLICATION MANAGEMENT SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="application-management-shortcuts">Application Management Shortcuts</h2>
+    <p class="section-description">
+        These shortcuts help you manage the Discord application.
+    </p>
+    <table id="app-management-table" data-category="app">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">R</span>
+                    </div>
+                </td>
+                <td>Reload the application</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + R">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">H</span>
+                    </div>
+                </td>
+                <td>Open help</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + H">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SPECIFIC SERVER FUNCTIONS SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="specific-server-functions-shortcuts">Specific Server Functions Shortcuts</h2>
+    <p class="section-description">
+        These shortcuts help you manage server-specific functions in Discord.
+    </p>
+    <table id="server-functions-table" data-category="server">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">M</span>
+                    </div>
+                </td>
+                <td>Toggle mute for the current server</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + M">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">V</span>
+                    </div>
+                </td>
+                <td>Toggle video</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + V">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- DEVELOPER SPECIFIC SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="developer-specific-shortcuts">Developer Specific Shortcuts</h2>
+    <p class="section-description">
+        These shortcuts are specific to developer-related functions in Discord.
+    </p>
+    <table id="developer-table" data-category="dev">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">X</span>
+                    </div>
+                </td>
+                <td>Open developer tools exclusives like experimental features</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + X">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- NITRO EXCLUSIVE FEATURES SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="nitro-exclusive-features-shortcuts">Nitro Exclusive Features Shortcuts</h2>
+    <p class="section-description">
+        These shortcuts are available only to Discord Nitro subscribers.
+    </p>
+    <table id="nitro-table" data-category="nitro">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">G</span>
+                    </div>
+                </td>
+                <td>Toggle the GIF picker</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + G">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + Click on Emoji
+                    </div>
+                </td>
+                <td>Open emoji picker for specific server boosted emojis</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + Click on Emoji">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- MISCELLANEOUS SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="miscellaneous-shortcuts">Miscellaneous Shortcuts</h2>
+    <p class="section-description">
+        Additional helpful shortcuts for Discord.
+    </p>
+    <table id="misc-table" data-category="misc">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">/</span>
+                    </div>
+                </td>
+                <td>Open the commands list</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + /">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">N</span>
+                    </div>
+                </td>
+                <td>Create a new server or direct message</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + N">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">/</span> (Slash)
+                    </div>
+                </td>
+                <td>Open search</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + / (Slash)">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">`</span> (Grave Accent)
+                    </div>
+                </td>
+                <td>Toggle in-line code formatting</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + ` (Grave Accent)">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SCREEN AND INTERFACE CONTROL SHORTCUTS -->
+<div class="table-container">
+    <h2 class="section-title" id="screen-and-interface-control-shortcuts">Screen and Interface Control Shortcuts</h2>
+    <p class="section-description">
+        These shortcuts help you control the screen and interface in Discord.
+    </p>
+    <table id="screen-control-table" data-category="screen">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">F</span>
+                    </div>
+                </td>
+                <td>Toggle the video call full-screen mode</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + F">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">B</span>
+                    </div>
+                </td>
+                <td>Apply bold formatting to selected text</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + B">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">1 to 9</span>
+                    </div>
+                </td>
+                <td>Switch directly to servers in the designated slots</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + 1 to 9">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">T</span>
+                    </div>
+                </td>
+                <td>Jump to a specific Text Channel or DM</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + T">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    
+        <div class="back-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+        
+        <div class="notification" id="notification"></div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Shortcut Sensei</h3>
+                <p>Your ultimate guide to mastering keyboard shortcuts. We provide comprehensive guides and tips to help you work faster and more efficiently.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../../home-page.html">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="../../About.htm">About</a></li>
+                    <li><a href="Privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul class="social-icons">
+                    <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Subscribe</h3>
+                <form class="subscribe-form">
+                    <input type="email" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Shortcut Sensei. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Menu toggle functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNav = document.querySelector('.main-nav ul');
+    
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('show');
+        });
+        
+        // Dark mode toggle
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+        const darkModeIcon = darkModeToggle.querySelector('i');
+        
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            } else {
+                darkModeIcon.classList.remove('fa-sun');
+                darkModeIcon.classList.add('fa-moon');
+            }
+        });
+        
+        // Filter shortcuts function
+        const filterInput = document.getElementById('shortcut-filter');
+        const noResults = document.getElementById('no-results');
+        
+        filterInput.addEventListener('keyup', () => {
+            const filterValue = filterInput.value.toLowerCase();
+            const tables = document.querySelectorAll('table');
+            let hasVisibleRows = false;
+            
+            tables.forEach(table => {
+                const rows = table.querySelectorAll('tbody tr');
+                let tableHasVisibleRows = false;
+                
+                rows.forEach(row => {
+                    const keyCombo = row.cells[0].textContent.toLowerCase();
+                    const description = row.cells[1].textContent.toLowerCase();
+                    
+                    if (keyCombo.includes(filterValue) || description.includes(filterValue)) {
+                        row.style.display = '';
+                        tableHasVisibleRows = true;
+                        hasVisibleRows = true;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide section titles based on visible rows
+                const sectionTitle = table.previousElementSibling.previousElementSibling;
+                const sectionDesc = table.previousElementSibling;
+                const tableContainer = table.closest('.table-container');
+                
+                if (tableHasVisibleRows) {
+                    tableContainer.style.display = '';
+                    sectionTitle.style.display = '';
+                    sectionDesc.style.display = '';
+                } else {
+                    tableContainer.style.display = 'none';
+                    sectionTitle.style.display = 'none';
+                    sectionDesc.style.display = 'none';
+                }
+            });
+            
+            // Show/hide "no results" message
+            if (hasVisibleRows) {
+                noResults.style.display = 'none';
+            } else {
+                noResults.style.display = 'block';
+            }
+        });
+        
+        // Category filter
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const category = button.getAttribute('data-category');
+                const tables = document.querySelectorAll('table');
+                let hasVisibleTables = false;
+                
+                tables.forEach(table => {
+                    const tableCategory = table.getAttribute('data-category');
+                    const sectionTitle = table.previousElementSibling.previousElementSibling;
+                    const sectionDesc = table.previousElementSibling;
+                    const tableContainer = table.closest('.table-container');
+                    
+                    if (category === 'all' || category === tableCategory) {
+                        tableContainer.style.display = '';
+                        sectionTitle.style.display = '';
+                        sectionDesc.style.display = '';
+                        hasVisibleTables = true;
+                    } else {
+                        tableContainer.style.display = 'none';
+                        sectionTitle.style.display = 'none';
+                        sectionDesc.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide "no results" message
+                if (hasVisibleTables) {
+                    noResults.style.display = 'none';
+                } else {
+                    noResults.style.display = 'block';
+                }
+            });
+        });
+        
+        // Copy shortcut function
+        function copyShortcut(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Show notification
+                showNotification('Shortcut copied to clipboard!');
+            });
+        }
+        
+        // Copy button event listeners
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const shortcut = event.currentTarget.getAttribute('data-shortcut');
+                copyShortcut(shortcut);
+                
+                // Show tooltip
+                const tooltip = event.currentTarget.querySelector('.tooltiptext');
+                tooltip.classList.add('visible');
+                
+                // Hide tooltip after 2 seconds
+                setTimeout(() => {
+                    tooltip.classList.remove('visible');
+                }, 2000);
+            });
+        });
+        
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) { // Show button after scrolling down 300px
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Print button functionality
+        const printButton = document.getElementById('print-btn');
+        printButton.addEventListener('click', () => {
+            window.print();
+        });
+        
+        // Notification function
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Add active class to current page link
+        const currentPage = window.location.pathname.split('/').pop();
+        const navLinks = document.querySelectorAll('.main-nav ul li a');
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPage || (currentPage === 'Homepage.html' && link.getAttribute('href') === 'Homepage.html')) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+    
+    </body>
+    </html>
+    

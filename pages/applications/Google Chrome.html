@@ -1,0 +1,3143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Chrome Shortcuts - Shortcut Sensei</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <style>
+        /* Base styles with CSS variables for easier theming */
+        :root {
+            --primary-color: #06a3be;
+            --primary-hover: #048ea6;
+            --secondary-color: #8a2be2;
+            --secondary-hover: #7a1dc5;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #f4f4f4;
+            --light-bg: #f4f4f4;
+            --light-card: #ffffff;
+            --light-text: #333;
+            --header-footer-bg: #000000;
+            --selection-color: rgba(6, 163, 190, 0.2);
+            --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+        
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        ::selection {
+            background-color: var(--selection-color);
+        }
+        
+        /* Header styles - sticky with shadow */
+        header {
+            background-color: var(--header-footer-bg);
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .main-nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: all var(--transition-speed) ease;
+            border-radius: var(--border-radius);
+        }
+
+        .main-nav ul li a:hover {
+            background-color: #444;
+        }
+        
+        .main-nav ul li a.active {
+            background-color: var(--primary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8em;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .search-container {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 25px;
+            padding: 5px 15px;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            transition: all var(--transition-speed);
+        }
+        
+        .dark-mode .search-container {
+            background-color: #333;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .search-container input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 16px;
+            outline: none;
+            background-color: transparent;
+            color: var(--light-text);
+            transition: color var(--transition-speed);
+        }
+        
+        .dark-mode .search-container input[type="text"] {
+            color: var(--dark-text);
+        }
+        
+        .search-container input[type="text"]::placeholder {
+            color: #888;
+        }
+
+        .search-container button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            outline: none;
+            transition: background-color var(--transition-speed);
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .search-container button:hover {
+            background-color: var(--secondary-hover);
+        }
+        
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: 15px;
+            position: relative;
+            user-select: none;
+        }
+        
+        .dark-mode-toggle i {
+            font-size: 24px;
+            transition: transform 0.4s ease;
+        }
+        
+        /* Main content */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .intro-container {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        
+        .dark-mode .intro-container {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .featured-image-container {
+            position: relative;
+            width: 100%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .featured-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .dark-mode .featured-image {
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .featured-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .section-title:hover::after {
+            width: 100px;
+        }
+        
+        .section-description {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Actions toolbar */
+        .actions-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color var(--transition-speed), transform 0.2s;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .action-button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        
+        .action-button i {
+            margin-right: 8px;
+        }
+        
+        /* Filter section with improved styling */
+        .filter-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: var(--light-card);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        
+        .dark-mode .filter-section {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .filter-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .filter-container {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color var(--transition-speed), background-color var(--transition-speed);
+            outline: none;
+        }
+        
+        .filter-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(6, 163, 190, 0.2);
+        }
+        
+        .dark-mode .filter-input {
+            background-color: #333;
+            border-color: #555;
+            color: var(--dark-text);
+        }
+        
+        /* Category filter */
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .category-btn {
+            background-color: #eee;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        .dark-mode .category-btn {
+            background-color: #333;
+            color: var(--dark-text);
+        }
+        
+        .category-btn:hover {
+            background-color: #ddd;
+            transform: translateY(-2px);
+        }
+        
+        .dark-mode .category-btn:hover {
+            background-color: #444;
+        }
+        
+        .category-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Empty state message */
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .dark-mode .empty-state {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+        
+        /* Table styles with enhanced design */
+        .table-container {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+            overflow: hidden;
+        }
+        
+        .dark-mode .table-container {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .dark-mode td {
+            border-bottom: 1px solid #444;
+        }
+        
+        tbody tr {
+            transition: background-color var(--transition-speed);
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .dark-mode tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        
+        tbody tr:hover {
+            background-color: rgba(6, 163, 190, 0.08);
+        }
+        
+        /* Copy button for shortcuts */
+        .actions-cell {
+            white-space: nowrap;
+        }
+        
+        .copy-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            transition: all var(--transition-speed);
+        }
+        
+        .copy-btn:hover {
+            color: var(--secondary-color);
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark-mode .copy-btn:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Tooltip for copied message */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 80px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -40px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(10px);
+            font-size: 0.8rem;
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
+        }
+        
+        .tooltip .tooltiptext.visible {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Key combination styling */
+        .key-combo {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .key {
+            display: inline-block;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-family: monospace;
+            font-size: 0.9em;
+            box-shadow: 0 2px 0 #ccc;
+            transition: all var(--transition-speed);
+        }
+        
+        .dark-mode .key {
+            background-color: #333;
+            border-color: #555;
+            box-shadow: 0 2px 0 #222;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-speed), visibility var(--transition-speed), background-color var(--transition-speed), transform 0.2s;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-5px);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Footer styles with enhanced design */
+        footer {
+            background-color: var(--header-footer-bg);
+            color: #fff;
+            padding: 40px 0 20px;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-links, .social-icons {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links li a, .social-icons li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all var(--transition-speed);
+            display: inline-block;
+        }
+
+        .footer-links li a:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons li a {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-speed);
+        }
+
+        .social-icons li a:hover {
+            color: #fff;
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .subscribe-form input[type="email"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            font-size: 1em;
+        }
+
+        .subscribe-form button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color var(--transition-speed);
+            white-space: nowrap;
+        }
+
+        .subscribe-form button:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1100;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Print styles */
+        @media print {
+            header, footer, .actions-toolbar, .filter-section, .copy-btn, .back-to-top {
+                display: none !important;
+            }
+            
+            body {
+                background-color: white;
+                color: black;
+            }
+            
+            .content-wrapper {
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            .table-container, .intro-container {
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            table {
+                border: 1px solid #ddd;
+            }
+            
+            th {
+                background-color: #f2f2f2 !important;
+                color: black !important;
+            }
+            
+            .page-title {
+                color: black;
+            }
+            
+            @page {
+                margin: 1.5cm;
+            }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .footer-column {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--header-footer-bg);
+                width: 100%;
+                z-index: 10;
+                flex-direction: column;
+                gap: 0;
+                padding: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .main-nav ul.show {
+                display: flex;
+            }
+            
+            .search-container {
+                margin-right: 10px;
+            }
+            
+            .search-container input[type="text"] {
+                width: 120px;
+            }
+            
+            .search-container button {
+                padding: 8px 12px;
+            }
+            
+            .category-filter {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+            }
+            
+            .category-btn {
+                scroll-snap-align: start;
+                flex: 0 0 auto;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+            
+            .table-container {
+                padding: 10px;
+                overflow-x: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .logo a {
+                font-size: 1.5em;
+            }
+            
+            .dark-mode-toggle i {
+                font-size: 20px;
+            }
+            
+            .search-container {
+                display: none;
+            }
+            
+            .actions-toolbar {
+                flex-direction: column;
+            }
+            
+            .action-button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .key-combo {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<script>
+// Universal navigation functionality for Google Chrome shortcuts page
+document.addEventListener('DOMContentLoaded', function() {
+    const navigationMappings = {
+        'home': 'home-page.html',
+        'applications': 'Applications_final.htm',
+        'apps': 'Applications_final.htm',
+        'about': 'About.htm',
+        'profile': 'user_profile.htm',
+        'back': 'Applications_final.htm',
+        'back to apps': 'Applications_final.htm',
+        'comments': 'user_com.htm',
+        'blog': 'blogs.html',
+        'blogs': 'blogs.html'
+    };
+
+    function navigateToPage(pageUrl) {
+        try {
+            window.location.href = pageUrl;
+        } catch (error) {
+            console.error('Navigation error:', error);
+        }
+    }
+
+    // Add click handlers to all clickable elements
+    const allClickableElements = document.querySelectorAll('button, a, .btn, .nav-item, [onclick]');
+    
+    allClickableElements.forEach(element => {
+        element.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            const text = this.textContent.toLowerCase().trim();
+            
+            // If it has a valid href, use it
+            if (href && (href.endsWith('.html') || href.endsWith('.htm')) && !href.startsWith('http')) {
+                e.preventDefault();
+                navigateToPage(href);
+                return;
+            }
+            
+            // Check if button text matches navigation mapping
+            if (navigationMappings[text]) {
+                e.preventDefault();
+                navigateToPage(navigationMappings[text]);
+                return;
+            }
+        });
+    });
+
+    // Add copy to clipboard functionality for shortcuts
+    const shortcutElements = document.querySelectorAll('.shortcut, .key-combination, kbd');
+    shortcutElements.forEach(element => {
+        element.addEventListener('click', function() {
+            const text = this.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                // Show copied message
+                const message = document.createElement('div');
+                message.innerHTML = `<div style="position: fixed; top: 20px; right: 20px; background: #4CAF50; color: white; padding: 10px; border-radius: 5px; z-index: 9999; font-family: Arial, sans-serif;">Copied: ${text}</div>`;
+                document.body.appendChild(message);
+                setTimeout(() => message.remove(), 2000);
+            }).catch(() => {
+                console.log('Copy failed');
+            });
+        });
+    });
+
+    // Enhanced Shortcut Page Features
+    class ShortcutPageEnhancer {
+        constructor() {
+            this.setupShortcutEnhancements();
+        }
+
+        setupShortcutEnhancements() {
+            this.addShortcutSearch();
+            this.addDifficultyFilter();
+            this.addPracticeMode();
+            this.addShortcutNotes();
+            this.addPrintMode();
+            this.addShortcutCategories();
+            this.setupKeyboardTester();
+        }
+
+        addShortcutSearch() {
+            const searchContainer = document.createElement('div');
+            searchContainer.className = 'shortcut-search';
+            searchContainer.style.cssText = `
+                position: sticky;
+                top: 0;
+                background: white;
+                padding: 15px;
+                border-radius: 10px;
+                margin: 20px 0;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                z-index: 100;
+            `;
+
+            searchContainer.innerHTML = `
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="shortcut-search" placeholder="Search shortcuts..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <select id="difficulty-filter" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <option value="all">All Levels</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                    <button id="practice-btn" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Practice</button>
+                    <button id="print-btn" style="padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer;">Print</button>
+                </div>
+            `;
+
+            document.body.insertBefore(searchContainer, document.body.firstChild);
+            this.setupSearchListeners();
+        }
+
+        setupSearchListeners() {
+            const searchInput = document.getElementById('shortcut-search');
+            const difficultyFilter = document.getElementById('difficulty-filter');
+            const practiceBtn = document.getElementById('practice-btn');
+            const printBtn = document.getElementById('print-btn');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => this.filterShortcuts(e.target.value));
+            }
+
+            if (difficultyFilter) {
+                difficultyFilter.addEventListener('change', (e) => this.filterByDifficulty(e.target.value));
+            }
+
+            if (practiceBtn) {
+                practiceBtn.addEventListener('click', () => this.startShortcutPractice());
+            }
+
+            if (printBtn) {
+                printBtn.addEventListener('click', () => this.printShortcuts());
+            }
+        }
+
+        addShortcutCategories() {
+            // Add category labels to shortcuts
+            const shortcuts = document.querySelectorAll('.shortcut, .key-combination, kbd');
+            shortcuts.forEach((shortcut, index) => {
+                const category = this.categorizeShortcut(shortcut.textContent);
+                const difficulty = this.getDifficulty(shortcut.textContent);
+                
+                shortcut.setAttribute('data-category', category);
+                shortcut.setAttribute('data-difficulty', difficulty);
+                
+                // Add visual indicators
+                const indicator = document.createElement('span');
+                indicator.style.cssText = `
+                    position: absolute;
+                    top: -5px;
+                    right: -5px;
+                    background: ${this.getCategoryColor(category)};
+                    color: white;
+                    font-size: 10px;
+                    padding: 2px 5px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                `;
+                indicator.textContent = difficulty.charAt(0).toUpperCase();
+                
+                shortcut.style.position = 'relative';
+                shortcut.appendChild(indicator);
+            });
+        }
+
+        categorizeShortcut(shortcutText) {
+            if (shortcutText.includes('Ctrl+T') || shortcutText.includes('Ctrl+W')) return 'tabs';
+            if (shortcutText.includes('Ctrl+F') || shortcutText.includes('F3')) return 'search';
+            if (shortcutText.includes('Ctrl+D') || shortcutText.includes('Ctrl+Shift+D')) return 'bookmarks';
+            if (shortcutText.includes('F12') || shortcutText.includes('Ctrl+Shift+I')) return 'developer';
+            return 'general';
+        }
+
+        getDifficulty(shortcutText) {
+            if (shortcutText.includes('Ctrl+C') || shortcutText.includes('Ctrl+V') || shortcutText.includes('Ctrl+T')) return 'beginner';
+            if (shortcutText.includes('Ctrl+Shift') || shortcutText.includes('Alt+')) return 'intermediate';
+            if (shortcutText.includes('F12') || shortcutText.length > 10) return 'advanced';
+            return 'beginner';
+        }
+
+        getCategoryColor(category) {
+            const colors = {
+                'tabs': '#4CAF50',
+                'search': '#2196F3', 
+                'bookmarks': '#FF9800',
+                'developer': '#9C27B0',
+                'general': '#757575'
+            };
+            return colors[category] || '#757575';
+        }
+
+        filterShortcuts(searchTerm) {
+            const shortcuts = document.querySelectorAll('.shortcut, .key-combination, kbd');
+            let visibleCount = 0;
+            
+            shortcuts.forEach(shortcut => {
+                const text = shortcut.textContent.toLowerCase();
+                const description = shortcut.getAttribute('title') || '';
+                const matches = text.includes(searchTerm.toLowerCase()) || description.toLowerCase().includes(searchTerm.toLowerCase());
+                
+                const container = shortcut.closest('tr, div, li') || shortcut.parentElement;
+                if (container) {
+                    container.style.display = matches ? '' : 'none';
+                    if (matches) visibleCount++;
+                }
+            });
+            
+            this.showMessage(`Found ${visibleCount} shortcuts matching "${searchTerm}"`);
+        }
+
+        filterByDifficulty(difficulty) {
+            if (difficulty === 'all') {
+                document.querySelectorAll('.shortcut, .key-combination, kbd').forEach(shortcut => {
+                    const container = shortcut.closest('tr, div, li') || shortcut.parentElement;
+                    if (container) container.style.display = '';
+                });
+                return;
+            }
+            
+            const shortcuts = document.querySelectorAll('.shortcut, .key-combination, kbd');
+            let visibleCount = 0;
+            
+            shortcuts.forEach(shortcut => {
+                const shortcutDifficulty = shortcut.getAttribute('data-difficulty');
+                const matches = shortcutDifficulty === difficulty;
+                
+                const container = shortcut.closest('tr, div, li') || shortcut.parentElement;
+                if (container) {
+                    container.style.display = matches ? '' : 'none';
+                    if (matches) visibleCount++;
+                }
+            });
+            
+            this.showMessage(`Showing ${visibleCount} ${difficulty} shortcuts`);
+        }
+
+        addShortcutNotes() {
+            const shortcuts = document.querySelectorAll('.shortcut, .key-combination, kbd');
+            shortcuts.forEach(shortcut => {
+                // Add note button
+                const noteBtn = document.createElement('button');
+                noteBtn.innerHTML = '📝';
+                noteBtn.style.cssText = `
+                    position: absolute;
+                    top: -5px;
+                    left: -5px;
+                    background: #FFC107;
+                    border: none;
+                    border-radius: 50%;
+                    width: 20px;
+                    height: 20px;
+                    font-size: 10px;
+                    cursor: pointer;
+                    z-index: 10;
+                `;
+                
+                noteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.openNoteDialog(shortcut);
+                });
+                
+                shortcut.appendChild(noteBtn);
+            });
+        }
+
+        openNoteDialog(shortcut) {
+            const shortcutText = shortcut.textContent;
+            const existingNote = localStorage.getItem(`note_${shortcutText}`) || '';
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 10001;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%;">
+                    <h3>Add Note for: ${shortcutText}</h3>
+                    <textarea id="note-text" placeholder="Add your personal note..." style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; resize: vertical;">${existingNote}</textarea>
+                    <div style="margin-top: 15px; text-align: right;">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #757575; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-right: 10px;">Cancel</button>
+                        <button onclick="window.shortcutPageEnhancer.saveNote('${shortcutText}', document.getElementById('note-text').value); this.parentElement.parentElement.parentElement.remove();" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Save</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.getElementById('note-text').focus();
+        }
+
+        saveNote(shortcutText, note) {
+            localStorage.setItem(`note_${shortcutText}`, note);
+            this.showMessage(`Note saved for ${shortcutText}`);
+        }
+
+        startShortcutPractice() {
+            const shortcuts = Array.from(document.querySelectorAll('.shortcut, .key-combination, kbd'));
+            const visibleShortcuts = shortcuts.filter(s => {
+                const container = s.closest('tr, div, li') || s.parentElement;
+                return container && container.style.display !== 'none';
+            });
+            
+            if (visibleShortcuts.length === 0) {
+                this.showMessage('No shortcuts available for practice', 'error');
+                return;
+            }
+            
+            this.practiceShortcuts = visibleShortcuts.map(s => ({
+                shortcut: s.textContent,
+                description: s.getAttribute('title') || s.nextElementSibling?.textContent || 'No description'
+            }));
+            
+            this.currentPracticeIndex = 0;
+            this.practiceScore = 0;
+            this.showPracticeQuestion();
+        }
+
+        showPracticeQuestion() {
+            if (this.currentPracticeIndex >= this.practiceShortcuts.length) {
+                this.showPracticeResults();
+                return;
+            }
+            
+            const current = this.practiceShortcuts[this.currentPracticeIndex];
+            const modal = document.createElement('div');
+            modal.id = 'practice-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.9);
+                z-index: 10001;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 40px; border-radius: 15px; max-width: 600px; width: 90%; text-align: center;">
+                    <h2>Practice Mode</h2>
+                    <p>Question ${this.currentPracticeIndex + 1}/${this.practiceShortcuts.length}</p>
+                    <h3>What does this shortcut do?</h3>
+                    <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px 0; font-size: 24px; font-weight: bold;">${current.shortcut}</div>
+                    <input type="text" id="practice-answer" placeholder="Enter your answer..." style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 5px; margin: 10px 0; font-size: 16px;">
+                    <div style="margin-top: 20px;">
+                        <button onclick="window.shortcutPageEnhancer.checkPracticeAnswer()" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 16px;">Submit</button>
+                        <button onclick="window.shortcutPageEnhancer.skipPracticeQuestion()" style="background: #ff9800; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 16px;">Skip</button>
+                        <button onclick="document.getElementById('practice-modal').remove()" style="background: #f44336; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 16px;">End Practice</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.getElementById('practice-answer').focus();
+            
+            document.getElementById('practice-answer').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') this.checkPracticeAnswer();
+            });
+        }
+
+        checkPracticeAnswer() {
+            const userAnswer = document.getElementById('practice-answer').value.toLowerCase().trim();
+            const correctAnswer = this.practiceShortcuts[this.currentPracticeIndex].description.toLowerCase();
+            
+            // Simple matching - in a real app, this would be more sophisticated
+            const isCorrect = correctAnswer.includes(userAnswer) || userAnswer.includes(correctAnswer.split(' ')[0]);
+            
+            if (isCorrect) {
+                this.practiceScore++;
+                this.showMessage('Correct! 🎉', 'success');
+            } else {
+                this.showMessage(`Incorrect. Answer: ${this.practiceShortcuts[this.currentPracticeIndex].description}`, 'error');
+            }
+            
+            this.currentPracticeIndex++;
+            document.getElementById('practice-modal').remove();
+            
+            setTimeout(() => this.showPracticeQuestion(), 2000);
+        }
+
+        skipPracticeQuestion() {
+            this.currentPracticeIndex++;
+            document.getElementById('practice-modal').remove();
+            this.showPracticeQuestion();
+        }
+
+        showPracticeResults() {
+            const percentage = Math.round((this.practiceScore / this.practiceShortcuts.length) * 100);
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.9);
+                z-index: 10001;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 40px; border-radius: 15px; max-width: 500px; width: 90%; text-align: center;">
+                    <h2>🎯 Practice Complete!</h2>
+                    <p style="font-size: 24px; margin: 20px 0;"><strong>${this.practiceScore}/${this.practiceShortcuts.length} (${percentage}%)</strong></p>
+                    <p>${percentage >= 80 ? '🏆 Excellent!' : percentage >= 60 ? '👍 Good job!' : '📚 Keep practicing!'}</p>
+                    <button onclick="window.shortcutPageEnhancer.startShortcutPractice(); this.parentElement.parentElement.remove();" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; margin: 10px;">Practice Again</button>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: #757575; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; margin: 10px;">Close</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        setupKeyboardTester() {
+            const testerBtn = document.createElement('button');
+            testerBtn.innerHTML = '⌨️ Test Keys';
+            testerBtn.style.cssText = `
+                position: fixed;
+                bottom: 80px;
+                left: 20px;
+                z-index: 10000;
+                background: #9C27B0;
+                color: white;
+                border: none;
+                padding: 12px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                font-weight: bold;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            `;
+            
+            testerBtn.addEventListener('click', () => this.openKeyboardTester());
+            document.body.appendChild(testerBtn);
+        }
+
+        openKeyboardTester() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.9);
+                z-index: 10001;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 40px; border-radius: 15px; max-width: 600px; width: 90%;">
+                    <h2>⌨️ Keyboard Shortcut Tester</h2>
+                    <p>Press any key combination to see what you're pressing:</p>
+                    <div id="key-display" style="background: #f5f5f5; padding: 30px; border-radius: 10px; margin: 20px 0; text-align: center; font-size: 24px; font-weight: bold; min-height: 60px; display: flex; align-items: center; justify-content: center;">Press keys...</div>
+                    <div id="key-log" style="background: #f0f0f0; padding: 15px; border-radius: 5px; max-height: 200px; overflow-y: auto; font-family: monospace;"></div>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: #f44336; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; margin-top: 20px;">Close Tester</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            const keyDisplay = document.getElementById('key-display');
+            const keyLog = document.getElementById('key-log');
+            
+            modal.addEventListener('keydown', (e) => {
+                e.preventDefault();
+                const keys = [];
+                if (e.ctrlKey) keys.push('Ctrl');
+                if (e.altKey) keys.push('Alt');
+                if (e.shiftKey) keys.push('Shift');
+                if (e.metaKey) keys.push('Cmd');
+                
+                if (!['Control', 'Alt', 'Shift', 'Meta'].includes(e.key)) {
+                    keys.push(e.key);
+                }
+                
+                const keyCombo = keys.join('+');
+                keyDisplay.textContent = keyCombo;
+                keyLog.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${keyCombo}</div>`;
+                keyLog.scrollTop = keyLog.scrollHeight;
+            });
+            
+            modal.tabIndex = 0;
+            modal.focus();
+        }
+
+        printShortcuts() {
+            const printWindow = window.open('', '_blank');
+            const shortcuts = document.querySelectorAll('.shortcut, .key-combination, kbd');
+            
+            let content = `
+                <html>
+                <head>
+                    <title>Chrome Shortcuts - Shortcut Sensei</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        .shortcut-item { margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+                        .shortcut-key { background: #f5f5f5; padding: 5px 10px; border-radius: 3px; font-weight: bold; }
+                        @media print { .no-print { display: none; } }
+                    </style>
+                </head>
+                <body>
+                    <h1>Google Chrome Keyboard Shortcuts</h1>
+                    <p>Generated by Shortcut Sensei - ${new Date().toLocaleDateString()}</p>
+            `;
+            
+            shortcuts.forEach(shortcut => {
+                const container = shortcut.closest('tr, div, li') || shortcut.parentElement;
+                if (container && container.style.display !== 'none') {
+                    const description = shortcut.getAttribute('title') || shortcut.nextElementSibling?.textContent || 'No description';
+                    content += `
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">${shortcut.textContent}</span> - ${description}
+                        </div>
+                    `;
+                }
+            });
+            
+            content += `
+                    <div class="no-print" style="margin-top: 30px;">
+                        <button onclick="window.print()">Print This Page</button>
+                        <button onclick="window.close()">Close</button>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            printWindow.document.write(content);
+            printWindow.document.close();
+        }
+
+        showMessage(message, type = 'info') {
+            const messageDiv = document.createElement('div');
+            const bgColor = type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3';
+            messageDiv.innerHTML = `<div style="position: fixed; top: 80px; right: 20px; background: ${bgColor}; color: white; padding: 15px 25px; border-radius: 25px; z-index: 10002; font-family: Arial, sans-serif; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">${message}</div>`;
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+    }
+
+    // Initialize Shortcut Page Enhancer
+    const shortcutPageEnhancer = new ShortcutPageEnhancer();
+    window.shortcutPageEnhancer = shortcutPageEnhancer;
+});
+</script>
+
+<header>
+    <div class="container">
+        <div class="logo">
+            <a href="../../home-page.html"><i class="fas fa-keyboard logo-icon"></i> Shortcut Sensei</a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../blogs/blogs.html">Blogs</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="../../About.htm">About</a></li>
+            </ul>
+            <span class="menu-toggle"><i class="fas fa-bars"></i></span>
+        </nav>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button type="button"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="dark-mode-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </div>
+    </div>
+</header>
+
+
+
+<div class="content-wrapper">
+    <h1 class="page-title">Top Google Chrome Shortcuts</h1>
+    
+    <div class="intro-container">
+        <p class="intro-text">
+            Master these essential keyboard shortcuts to navigate and manage Google Chrome efficiently. Even if you're quite familiar with Chrome, you might be taken aback by the range and diversity of keyboard shortcuts you can use to accelerate your tasks and generally enhance convenience.
+        </p>
+        
+        <div class="featured-image-container">
+            <img src="../../images/apps/Google_Chrome.jpg" alt="Google Chrome Interface" class="featured-image">
+        </div>
+        
+        <div class="actions-toolbar">
+            <button class="action-button" id="print-btn">
+                <i class="fas fa-print"></i> Print Guide
+            </button>
+            <button class="action-button" id="download-btn">
+                <i class="fas fa-download"></i> Download PDF
+            </button>
+            <button class="action-button" id="share-btn">
+                <i class="fas fa-share-alt"></i> Share
+            </button>
+            <button class="action-button" id="bookmark-btn">
+                <i class="fas fa-bookmark"></i> Bookmark
+            </button>
+        </div>
+    </div>
+    
+    <div class="filter-section">
+        <div class="filter-container">
+            <div class="filter-title">Search Shortcuts</div>
+            <input type="text" id="shortcut-filter" class="filter-input" placeholder="Type to search for shortcuts...">
+        </div>
+        
+        <div class="filter-title">Filter by Category</div>
+        <div class="category-filter">
+            <button class="category-btn active" data-category="all">All Shortcuts</button>
+            <button class="category-btn" data-category="tabs">Tab & Window</button>
+            <button class="category-btn" data-category="features">Chrome Features</button>
+            <button class="category-btn" data-category="address-bar">Address Bar</button>
+            <button class="category-btn" data-category="webpage">Webpage</button>
+            <button class="category-btn" data-category="mouse">Mouse Gestures</button>
+        </div>
+    </div>
+    
+    <div class="empty-state" id="no-results">
+        <i class="fas fa-search"></i>
+        <h3>No shortcuts found</h3>
+        <p>Try adjusting your search or filter criteria.</p>
+    </div>
+
+    <div class="note-box">
+        <h3>Note on Keyboard Combinations:</h3>
+        <p>A plus (+) signifies that you should press those keys simultaneously. A comma (,) signifies that you should press keys sequentially. For instance, "Ctrl+N" indicates holding down the Ctrl key while pressing the N key and then releasing both keys. Conversely, "Alt+N,P" entails holding down the Alt key, pressing the N key, releasing the N key, pressing the P key, and then releasing all keys.</p>
+    </div>
+
+    <div class="table-container">
+        <h2 class="section-title" id="tab-window-shortcuts">Tab Panel & Window Hotkeys</h2>
+        <p class="section-description">
+            Boost productivity and streamline navigation by utilizing Google Chrome's keyboard shortcuts for seamless tab and window management.
+        </p>
+
+        <table id="tabs-table" data-category="tabs">
+            <thead>
+                <tr>
+                    <th width="30%">Key Combination</th>
+                    <th>Description</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">N</span>
+                        </div>
+                    </td>
+                    <td>Open a new window</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + N">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">N</span>
+                        </div>
+                    </td>
+                    <td>Open a new window in Incognito mode</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + N">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">T</span>
+                        </div>
+                    </td>
+                    <td>Open a new tab, and jump to it</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + T">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">T</span>
+                        </div>
+                    </td>
+                    <td>Reopen previously closed tabs in the order they were closed</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + T">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Tab</span>
+                        </div>
+                        <div class="key-combo alt-combo">or</div>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">PgDn</span>
+                        </div>
+                    </td>
+                    <td>Jump to the next open tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Tab">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">Tab</span>
+                        </div>
+                        <div class="key-combo alt-combo">or</div>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">PgUp</span>
+                        </div>
+                    </td>
+                    <td>Jump to the previous open tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + Tab">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">1</span> through <span class="key">8</span>
+                        </div>
+                    </td>
+                    <td>Jump to a specific tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + [1-8]">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">9</span>
+                        </div>
+                    </td>
+                    <td>Jump to the rightmost tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + 9">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">Home</span>
+                        </div>
+                    </td>
+                    <td>Open your home page in the current tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Home">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">Left arrow</span>
+                        </div>
+                    </td>
+                    <td>Open the previous page from your browsing history in the current tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Left arrow">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">Right arrow</span>
+                        </div>
+                    </td>
+                    <td>Open the next page from your browsing history in the current tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Right arrow">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">W</span>
+                        </div>
+                        <div class="key-combo alt-combo">or</div>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">F4</span>
+                        </div>
+                    </td>
+                    <td>Close the current tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + W">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">W</span>
+                        </div>
+                        <div class="key-combo alt-combo">or</div>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">F4</span>
+                        </div>
+                    </td>
+                    <td>Close the current window</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + W">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">Space</span>, <span class="key">N</span>
+                        </div>
+                    </td>
+                    <td>Minimize the current window</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Space, N">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">Space</span>, <span class="key">X</span>
+                        </div>
+                    </td>
+                    <td>Maximize the current window</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Space, X">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">F</span>, <span class="key">X</span>
+                        </div>
+                    </td>
+                    <td>Quit Google Chrome</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + F, X">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">PgUp</span>
+                        </div>
+                        <div class="key-combo alt-combo">or</div>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">PgDn</span>
+                        </div>
+                    </td>
+                    <td>Move tabs right or left</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + PgUp/PgDn">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2 class="section-title" id="feature-shortcuts">Chrome Feature Hotkeys</h2>
+        <p class="section-description">
+            Quickly access and utilize Chrome's diverse features with intuitive keyboard shortcuts, optimizing browsing convenience and productivity.
+        </p>
+
+        <table id="features-table" data-category="features">
+            <thead>
+                <tr>
+                    <th width="30%">Key Combination</th>
+                    <th>Description</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">F</span>
+                        </div>
+                        <div class="key-combo alt-combo">or</div>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">E</span>
+                        </div>
+                    </td>
+                    <td>Open the Chrome menu</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + F">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">B</span>
+                        </div>
+                    </td>
+                    <td>Show or hide the Bookmarks bar</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + B">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">O</span>
+                        </div>
+                    </td>
+                    <td>Open the Bookmarks Manager</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + O">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">H</span>
+                        </div>
+                    </td>
+                    <td>Open the History page in a new tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + H">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">J</span>
+                        </div>
+                    </td>
+                    <td>Open the Downloads page in a new tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + J">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Shift</span> + <span class="key">Esc</span>
+                        </div>
+                    </td>
+                    <td>Open the Chrome Task Manager</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Shift + Esc">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Shift</span> + <span class="key">Alt</span> + <span class="key">T</span>
+                        </div>
+                    </td>
+                    <td>Set focus on the first item in the Chrome toolbar</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Shift + Alt + T">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">F10</span>
+                        </div>
+                    </td>
+                    <td>Set focus on the rightmost item in the Chrome toolbar</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="F10">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">F6</span>
+                        </div>
+                    </td>
+                    <td>Switch focus to unfocused dialog (if showing) and all toolbars</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="F6">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">F</span>
+                        </div>
+                        <div class="key-combo alt-combo">or</div>
+                        <div class="key-combo">
+                            <span class="key">F3</span>
+                        </div>
+                    </td>
+                    <td>Open the Find Bar to search the current page</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + F">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">G</span>
+                        </div>
+                    </td>
+                    <td>Jump to the next match to your Find Bar search</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + G">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">G</span>
+                        </div>
+                    </td>
+                    <td>Jump to the previous match to your Find Bar search</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + G">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">J</span>
+                        </div>
+                        <div class="key-combo alt-combo">or</div>
+                        <div class="key-combo">
+                            <span class="key">F12</span>
+                        </div>
+                    </td>
+                    <td>Open Developer Tools</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + J">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">Delete</span>
+                        </div>
+                    </td>
+                    <td>Open the Clear Browsing Data options</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + Delete">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">F1</span>
+                        </div>
+                    </td>
+                    <td>Open the Chrome Help Center in a new tab</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="F1">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">M</span>
+                        </div>
+                    </td>
+                    <td>Log in a different user or browse as a Guest</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + M">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">Shift</span> + <span class="key">I</span>
+                        </div>
+                    </td>
+                    <td>Open a feedback form</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Shift + I">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">F7</span>
+                        </div>
+                    </td>
+                    <td>Turn on caret browsing</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="F7">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">F6</span>
+                        </div>
+                    </td>
+                    <td>Skip to web contents</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + F6">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">Shift</span> + <span class="key">A</span>
+                        </div>
+                    </td>
+                    <td>Focus on inactive dialogs</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + Shift + A">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Address Bar Quick Keys -->
+<div class="table-container">
+    <h2 class="section-title" id="address-bar-shortcuts">Address Bar Quick Keys</h2>
+    <p class="section-description">
+        Accelerate your browsing experience with Address Bar Quick Keys, enabling swift access to URLs and commands for efficient navigation in Google Chrome.
+    </p>
+
+    <table id="address-bar-table" data-category="address-bar">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Type a search term</span> + <span class="key">Enter</span>
+                    </div>
+                </td>
+                <td>Search with your default search engine</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Type a search term + Enter">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Type a search engine name</span> + <span class="key">Tab</span>
+                    </div>
+                </td>
+                <td>Search using a different search engine</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Type a search engine name + Tab">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Type a site name</span> + <span class="key">Ctrl</span> + <span class="key">Enter</span>
+                    </div>
+                </td>
+                <td>Add www. and .com to a site name, and open it in the current tab</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Type a site name + Ctrl + Enter">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Type a site name</span> + <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">Enter</span>
+                    </div>
+                </td>
+                <td>Add www. and .com to a site name, and open it in a new window</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Type a site name + Ctrl + Shift + Enter">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Type a search term</span> + <span class="key">Alt</span> + <span class="key">Enter</span>
+                    </div>
+                </td>
+                <td>Open a new tab and perform a Google search</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Type a search term + Alt + Enter">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">L</span>
+                    </div>
+                    <div class="key-combo alt-combo">or</div>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + <span class="key">D</span>
+                    </div>
+                    <div class="key-combo alt-combo">or</div>
+                    <div class="key-combo">
+                        <span class="key">F6</span>
+                    </div>
+                </td>
+                <td>Jump to the address bar</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + L">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span>
+                    </div>
+                    <div class="key-combo alt-combo">or</div>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">E</span>
+                    </div>
+                </td>
+                <td>Search from anywhere on the page</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Down arrow</span> to highlight + <span class="key">Shift</span> + <span class="key">Delete</span>
+                    </div>
+                </td>
+                <td>Remove predictions from your address bar</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Down arrow to highlight + Shift + Delete">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">F5</span>
+                    </div>
+                </td>
+                <td>Move cursor to the address bar</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + F5">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Webpage Shortcuts -->
+<div class="table-container">
+    <h2 class="section-title" id="webpage-shortcuts">Webpage Shortcuts</h2>
+    <p class="section-description">
+        Simplify browsing tasks and streamline navigation with Webpage Shortcuts, empowering users to swiftly access key features and commands for enhanced productivity in Google Chrome.
+    </p>
+
+    <table id="webpage-table" data-category="webpage">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">P</span>
+                    </div>
+                </td>
+                <td>Open options to print the current page</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + P">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">S</span>
+                    </div>
+                </td>
+                <td>Open options to save the current page</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + S">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F5</span>
+                    </div>
+                    <div class="key-combo alt-combo">or</div>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">R</span>
+                    </div>
+                </td>
+                <td>Reload the current page</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F5">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">F5</span>
+                    </div>
+                    <div class="key-combo alt-combo">or</div>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">R</span>
+                    </div>
+                </td>
+                <td>Reload the current page, ignoring cached content</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + F5">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Esc</span>
+                    </div>
+                </td>
+                <td>Stop the page loading</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Esc">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Tab</span>
+                    </div>
+                </td>
+                <td>Browse clickable items moving forward</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Tab">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Tab</span>
+                    </div>
+                </td>
+                <td>Browse clickable items moving backward</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Tab">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">O</span> + Select a file
+                    </div>
+                </td>
+                <td>Open a file from your computer in Chrome</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + O + Select a file">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">U</span>
+                    </div>
+                </td>
+                <td>Display non-editable HTML source code for the current page</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + U">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">D</span>
+                    </div>
+                </td>
+                <td>Save your current webpage as a bookmark</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + D">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">D</span>
+                    </div>
+                </td>
+                <td>Save all open tabs as bookmarks in a new folder</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + D">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F11</span>
+                    </div>
+                </td>
+                <td>Turn full-screen mode on or off</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F11">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">+</span>
+                    </div>
+                </td>
+                <td>Make everything on the page bigger</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + +">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">-</span>
+                    </div>
+                </td>
+                <td>Make everything on the page smaller</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + -">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">0</span>
+                    </div>
+                </td>
+                <td>Return everything on the page to default size</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + 0">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Space</span>
+                    </div>
+                    <div class="key-combo alt-combo">or</div>
+                    <div class="key-combo">
+                        <span class="key">PgDn</span>
+                    </div>
+                </td>
+                <td>Scroll down a webpage, a screen at a time</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Space">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Space</span>
+                    </div>
+                    <div class="key-combo alt-combo">or</div>
+                    <div class="key-combo">
+                        <span class="key">PgUp</span>
+                    </div>
+                </td>
+                <td>Scroll up a webpage, a screen at a time</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Space">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Home</span>
+                    </div>
+                </td>
+                <td>Go to the top of the page</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Home">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">End</span>
+                    </div>
+                </td>
+                <td>Go to the bottom of the page</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="End">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + Scroll your mousewheel
+                    </div>
+                </td>
+                <td>Scroll horizontally on the page</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Scroll your mousewheel">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Left arrow</span>
+                    </div>
+                </td>
+                <td>Move your cursor to the beginning of the previous word in a text field</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Left arrow">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Right arrow</span>
+                    </div>
+                </td>
+                <td>Move your cursor to the next word</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Right arrow">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Backspace</span>
+                    </div>
+                </td>
+                <td>Delete the previous word in a text field</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Backspace">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + <span class="key">Home</span>
+                    </div>
+                </td>
+                <td>Open the Home page in the current tab</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + Home">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Mouse Gestures Shortcuts -->
+<div class="table-container">
+    <h2 class="section-title" id="mouse-gestures-shortcuts">Mouse Gestures Shortcuts</h2>
+    <p class="section-description">
+        Navigate efficiently using these essential mouse gestures and combination shortcuts.
+    </p>
+
+    <table id="mouse-gestures-table" data-category="mouse">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        Drag a link to a tab
+                    </div>
+                </td>
+                <td>Open a link in a current tab (mouse only)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Drag a link to a tab">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + Click a link
+                    </div>
+                </td>
+                <td>Open a link in new background tab</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Click a link">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + Click a link
+                    </div>
+                </td>
+                <td>Open a link, and jump to it</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + Click a link">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        Drag a link to a blank area of the tab strip
+                    </div>
+                </td>
+                <td>Open a link, and jump to it (mouse only)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Drag a link to a blank area of the tab strip">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + Click a link
+                    </div>
+                </td>
+                <td>Open a link in a new window</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Click a link">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        Drag the tab out of the tab strip
+                    </div>
+                </td>
+                <td>Open a tab in a new window (mouse only)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Drag the tab out of the tab strip">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        Drag the tab into an existing window
+                    </div>
+                </td>
+                <td>Move a tab to a current window (mouse only)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Drag the tab into an existing window">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Esc</span> while dragging
+                    </div>
+                </td>
+                <td>Return a tab to its original position</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Esc while dragging">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        Drag the web address to the Bookmarks Bar
+                    </div>
+                </td>
+                <td>Save the current webpage as a bookmark</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Drag the web address to the Bookmarks Bar">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + Scroll your mousewheel
+                    </div>
+                </td>
+                <td>Scroll horizontally on the page</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Scroll your mousewheel">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + Click a link
+                    </div>
+                </td>
+                <td>Download the target of a link</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + Click a link">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        Right-click <span class="key">Back</span> or click & hold <span class="key">Back</span>
+                    </div>
+                </td>
+                <td>Display your browsing history</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Right-click Back or click & hold Back">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        Right-click <span class="key">Next</span> or click & hold <span class="key">Next</span>
+                    </div>
+                </td>
+                <td>Display your browsing history</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Right-click Next or click & hold Next">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        Double-click a blank area of the tab strip
+                    </div>
+                </td>
+                <td>Switch between maximized and windowed modes</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Double-click a blank area of the tab strip">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + Scroll your mousewheel up
+                    </div>
+                </td>
+                <td>Make everything on the page bigger</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Scroll your mousewheel up">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + Scroll your mousewheel down
+                    </div>
+                </td>
+                <td>Make everything on the page smaller</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Scroll your mousewheel down">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    
+        <div class="back-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+        
+        <div class="notification" id="notification"></div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Shortcut Sensei</h3>
+                <p>Your ultimate guide to mastering keyboard shortcuts. We provide comprehensive guides and tips to help you work faster and more efficiently.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../../home-page.html">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="../../About.htm">About</a></li>
+                    <li><a href="Privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul class="social-icons">
+                    <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Subscribe</h3>
+                <form class="subscribe-form">
+                    <input type="email" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Shortcut Sensei. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Menu toggle functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNav = document.querySelector('.main-nav ul');
+    
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('show');
+        });
+        
+        // Dark mode toggle
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+        const darkModeIcon = darkModeToggle.querySelector('i');
+        
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            } else {
+                darkModeIcon.classList.remove('fa-sun');
+                darkModeIcon.classList.add('fa-moon');
+            }
+        });
+        
+        // Filter shortcuts function
+        const filterInput = document.getElementById('shortcut-filter');
+        const noResults = document.getElementById('no-results');
+        
+        filterInput.addEventListener('keyup', () => {
+            const filterValue = filterInput.value.toLowerCase();
+            const tables = document.querySelectorAll('table');
+            let hasVisibleRows = false;
+            
+            tables.forEach(table => {
+                const rows = table.querySelectorAll('tbody tr');
+                let tableHasVisibleRows = false;
+                
+                rows.forEach(row => {
+                    const keyCombo = row.cells[0].textContent.toLowerCase();
+                    const description = row.cells[1].textContent.toLowerCase();
+                    
+                    if (keyCombo.includes(filterValue) || description.includes(filterValue)) {
+                        row.style.display = '';
+                        tableHasVisibleRows = true;
+                        hasVisibleRows = true;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide section titles based on visible rows
+                const sectionTitle = table.previousElementSibling.previousElementSibling;
+                const sectionDesc = table.previousElementSibling;
+                const tableContainer = table.closest('.table-container');
+                
+                if (tableHasVisibleRows) {
+                    tableContainer.style.display = '';
+                    sectionTitle.style.display = '';
+                    sectionDesc.style.display = '';
+                } else {
+                    tableContainer.style.display = 'none';
+                    sectionTitle.style.display = 'none';
+                    sectionDesc.style.display = 'none';
+                }
+            });
+            
+            // Show/hide "no results" message
+            if (hasVisibleRows) {
+                noResults.style.display = 'none';
+            } else {
+                noResults.style.display = 'block';
+            }
+        });
+        
+        // Category filter
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const category = button.getAttribute('data-category');
+                const tables = document.querySelectorAll('table');
+                let hasVisibleTables = false;
+                
+                tables.forEach(table => {
+                    const tableCategory = table.getAttribute('data-category');
+                    const sectionTitle = table.previousElementSibling.previousElementSibling;
+                    const sectionDesc = table.previousElementSibling;
+                    const tableContainer = table.closest('.table-container');
+                    
+                    if (category === 'all' || category === tableCategory) {
+                        tableContainer.style.display = '';
+                        sectionTitle.style.display = '';
+                        sectionDesc.style.display = '';
+                        hasVisibleTables = true;
+                    } else {
+                        tableContainer.style.display = 'none';
+                        sectionTitle.style.display = 'none';
+                        sectionDesc.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide "no results" message
+                if (hasVisibleTables) {
+                    noResults.style.display = 'none';
+                } else {
+                    noResults.style.display = 'block';
+                }
+            });
+        });
+        
+        // Copy shortcut function
+        function copyShortcut(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Show notification
+                showNotification('Shortcut copied to clipboard!');
+            });
+        }
+        
+        // Copy button event listeners
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const shortcut = event.currentTarget.getAttribute('data-shortcut');
+                copyShortcut(shortcut);
+                
+                // Show tooltip
+                const tooltip = event.currentTarget.querySelector('.tooltiptext');
+                tooltip.classList.add('visible');
+                
+                // Hide tooltip after 2 seconds
+                setTimeout(() => {
+                    tooltip.classList.remove('visible');
+                }, 2000);
+            });
+        });
+        
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) { // Show button after scrolling down 300px
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Print button functionality
+        const printButton = document.getElementById('print-btn');
+        printButton.addEventListener('click', () => {
+            window.print();
+        });
+        
+        // Notification function
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Add active class to current page link
+        const currentPage = window.location.pathname.split('/').pop();
+        const navLinks = document.querySelectorAll('.main-nav ul li a');
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPage || (currentPage === 'Homepage.html' && link.getAttribute('href') === 'Homepage.html')) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+    
+    </body>
+    </html>
+    

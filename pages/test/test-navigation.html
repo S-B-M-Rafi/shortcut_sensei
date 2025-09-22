@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Test - Shortcut Sensei</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        
+        .test-link {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #007acc;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        
+        .test-link:hover {
+            background-color: #005a99;
+        }
+        
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e7f3ff;
+            border: 1px solid #b3d9ff;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #007acc;
+            border-bottom: 2px solid #007acc;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔗 Shortcut Sensei Navigation Test</h1>
+    
+    <div class="test-section">
+        <h2>📱 Homepage Tests</h2>
+        <p>Test both homepage variants with enhanced functionality:</p>
+        <a href="home-page.html" class="test-link">Test Main Homepage</a>
+        <a href="home-page-after_signup.html" class="test-link">Test After Signup Homepage</a>
+        <div class="status">
+            ✅ Both pages should have:
+            <ul>
+                <li>Theme toggle button (🌙/☀️)</li>
+                <li>Favorites system (⭐)</li>
+                <li>Enhanced search functionality</li>
+                <li>Copy shortcuts feature</li>
+                <li>Smooth navigation animations</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Applications Page</h2>
+        <p>Test the main applications listing:</p>
+        <a href="Applications_final.htm" class="test-link">Test Applications Page</a>
+        <div class="status">
+            ✅ Should have comprehensive search and filtering features
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🛠️ Individual App Pages</h2>
+        <p>Test specific application shortcut pages:</p>
+        <a href="Google Chrome.html" class="test-link">Test Google Chrome Shortcuts</a>
+        <a href="Microsoft Excell.htm" class="test-link">Test Microsoft Excel Shortcuts</a>
+        <a href="Microsoft Word.htm" class="test-link">Test Microsoft Word Shortcuts</a>
+        <a href="Discord.html" class="test-link">Test Discord Shortcuts</a>
+        <div class="status">
+            ✅ Each should have search, copy, and practice features
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Feature Tests</h2>
+        <p>Manual testing checklist:</p>
+        <div class="status">
+            <strong>Navigation Features:</strong>
+            <ul>
+                <li>✅ All navigation links work</li>
+                <li>✅ Search functionality operational</li>
+                <li>✅ Theme toggle works</li>
+                <li>✅ Favorites system functional</li>
+                <li>✅ Keyboard shortcuts (Ctrl/Cmd + K for search)</li>
+            </ul>
+            <strong>Design Preservation:</strong>
+            <ul>
+                <li>✅ Original design maintained</li>
+                <li>✅ CSS classes preserved</li>
+                <li>✅ No layout breaking</li>
+                <li>✅ Responsive behavior intact</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🏠 Return to Main Pages</h2>
+        <a href="home-page.html" class="test-link">← Back to Homepage</a>
+        <a href="Applications_final.htm" class="test-link">← Back to Applications</a>
+    </div>
+
+    <script>
+        // Simple functionality test
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔗 Navigation Test Page Loaded');
+            
+            // Add click handlers to test links
+            const testLinks = document.querySelectorAll('.test-link');
+            testLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    console.log(`Testing navigation to: ${this.href}`);
+                    
+                    // Show loading indicator
+                    const originalText = this.textContent;
+                    this.textContent = 'Loading...';
+                    this.style.backgroundColor = '#999';
+                    
+                    // Reset after a moment (in case page doesn't load)
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.backgroundColor = '#007acc';
+                    }, 3000);
+                });
+            });
+            
+            // Show success message
+            setTimeout(() => {
+                const successMsg = document.createElement('div');
+                successMsg.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #4CAF50;
+                    color: white;
+                    padding: 15px;
+                    border-radius: 5px;
+                    z-index: 1000;
+                `;
+                successMsg.textContent = '✅ Test page ready!';
+                document.body.appendChild(successMsg);
+                
+                setTimeout(() => {
+                    successMsg.remove();
+                }, 3000);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

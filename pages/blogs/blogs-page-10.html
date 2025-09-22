@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Tips - Page 10 - Shortcut Sensei</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base styles with CSS variables for easier theming */
+        :root {
+            --primary-color: #06a3be;
+            --primary-hover: #048ea6;
+            --secondary-color: #8a2be2;
+            --secondary-hover: #7a1dc5;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #f4f4f4;
+            --light-bg: #f4f4f4;
+            --light-card: #ffffff;
+            --light-text: #333;
+            --header-footer-bg: #000000;
+            --selection-color: rgba(6, 163, 190, 0.2);
+            --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+        
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        ::selection {
+            background-color: var(--selection-color);
+        }
+        
+        /* Header styles - sticky with shadow */
+        header {
+            background-color: var(--header-footer-bg);
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .main-nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: all var(--transition-speed) ease;
+            border-radius: var(--border-radius);
+        }
+
+        .main-nav ul li a:hover {
+            background-color: #444;
+        }
+        
+        .main-nav ul li a.active {
+            background-color: var(--primary-color);
+        }
+
+        /* Blog page styles */
+        .blog-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .dark-mode .page-subtitle {
+            color: #ccc;
+        }
+
+        /* Blog filters and search */
+        .blog-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-dropdown {
+            position: relative;
+        }
+
+        .filter-dropdown select {
+            background-color: var(--light-card);
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 10px 40px 10px 15px;
+            font-size: 16px;
+            color: var(--light-text);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+
+        .dark-mode .filter-dropdown select {
+            background-color: var(--dark-card);
+            border-color: #555;
+            color: var(--dark-text);
+        }
+
+        .blog-search {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .blog-search i {
+            position: absolute;
+            left: 15px;
+            color: #666;
+            z-index: 1;
+        }
+
+        .blog-search input {
+            padding: 10px 15px 10px 45px;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            width: 300px;
+            background-color: var(--light-card);
+            color: var(--light-text);
+        }
+
+        .dark-mode .blog-search input {
+            background-color: var(--dark-card);
+            border-color: #555;
+            color: var(--dark-text);
+        }
+
+        .blog-search input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Blog grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .blog-card {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: all var(--transition-speed) ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-mode .blog-card {
+            background-color: var(--dark-card);
+            border-color: #444;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .dark-mode .blog-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .blog-category {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            line-height: 1.3;
+            color: var(--light-text);
+        }
+
+        .dark-mode .blog-title {
+            color: var(--dark-text);
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .dark-mode .blog-excerpt {
+            color: #bbb;
+        }
+
+        .blog-read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .blog-read-more:hover {
+            color: var(--primary-hover);
+            gap: 12px;
+        }
+
+        /* Pagination */
+        .blog-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0;
+        }
+
+        .pagination-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            background-color: var(--light-card);
+            color: var(--light-text);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: all var(--transition-speed) ease;
+            font-weight: 500;
+            min-width: 45px;
+        }
+
+        .dark-mode .pagination-btn {
+            background-color: var(--dark-card);
+            border-color: #555;
+            color: var(--dark-text);
+        }
+
+        .pagination-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .dark-mode .pagination-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .pagination-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .pagination-btn.active:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Newsletter section */
+        .newsletter-section {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+            text-align: center;
+        }
+        
+        .dark-mode .newsletter-section {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .newsletter-heading {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .newsletter-description {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color var(--transition-speed);
+        }
+        
+        .newsletter-form input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(6, 163, 190, 0.2);
+        }
+        
+        .dark-mode .newsletter-form input {
+            background-color: #333;
+            border-color: #555;
+            color: var(--dark-text);
+        }
+        
+        .newsletter-form button {
+            padding: 12px 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+            white-space: nowrap;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--header-footer-bg);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            color: #888;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .blog-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .blog-search input {
+                width: 100%;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .pagination-btn {
+                padding: 8px 12px;
+                min-width: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../../home-page.html"><i class="fas fa-keyboard logo-icon"></i> Shortcut Sensei</a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="blogs.html" class="active">Blogs</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="../../About.htm">About</a></li>
+                </ul>
+                <span class="menu-toggle"><i class="fas fa-bars"></i></span>
+            </nav>
+            <div class="search-container">
+                <input type="text" placeholder="Search...">
+                <button type="button"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="dark-mode-toggle">
+              <i class="fa-solid fa-moon"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="blog-main">
+        <!-- Page header -->
+        <div class="page-header">
+            <h1 class="page-title">Productivity Tips - Page 10</h1>
+            <p class="page-subtitle">Master specialized productivity areas: education, parenting, seniors, and life transitions with expert guidance</p>
+        </div>
+
+        <!-- Blog filters -->
+        <div class="blog-filters">
+            <div class="filter-dropdown">
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="education">Education</option>
+                    <option value="parenting">Parenting</option>
+                    <option value="seniors">Seniors</option>
+                    <option value="life-transitions">Life Transitions</option>
+                    <option value="wellness">Wellness</option>
+                </select>
+            </div>
+            <div class="blog-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="blog-search-input" placeholder="Search blogs...">
+            </div>
+        </div>
+
+        <!-- Blog grid -->
+        <div class="blog-grid">
+            <!-- Blog card 1 -->
+            <div class="blog-card" data-category="education">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&h=300&fit=crop" alt="Student Productivity" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Education</span>
+                        <span>January 3, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Student Productivity: Study Techniques That Work</h2>
+                    <p class="blog-excerpt">Evidence-based study methods, note-taking systems, and productivity tools specifically designed for students and lifelong learners at all levels.</p>
+                    <a href="https://www.khanacademy.org/college-careers-more/college-admissions/learning-techniques-101" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 2 -->
+            <div class="blog-card" data-category="parenting">
+                <img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=500&h=300&fit=crop" alt="Productive Parenting" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Parenting</span>
+                        <span>January 1, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Productive Parenting: Managing Family and Career</h2>
+                    <p class="blog-excerpt">Strategies for working parents to balance career demands with family responsibilities, creating systems that work for everyone in the household.</p>
+                    <a href="https://www.parents.com/parenting/work/life-balance/" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 3 -->
+            <div class="blog-card" data-category="seniors">
+                <img src="../../images/apps/about_page.jpg" alt="Senior Productivity" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Seniors</span>
+                        <span>December 30, 2024</span>
+                    </div>
+                    <h2 class="blog-title">Technology and Productivity for Seniors</h2>
+                    <p class="blog-excerpt">Age-friendly productivity tools, digital literacy resources, and techniques for staying organized and connected in the modern digital world.</p>
+                    <a href="https://www.aarp.org/home-family/personal-technology/" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 4 -->
+            <div class="blog-card" data-category="life-transitions">
+                <img src="../../images/apps/win11.jpg" alt="Career Transition" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Life Transitions</span>
+                        <span>December 28, 2024</span>
+                    </div>
+                    <h2 class="blog-title">Navigating Career Transitions Productively</h2>
+                    <p class="blog-excerpt">Strategic approaches to career changes, skill development, and maintaining productivity during professional transitions and life changes.</p>
+                    <a href="https://www.themuse.com/advice/career-change-guide" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 5 -->
+            <div class="blog-card" data-category="wellness">
+                <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=500&h=300&fit=crop" alt="Retirement Planning" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Wellness</span>
+                        <span>December 26, 2024</span>
+                    </div>
+                    <h2 class="blog-title">Productive Retirement: Purpose and Planning</h2>
+                    <p class="blog-excerpt">Transform retirement into the most productive phase of life with structured approaches to pursuing passions, volunteering, and lifelong learning.</p>
+                    <a href="https://www.fidelity.com/retirement-planning/overview" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 6 -->
+            <div class="blog-card" data-category="education">
+                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=300&fit=crop" alt="Lifelong Learning" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Education</span>
+                        <span>December 24, 2024</span>
+                    </div>
+                    <h2 class="blog-title">Lifelong Learning Systems for Continuous Growth</h2>
+                    <p class="blog-excerpt">Create sustainable learning habits and systems that keep you growing throughout your career and personal life, regardless of age or stage.</p>
+                    <a href="https://www.coursera.org/articles/lifelong-learning" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="blog-pagination">
+            <a href="blogs-page-9.html" class="pagination-btn"><i class="fas fa-chevron-left"></i></a>
+            <a href="blogs.html" class="pagination-btn">1</a>
+            <a href="blogs-page-2.html" class="pagination-btn">2</a>
+            <span class="pagination-btn">...</span>
+            <a href="blogs-page-8.html" class="pagination-btn">8</a>
+            <a href="blogs-page-9.html" class="pagination-btn">9</a>
+            <a href="blogs-page-10.html" class="pagination-btn active">10</a>
+        </div>
+        
+        <!-- Newsletter section -->
+        <div class="newsletter-section">
+            <h2 class="newsletter-heading">Subscribe to Our Newsletter</h2>
+            <p class="newsletter-description">Get the latest shortcuts, productivity tips, and keyboard hacks delivered directly to your inbox. Stay updated with our weekly newsletter.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="../../home-page.html">Home</a></li>
+                    <li><a href="../Applications_final.htm">Applications</a></li>
+                    <li><a href="blogs.html">Blogs</a></li>
+                    <li><a href="../../About.htm">About</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="https://support.microsoft.com/en-us/windows/keyboard-shortcuts-in-windows-dcc61a57-8ff0-cffe-9796-cb9706c75eec" target="_blank">Windows</a></li>
+                    <li><a href="https://support.apple.com/en-us/HT201236" target="_blank">macOS</a></li>
+                    <li><a href="https://chrome.google.com/webstore/category/extensions" target="_blank">Browsers</a></li>
+                    <li><a href="https://blog.hubspot.com/marketing/productivity-tips" target="_blank">Productivity</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="https://www.twitter.com/shortcutsensei" target="_blank"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="https://www.facebook.com/shortcutsensei" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="https://www.linkedin.com/company/shortcut-sensei" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="https://github.com/shortcut-sensei" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>About Shortcut Sensei</h3>
+                <p>Your ultimate guide to keyboard shortcuts and productivity tips. Master your tools and boost your efficiency with our comprehensive guides.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Shortcut Sensei. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

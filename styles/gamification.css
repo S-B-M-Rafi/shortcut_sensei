@@ -1,0 +1,1290 @@
+/* Badge System, Streak System, and Shortcut of the Day Styles */
+
+/* Badge Notification Styles */
+.badge-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 0;
+    min-width: 300px;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(76, 175, 80, 0.3);
+    z-index: 10001;
+    transform: translateX(420px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.badge-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.badge-notification-content {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+.badge-notification .badge-icon {
+    font-size: 2.5em;
+    margin-right: 15px;
+    animation: badgeBounce 0.6s ease;
+}
+
+@keyframes badgeBounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.badge-notification .badge-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #fff;
+}
+
+.badge-notification .badge-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #fff;
+}
+
+.badge-notification .badge-info p {
+    margin: 0 0 8px 0;
+    font-size: 0.9em;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.badge-notification .badge-reward {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.badge-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Badge Collection Modal */
+.badge-collection-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.badge-collection-content {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalSlideIn {
+    from { transform: scale(0.7) translateY(50px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.badge-collection-header {
+    background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge-collection-header h2 {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.badge-stats {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+.badge-categories {
+    padding: 30px;
+}
+
+.badge-category {
+    margin-bottom: 40px;
+}
+
+.badge-category h3 {
+    color: #333;
+    margin: 0 0 20px 0;
+    font-size: 1.4em;
+    font-weight: 600;
+    text-transform: capitalize;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.badge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.badge-card {
+    background: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.badge-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.badge-card.unlocked {
+    background: linear-gradient(135deg, #fff8e1 0%, #f3e5f5 100%);
+    border-color: #9c27b0;
+}
+
+.badge-card.locked {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+.badge-card.locked .badge-icon {
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.badge-card .badge-icon {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.badge-card .badge-info h4 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.badge-card .badge-info p {
+    margin: 0 0 15px 0;
+    color: #666;
+    line-height: 1.5;
+    font-size: 0.9em;
+}
+
+.badge-progress-bar {
+    background: #e0e0e0;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.badge-progress-bar .progress-fill {
+    background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+    height: 100%;
+    transition: width 0.5s ease;
+    border-radius: 3px;
+}
+
+.progress-text {
+    font-size: 0.8em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.badge-unlocked-date {
+    font-size: 0.8em;
+    color: #4CAF50;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.badge-difficulty {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-difficulty.bronze {
+    background: #CD7F32;
+    color: white;
+}
+
+.badge-difficulty.silver {
+    background: #C0C0C0;
+    color: #333;
+}
+
+.badge-difficulty.gold {
+    background: #FFD700;
+    color: #333;
+}
+
+.badge-difficulty.platinum {
+    background: linear-gradient(135deg, #E5E4E2 0%, #B8860B 100%);
+    color: #333;
+}
+
+/* Streak Notification Styles */
+.streak-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 16px;
+    min-width: 400px;
+    max-width: 500px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    z-index: 10002;
+    opacity: 0;
+    animation: streakNotificationShow 0.5s ease forwards;
+}
+
+@keyframes streakNotificationShow {
+    to { opacity: 1; }
+}
+
+.streak-notification.streak-broken {
+    border: 3px solid #f44336;
+}
+
+.streak-notification.streak-freeze-offer {
+    border: 3px solid #2196F3;
+}
+
+.streak-notification.streak-milestone {
+    border: 3px solid #FF9800;
+}
+
+.streak-notification.daily-goals-completed {
+    border: 3px solid #4CAF50;
+}
+
+.notification-content {
+    padding: 25px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.notification-icon {
+    font-size: 2.5em;
+    flex-shrink: 0;
+}
+
+.notification-text h3 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.notification-text p {
+    margin: 0 0 20px 0;
+    color: #666;
+    line-height: 1.5;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.notification-action {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background: #f0f0f0;
+    color: #333;
+}
+
+.notification-action.primary {
+    background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+    color: white;
+}
+
+.notification-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #999;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.notification-close:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+/* Streak Stats Modal */
+.streak-stats-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.streak-stats-content {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.streak-stats-header {
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.streak-overview {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.streak-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.streak-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.streak-card.current {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    border-color: #ff9800;
+}
+
+.streak-card.longest {
+    background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+    border-color: #4caf50;
+}
+
+.streak-card.total {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-color: #2196f3;
+}
+
+.streak-card.freezes {
+    background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+    border-color: #9c27b0;
+}
+
+.streak-icon {
+    font-size: 2em;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.streak-number {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.streak-label {
+    font-size: 0.9em;
+    color: #666;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.daily-progress {
+    padding: 0 30px 30px 30px;
+}
+
+.daily-progress h3 {
+    color: #333;
+    margin: 0 0 20px 0;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.progress-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.progress-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.progress-item > span:first-child {
+    min-width: 140px;
+    font-weight: 500;
+    color: #333;
+}
+
+.progress-item > span:last-child {
+    min-width: 80px;
+    text-align: right;
+    font-weight: 500;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.progress-bar {
+    flex: 1;
+    background: #e0e0e0;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar .progress-fill {
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    height: 100%;
+    transition: width 0.5s ease;
+    border-radius: 4px;
+}
+
+/* Shortcut of the Day Styles */
+.shortcut-of-day {
+    margin: 40px 0;
+}
+
+.shortcut-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 2px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.shortcut-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    border-color: #9c27b0;
+}
+
+.shortcut-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shortcut-header h3 {
+    margin: 0;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.shortcut-date {
+    font-size: 0.9em;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.shortcut-main {
+    padding: 25px;
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+.shortcut-combination {
+    text-align: center;
+    min-width: 150px;
+}
+
+.shortcut-keys {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2em;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+    letter-spacing: 1px;
+}
+
+.shortcut-app {
+    background: #e8f4fd;
+    color: #1976d2;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.shortcut-info {
+    flex: 1;
+}
+
+.shortcut-info h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.shortcut-tip {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: #5d4037;
+    line-height: 1.5;
+}
+
+.shortcut-meta {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.shortcut-meta .difficulty {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.shortcut-meta .difficulty.beginner {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+.shortcut-meta .difficulty.intermediate {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.shortcut-meta .difficulty.advanced {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.shortcut-meta .category {
+    background: #f3e5f5;
+    color: #7b1fa2;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.shortcut-actions {
+    padding: 20px 25px;
+    background: #f8f9fa;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-top: 1px solid #e0e0e0;
+}
+
+.shortcut-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.practice-btn {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: white;
+}
+
+.learn-btn {
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    color: white;
+}
+
+.share-btn {
+    background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+    color: white;
+}
+
+.shortcut-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.shortcut-actions button.completed {
+    background: #e8f5e8;
+    color: #2e7d32;
+    cursor: default;
+}
+
+.shortcut-actions button.completed:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.related-shortcuts {
+    padding: 20px 25px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.related-shortcuts h5 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.related-shortcuts-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.related-shortcut {
+    background: #f0f0f0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #ddd;
+}
+
+.related-shortcut:hover {
+    background: #9c27b0;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.shortcut-history-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.shortcut-history-link button {
+    background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.shortcut-history-link button:hover {
+    background: linear-gradient(135deg, #7b1fa2 0%, #6a1b9a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(156, 39, 176, 0.3);
+}
+
+/* Shortcut Details Modal */
+.shortcut-details-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.shortcut-details-modal .modal-content {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.shortcut-details-modal .modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 25px;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shortcut-details-modal .modal-body {
+    padding: 25px;
+}
+
+.shortcut-details-modal .shortcut-info h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 1.3em;
+}
+
+.shortcut-details-modal .shortcut-info p {
+    margin: 0 0 10px 0;
+    color: #666;
+}
+
+.shortcut-details-modal .tip {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: #5d4037;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Shortcut History Modal */
+.shortcut-history-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.shortcut-history-modal .modal-content {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.history-item.learned {
+    border-left-color: #4caf50;
+    background: #f1f8e9;
+}
+
+.history-item.practiced {
+    border-left-color: #ff9800;
+    background: #fff8e1;
+}
+
+.history-date {
+    min-width: 100px;
+    font-size: 0.9em;
+    color: #666;
+    font-weight: 500;
+}
+
+.history-shortcut {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.history-shortcut .combination {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #333;
+}
+
+.history-shortcut .description {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.history-shortcut .application {
+    color: #9c27b0;
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+.history-status {
+    display: flex;
+    gap: 8px;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.7em;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.learned {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+.status-badge.practiced {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+/* Level Up Notification */
+.level-up-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+    color: #333;
+    border-radius: 16px;
+    padding: 0;
+    min-width: 350px;
+    box-shadow: 0 15px 50px rgba(255, 215, 0, 0.4);
+    z-index: 10003;
+    opacity: 0;
+    animation: levelUpShow 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes levelUpShow {
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.level-up-content {
+    display: flex;
+    align-items: center;
+    padding: 25px;
+    position: relative;
+}
+
+.level-up-icon {
+    font-size: 3em;
+    margin-right: 20px;
+    animation: levelUpPulse 1s ease infinite;
+}
+
+@keyframes levelUpPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.level-up-text h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #333;
+}
+
+.level-up-text p {
+    margin: 0 0 10px 0;
+    color: #555;
+    font-weight: 500;
+}
+
+.bonus-xp {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.level-up-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 20px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.level-up-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* General Notification Styles */
+.shortcut-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 10001;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.shortcut-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.shortcut-notification.success {
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+}
+
+.shortcut-notification.info {
+    background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+}
+
+.shortcut-notification.warning {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+}
+
+.shortcut-notification.error {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .badge-notification {
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+        max-width: none;
+        transform: translateY(-100px);
+    }
+
+    .badge-notification.show {
+        transform: translateY(0);
+    }
+
+    .badge-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .streak-overview {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .shortcut-main {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .shortcut-combination {
+        min-width: auto;
+        text-align: left;
+    }
+
+    .shortcut-actions {
+        flex-direction: column;
+    }
+
+    .progress-item {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .progress-item > span:first-child,
+    .progress-item > span:last-child {
+        min-width: auto;
+    }
+
+    .history-item {
+        flex-direction: column;
+        gap: 10px;
+        text-align: left;
+    }
+
+    .history-date {
+        min-width: auto;
+    }
+
+    .history-status {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .badge-collection-content,
+    .streak-stats-content,
+    .shortcut-details-modal .modal-content,
+    .shortcut-history-modal .modal-content {
+        width: 95%;
+    }
+
+    .badge-collection-header,
+    .streak-stats-header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .badge-stats {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
+    .streak-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .notification-content {
+        padding: 20px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .notification-actions {
+        justify-content: center;
+    }
+
+    .shortcut-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .level-up-notification {
+        min-width: 300px;
+    }
+
+    .level-up-content {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .level-up-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* Dark Theme Support */
+@media (prefers-color-scheme: dark) {
+    .badge-collection-content,
+    .streak-stats-content,
+    .shortcut-details-modal .modal-content,
+    .shortcut-history-modal .modal-content,
+    .shortcut-card,
+    .streak-notification {
+        background: #2d2d2d;
+        color: #e0e0e0;
+    }
+
+    .badge-card {
+        background: #3d3d3d;
+        border-color: #555;
+    }
+
+    .badge-card.unlocked {
+        background: #4a4a4a;
+    }
+
+    .history-item {
+        background: #3d3d3d;
+    }
+
+    .shortcut-actions {
+        background: #3d3d3d;
+    }
+
+    .related-shortcut {
+        background: #4a4a4a;
+        border-color: #666;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .badge-notification,
+    .streak-notification,
+    .level-up-notification,
+    .shortcut-notification {
+        animation: none;
+        transition: none;
+    }
+
+    .badge-icon,
+    .level-up-icon {
+        animation: none;
+    }
+
+    .shortcut-card,
+    .badge-card,
+    .streak-card {
+        transition: none;
+    }
+
+    .shortcut-card:hover,
+    .badge-card:hover,
+    .streak-card:hover {
+        transform: none;
+    }
+}

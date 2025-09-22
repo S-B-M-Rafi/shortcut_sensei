@@ -1,0 +1,2967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Studio Shortcuts - Shortcut Sensei</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <style>
+        /* Base styles with CSS variables for easier theming */
+        :root {
+            --primary-color: #06a3be;
+            --primary-hover: #048ea6;
+            --secondary-color: #8a2be2;
+            --secondary-hover: #7a1dc5;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #f4f4f4;
+            --light-bg: #f4f4f4;
+            --light-card: #ffffff;
+            --light-text: #333;
+            --header-footer-bg: #000000;
+            --selection-color: rgba(6, 163, 190, 0.2);
+            --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+        
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        ::selection {
+            background-color: var(--selection-color);
+        }
+        
+        /* Header styles - sticky with shadow */
+        header {
+            background-color: var(--header-footer-bg);
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .main-nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: all var(--transition-speed) ease;
+            border-radius: var(--border-radius);
+        }
+
+        .main-nav ul li a:hover {
+            background-color: #444;
+        }
+        
+        .main-nav ul li a.active {
+            background-color: var(--primary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8em;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .search-container {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 25px;
+            padding: 5px 15px;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            transition: all var(--transition-speed);
+        }
+        
+        .dark-mode .search-container {
+            background-color: #333;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .search-container input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 16px;
+            outline: none;
+            background-color: transparent;
+            color: var(--light-text);
+            transition: color var(--transition-speed);
+        }
+        
+        .dark-mode .search-container input[type="text"] {
+            color: var(--dark-text);
+        }
+        
+        .search-container input[type="text"]::placeholder {
+            color: #888;
+        }
+
+        .search-container button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            outline: none;
+            transition: background-color var(--transition-speed);
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .search-container button:hover {
+            background-color: var(--secondary-hover);
+        }
+        
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: 15px;
+            position: relative;
+            user-select: none;
+        }
+        
+        .dark-mode-toggle i {
+            font-size: 24px;
+            transition: transform 0.4s ease;
+        }
+        
+        /* Main content */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .intro-container {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        
+        .dark-mode .intro-container {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .featured-image-container {
+            position: relative;
+            width: 100%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .featured-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .dark-mode .featured-image {
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .featured-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .section-title:hover::after {
+            width: 100px;
+        }
+        
+        .section-description {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Actions toolbar */
+        .actions-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color var(--transition-speed), transform 0.2s;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .action-button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        
+        .action-button i {
+            margin-right: 8px;
+        }
+        
+        /* Filter section with improved styling */
+        .filter-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: var(--light-card);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        
+        .dark-mode .filter-section {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .filter-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .filter-container {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color var(--transition-speed), background-color var(--transition-speed);
+            outline: none;
+        }
+        
+        .filter-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(6, 163, 190, 0.2);
+        }
+        
+        .dark-mode .filter-input {
+            background-color: #333;
+            border-color: #555;
+            color: var(--dark-text);
+        }
+        
+        /* Category filter */
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .category-btn {
+            background-color: #eee;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        .dark-mode .category-btn {
+            background-color: #333;
+            color: var(--dark-text);
+        }
+        
+        .category-btn:hover {
+            background-color: #ddd;
+            transform: translateY(-2px);
+        }
+        
+        .dark-mode .category-btn:hover {
+            background-color: #444;
+        }
+        
+        .category-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Empty state message */
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .dark-mode .empty-state {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+        
+        /* Table styles with enhanced design */
+        .table-container {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+            overflow: hidden;
+        }
+        
+        .dark-mode .table-container {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .dark-mode td {
+            border-bottom: 1px solid #444;
+        }
+        
+        tbody tr {
+            transition: background-color var(--transition-speed);
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .dark-mode tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        
+        tbody tr:hover {
+            background-color: rgba(6, 163, 190, 0.08);
+        }
+        
+        /* Copy button for shortcuts */
+        .actions-cell {
+            white-space: nowrap;
+        }
+        
+        .copy-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            transition: all var(--transition-speed);
+        }
+        
+        .copy-btn:hover {
+            color: var(--secondary-color);
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark-mode .copy-btn:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Tooltip for copied message */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 80px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -40px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(10px);
+            font-size: 0.8rem;
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
+        }
+        
+        .tooltip .tooltiptext.visible {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Key combination styling */
+        .key-combo {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .key {
+            display: inline-block;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-family: monospace;
+            font-size: 0.9em;
+            box-shadow: 0 2px 0 #ccc;
+            transition: all var(--transition-speed);
+        }
+        
+        .dark-mode .key {
+            background-color: #333;
+            border-color: #555;
+            box-shadow: 0 2px 0 #222;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-speed), visibility var(--transition-speed), background-color var(--transition-speed), transform 0.2s;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-5px);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Footer styles with enhanced design */
+        footer {
+            background-color: var(--header-footer-bg);
+            color: #fff;
+            padding: 40px 0 20px;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-links, .social-icons {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links li a, .social-icons li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all var(--transition-speed);
+            display: inline-block;
+        }
+
+        .footer-links li a:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons li a {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-speed);
+        }
+
+        .social-icons li a:hover {
+            color: #fff;
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .subscribe-form input[type="email"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            font-size: 1em;
+        }
+
+        .subscribe-form button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color var(--transition-speed);
+            white-space: nowrap;
+        }
+
+        .subscribe-form button:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1100;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Print styles */
+        @media print {
+            header, footer, .actions-toolbar, .filter-section, .copy-btn, .back-to-top {
+                display: none !important;
+            }
+            
+            body {
+                background-color: white;
+                color: black;
+            }
+            
+            .content-wrapper {
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            .table-container, .intro-container {
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            table {
+                border: 1px solid #ddd;
+            }
+            
+            th {
+                background-color: #f2f2f2 !important;
+                color: black !important;
+            }
+            
+            .page-title {
+                color: black;
+            }
+            
+            @page {
+                margin: 1.5cm;
+            }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .footer-column {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--header-footer-bg);
+                width: 100%;
+                z-index: 10;
+                flex-direction: column;
+                gap: 0;
+                padding: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .main-nav ul.show {
+                display: flex;
+            }
+            
+            .search-container {
+                margin-right: 10px;
+            }
+            
+            .search-container input[type="text"] {
+                width: 120px;
+            }
+            
+            .search-container button {
+                padding: 8px 12px;
+            }
+            
+            .category-filter {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+            }
+            
+            .category-btn {
+                scroll-snap-align: start;
+                flex: 0 0 auto;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+            
+            .table-container {
+                padding: 10px;
+                overflow-x: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .logo a {
+                font-size: 1.5em;
+            }
+            
+            .dark-mode-toggle i {
+                font-size: 20px;
+            }
+            
+            .search-container {
+                display: none;
+            }
+            
+            .actions-toolbar {
+                flex-direction: column;
+            }
+            
+            .action-button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .key-combo {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+    <script src="assets/js/global.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="logo">
+            <a href="../../home-page.html"><i class="fas fa-keyboard logo-icon"></i> Shortcut Sensei</a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../blogs/blogs.html">Blogs</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="../../About.htm">About</a></li>
+            </ul>
+            <span class="menu-toggle"><i class="fas fa-bars"></i></span>
+        </nav>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button type="button"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="dark-mode-toggle">
+          <i class="fa-solid fa-moon"></i>
+        </div>
+    </div>
+</header>
+
+<div class="content-wrapper">
+    <h1 class="page-title">Top Visual Studio Shortcuts</h1>
+    
+    <div class="intro-container">
+        <p class="intro-text">
+            Welcome to Shortcut Sensei's guide to Visual Studio Code (VS Code) shortcuts! Whether you're a seasoned developer or just getting started with coding, mastering keyboard shortcuts can turbocharge your workflow in VS Code. Below, you'll find a comprehensive list of shortcuts categorized for quick reference. Dive in and discover how to navigate, edit, and debug your code with lightning speed!
+        </p>
+        
+        <div class="featured-image-container">
+            <img src="../../images/apps/src="Visual_Studio.png"" alt="Visual Studio Interface" class="featured-image">
+        </div>
+        
+        <div class="actions-toolbar">
+            <button class="action-button" id="print-btn">
+                <i class="fas fa-print"></i> Print Guide
+            </button>
+            <button class="action-button" id="download-btn">
+                <i class="fas fa-download"></i> Download PDF
+            </button>
+            <button class="action-button" id="share-btn">
+                <i class="fas fa-share-alt"></i> Share
+            </button>
+            <button class="action-button" id="bookmark-btn">
+                <i class="fas fa-bookmark"></i> Bookmark
+            </button>
+        </div>
+    </div>
+    
+    <div class="filter-section">
+        <div class="filter-container">
+            <div class="filter-title">Search Shortcuts</div>
+            <input type="text" id="shortcut-filter" class="filter-input" placeholder="Type to search for shortcuts...">
+        </div>
+        
+        <div class="filter-title">Filter by Category</div>
+        <div class="category-filter">
+            <button class="category-btn active" data-category="all">All Shortcuts</button>
+            <button class="category-btn" data-category="general">General</button>
+            <button class="category-btn" data-category="editing">Basic Editing</button>
+            <button class="category-btn" data-category="navigation">Navigation</button>
+            <button class="category-btn" data-category="search">Search & Replace</button>
+            <button class="category-btn" data-category="selection">Multi-cursor & Selection </button>
+            <button class="category-btn" data-category="management">Editing</button>
+            <button class="category-btn" data-category="files">File Management</button>
+            <button class="category-btn" data-category="display">Display</button>
+            <button class="category-btn" data-category="debug">Debug</button>
+            <button class="category-btn" data-category="terminal">Integrated Terminal</button>
+            <button class="category-btn" data-category="other">Other</button>
+        </div>
+    </div>
+    
+    <div class="empty-state" id="no-results">
+        <i class="fas fa-search"></i>
+        <h3>No shortcuts found</h3>
+        <p>Try adjusting your search or filter criteria.</p>
+    </div>
+
+    <div class="table-container">
+        <h2 class="section-title" id="general-shortcuts">General Shortcuts</h2>
+        <p class="section-description">
+            Essential shortcuts to quickly access core Visual Studio features, open files, and configure your development environment.
+        </p>
+
+        <table id="general-table" data-category="general">
+            <thead>
+                <tr>
+                    <th width="30%">Key Combination</th>
+                    <th>Description</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">P</span>, <span class="key">F1</span>
+                        </div>
+                    </td>
+                    <td>Show Command Palette</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + P, F1">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">P</span>
+                        </div>
+                    </td>
+                    <td>Quick Open, Go to File…</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + P">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">N</span>
+                        </div>
+                    </td>
+                    <td>New window/instance</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + N">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">W</span>
+                        </div>
+                    </td>
+                    <td>Close window/instance</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + W">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">,</span>
+                        </div>
+                    </td>
+                    <td>User Settings</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + ,">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">Ctrl</span> + <span class="key">S</span>
+                        </div>
+                    </td>
+                    <td>Keyboard Shortcuts</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + K Ctrl + S">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2 class="section-title" id="editing-shortcuts">Basic Editing Shortcuts</h2>
+        <p class="section-description">
+            Master these shortcuts to edit code efficiently, manipulate lines, navigate through text, and work with code folding features.
+        </p>
+
+        <table id="editing-table" data-category="editing">
+            <thead>
+                <tr>
+                    <th width="30%">Key Combination</th>
+                    <th>Description</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">X</span>
+                        </div>
+                    </td>
+                    <td>Cut line (empty selection)</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + X">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">C</span>
+                        </div>
+                    </td>
+                    <td>Copy line (empty selection)</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + C">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">↑</span> / <span class="key">↓</span>
+                        </div>
+                    </td>
+                    <td>Move line up/down</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + ↑ / ↓">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Shift</span> + <span class="key">Alt</span> + <span class="key">↓</span> / <span class="key">↑</span>
+                        </div>
+                    </td>
+                    <td>Copy line up/down</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Shift + Alt + ↓ / ↑">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">K</span>
+                        </div>
+                    </td>
+                    <td>Delete line</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + K">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Enter</span>
+                        </div>
+                    </td>
+                    <td>Insert line below</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Enter">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">Enter</span>
+                        </div>
+                    </td>
+                    <td>Insert line above</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + Enter">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">\</span>
+                        </div>
+                    </td>
+                    <td>Jump to matching bracket</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + \">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">]</span> / <span class="key">[</span>
+                        </div>
+                    </td>
+                    <td>Indent/outdent line</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + ] / [">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Home</span> / <span class="key">End</span>
+                        </div>
+                    </td>
+                    <td>Go to beginning/end of line</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Home / End">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2 class="section-title" id="navigation-shortcuts">Navigation Shortcuts</h2>
+        <p class="section-description">
+            Use these shortcuts to quickly navigate between files, locate symbols, and find errors in your codebase.
+        </p>
+
+        <table id="navigation-table" data-category="navigation">
+            <thead>
+                <tr>
+                    <th width="30%">Key Combination</th>
+                    <th>Description</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">T</span>
+                        </div>
+                    </td>
+                    <td>Show all Symbols</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + T">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">G</span>
+                        </div>
+                    </td>
+                    <td>Go to Line...</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + G">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">P</span>
+                        </div>
+                    </td>
+                    <td>Go to File...</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + P">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">O</span>
+                        </div>
+                    </td>
+                    <td>Go to Symbol...</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + O">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">M</span>
+                        </div>
+                    </td>
+                    <td>Show Problems panel</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + M">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">F8</span>
+                        </div>
+                    </td>
+                    <td>Go to next error or warning</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="F8">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Shift</span> + <span class="key">F8</span>
+                        </div>
+                    </td>
+                    <td>Go to previous error or warning</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Shift + F8">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">Tab</span>
+                        </div>
+                    </td>
+                    <td>Navigate editor group history</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + Tab">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="key-combo">
+                            <span class="key">Alt</span> + <span class="key">←</span> / <span class="key">→</span>
+                        </div>
+                    </td>
+                    <td>Go back / forward</td>
+                    <td class="actions-cell">
+                        <button class="copy-btn tooltip" data-shortcut="Alt + ← / →">
+                            <i class="fas fa-copy"></i>
+                            <span class="tooltiptext">Click to copy</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Search and Replace Shortcuts -->
+<div class="table-container">
+    <h2 class="section-title" id="search-replace-shortcuts">Search and Replace Shortcuts</h2>
+    <p class="section-description">
+        Find text, replace content, and navigate through search results with these essential search shortcuts.
+    </p>
+
+    <table id="search-table" data-category="search">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">F</span>
+                    </div>
+                </td>
+                <td>Find</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + F">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">H</span>
+                    </div>
+                </td>
+                <td>Replace</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + H">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F3</span> / <span class="key">Shift</span> + <span class="key">F3</span>
+                    </div>
+                </td>
+                <td>Find next/previous</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F3 / Shift + F3">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + <span class="key">Enter</span>
+                    </div>
+                </td>
+                <td>Select all occurrences of Find match</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + Enter">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">D</span>
+                    </div>
+                </td>
+                <td>Add selection to next Find match</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + D">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">Ctrl</span> + <span class="key">D</span>
+                    </div>
+                </td>
+                <td>Move last selection to next Find match</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K Ctrl + D">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + <span class="key">C</span> / <span class="key">R</span> / <span class="key">W</span>
+                    </div>
+                </td>
+                <td>Toggle case-sensitive / regex / whole word</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + C / R / W">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Multi-cursor and Selection Shortcuts -->
+<div class="table-container">
+    <h2 class="section-title" id="multi-cursor-shortcuts">Multi-cursor and Selection Shortcuts</h2>
+    <p class="section-description">
+        Boost your editing productivity with powerful multi-cursor features and selection techniques.
+    </p>
+
+    <table id="multi-cursor-table" data-category="selection">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + <span class="key">Click</span>
+                    </div>
+                </td>
+                <td>Insert cursor</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + Click">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Alt</span> + <span class="key">↑</span> / <span class="key">↓</span>
+                    </div>
+                </td>
+                <td>Insert cursor above / below</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Alt + ↑ / ↓">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">U</span>
+                    </div>
+                </td>
+                <td>Undo last cursor operation</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + U">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Alt</span> + <span class="key">I</span>
+                    </div>
+                </td>
+                <td>Insert cursor at end of each line selected</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Alt + I">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">L</span>
+                    </div>
+                </td>
+                <td>Select current line</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + L">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">L</span>
+                    </div>
+                </td>
+                <td>Select all occurrences of current selection</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + L">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">F2</span>
+                    </div>
+                </td>
+                <td>Select all occurrences of current word</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + F2">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Alt</span> + <span class="key">→</span>
+                    </div>
+                </td>
+                <td>Expand selection</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Alt + →">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Alt</span> + <span class="key">←</span>
+                    </div>
+                </td>
+                <td>Shrink selection</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Alt + ←">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Alt</span> + (drag mouse)
+                    </div>
+                </td>
+                <td>Column (box) selection</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Alt + (drag mouse)">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">Alt</span> + (arrow key)
+                    </div>
+                </td>
+                <td>Column (box) selection</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + Alt + (arrow key)">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">Alt</span> + <span class="key">PgUp</span>/<span class="key">PgDn</span>
+                    </div>
+                </td>
+                <td>Column (box) selection page up/down</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + Alt + PgUp/PgDn">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Rich Languages Editing Shortcuts -->
+<div class="table-container">
+    <h2 class="section-title" id="rich-languages-shortcuts">Rich Languages Editing Shortcuts</h2>
+    <p class="section-description">
+        Enhance your coding experience with powerful language editing features and shortcuts.
+    </p>
+
+    <table id="rich-languages-table" data-category="management">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Space</span>, <span class="key">Ctrl</span> + <span class="key">I</span>
+                    </div>
+                </td>
+                <td>Trigger suggestion</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Space, Ctrl + I">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">Space</span>
+                    </div>
+                </td>
+                <td>Trigger parameter hints</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + Space">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Alt</span> + <span class="key">F</span>
+                    </div>
+                </td>
+                <td>Format document</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Alt + F">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">Ctrl</span> + <span class="key">F</span>
+                    </div>
+                </td>
+                <td>Format selection</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K Ctrl + F">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F12</span>
+                    </div>
+                </td>
+                <td>Go to Definition</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F12">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Alt</span> + <span class="key">F12</span>
+                    </div>
+                </td>
+                <td>Peek Definition</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Alt + F12">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">F12</span>
+                    </div>
+                </td>
+                <td>Open Definition to the side</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K F12">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">.</span>
+                    </div>
+                </td>
+                <td>Quick Fix</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + .">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">F12</span>
+                    </div>
+                </td>
+                <td>Show References</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + F12">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F2</span>
+                    </div>
+                </td>
+                <td>Rename Symbol</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F2">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">Ctrl</span> + <span class="key">X</span>
+                    </div>
+                </td>
+                <td>Trim trailing whitespace</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K Ctrl + X">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">M</span>
+                    </div>
+                </td>
+                <td>Change file language</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K M">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Editor Management Shortcuts -->
+<div class="table-container">
+    <h2 class="section-title" id="editor-management-shortcuts">Editor Management Shortcuts</h2>
+    <p class="section-description">
+        Efficiently manage your editor workspace with these powerful shortcuts.
+    </p>
+
+    <table id="editor-management-table" data-category="management">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">F4</span>, <span class="key">Ctrl</span> + <span class="key">W</span>
+                    </div>
+                </td>
+                <td>Close editor</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + F4, Ctrl + W">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">F</span>
+                    </div>
+                </td>
+                <td>Close folder</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K F">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">\</span>
+                    </div>
+                </td>
+                <td>Split editor</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + \">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">1</span> / <span class="key">2</span> / <span class="key">3</span>
+                    </div>
+                </td>
+                <td>Focus into 1st, 2nd or 3rd editor group</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + 1 / 2 / 3">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">Ctrl</span> + <span class="key">←</span>/<span class="key">→</span>
+                    </div>
+                </td>
+                <td>Focus into previous/next editor group</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K Ctrl + ←/→">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">PgUp</span> / <span class="key">PgDn</span>
+                    </div>
+                </td>
+                <td>Move editor left/right</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + PgUp / PgDn">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">←</span> / <span class="key">→</span>
+                    </div>
+                </td>
+                <td>Move active editor group</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K ← / →">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- File Management Shortcuts -->
+<div class="table-container">
+    <h2 class="section-title" id="file-management-shortcuts">File Management Shortcuts</h2>
+    <p class="section-description">
+        Streamline your workflow with essential file operations shortcuts.
+    </p>
+
+    <table id="file-management-table" data-category="files">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">N</span>
+                    </div>
+                </td>
+                <td>New File</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + N">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">O</span>
+                    </div>
+                </td>
+                <td>Open File...</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + O">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">S</span>
+                    </div>
+                </td>
+                <td>Save</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + S">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">S</span>
+                    </div>
+                </td>
+                <td>Save As...</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + S">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">S</span>
+                    </div>
+                </td>
+                <td>Save All</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K S">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">F4</span>
+                    </div>
+                </td>
+                <td>Close</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + F4">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">Ctrl</span> + <span class="key">W</span>
+                    </div>
+                </td>
+                <td>Close All</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K Ctrl + W">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">T</span>
+                    </div>
+                </td>
+                <td>Reopen closed editor</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + T">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">Enter</span>
+                    </div>
+                </td>
+                <td>Keep preview mode editor open</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K Enter">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Tab</span>
+                    </div>
+                </td>
+                <td>Open next</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Tab">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">Tab</span>
+                    </div>
+                </td>
+                <td>Open previous</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + Tab">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">P</span>
+                    </div>
+                </td>
+                <td>Copy path of active file</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K P">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">R</span>
+                    </div>
+                </td>
+                <td>Reveal active file in Explorer</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K R">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">O</span>
+                    </div>
+                </td>
+                <td>Show active file in new window/instance</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K O">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Display Shortcuts -->
+<div class="table-container">
+    <h2 class="section-title" id="display-shortcuts">Display Shortcuts</h2>
+    <p class="section-description">
+        Essential shortcuts for display management.
+    </p>
+    <table id="display-shortcuts-table" data-category="display">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F11</span>
+                    </div>
+                </td>
+                <td>Toggle full screen</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F11">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">Alt</span> + <span class="key">0</span>
+                    </div>
+                </td>
+                <td>Toggle editor layout (horizontal/vertical)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + Alt + 0">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">=</span> / <span class="key">-</span>
+                    </div>
+                </td>
+                <td>Zoom in/out</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + = / -">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">B</span>
+                    </div>
+                </td>
+                <td>Toggle Sidebar visibility</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + B">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">E</span>
+                    </div>
+                </td>
+                <td>Show Explorer / Toggle focus</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + E">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">F</span>
+                    </div>
+                </td>
+                <td>Show Search</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + F">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">G</span>
+                    </div>
+                </td>
+                <td>Show Source Control</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + G">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">D</span>
+                    </div>
+                </td>
+                <td>Show Debug</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + D">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">X</span>
+                    </div>
+                </td>
+                <td>Show Extensions</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + X">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">H</span>
+                    </div>
+                </td>
+                <td>Replace in files</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + H">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">J</span>
+                    </div>
+                </td>
+                <td>Toggle Search details</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + J">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">U</span>
+                    </div>
+                </td>
+                <td>Show Output panel</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + U">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">V</span>
+                    </div>
+                </td>
+                <td>Open Markdown preview</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + V">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">V</span>
+                    </div>
+                </td>
+                <td>Open Markdown preview to the side</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K V">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">Z</span>
+                    </div>
+                </td>
+                <td>Zen Mode (Esc Esc to exit)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K Z">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+        <!-- Debug Shortcuts -->
+<div class="table-container">
+    <h2 class="section-title" id="debug-shortcuts">Debug Shortcuts</h2>
+    <p class="section-description">
+        Essential shortcuts for efficient debugging.
+    </p>
+
+    <table id="debug-shortcuts-table" data-category="debug">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F9</span>
+                    </div>
+                </td>
+                <td>Toggle breakpoint</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F9">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F5</span>
+                    </div>
+                </td>
+                <td>Start/Continue</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F5">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">F5</span>
+                    </div>
+                </td>
+                <td>Stop</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + F5">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F11</span> / <span class="key">Shift</span> + <span class="key">F11</span>
+                    </div>
+                </td>
+                <td>Step into/out</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F11 / Shift + F11">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">F10</span>
+                    </div>
+                </td>
+                <td>Step over</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="F10">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">Ctrl</span> + <span class="key">I</span>
+                    </div>
+                </td>
+                <td>Show hover</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K Ctrl + I">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Integrated Terminal Shortcuts -->
+<div class="table-container">
+    <h2 class="section-title" id="terminal-shortcuts">Integrated Terminal Shortcuts</h2>
+    <p class="section-description">
+        Navigate and control the integrated terminal with these shortcuts.
+    </p>
+
+    <table id="terminal-shortcuts-table" data-category="terminal">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">`</span>
+                    </div>
+                </td>
+                <td>Show integrated terminal</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + `">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">`</span>
+                    </div>
+                </td>
+                <td>Create new terminal</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + `">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">C</span>
+                    </div>
+                </td>
+                <td>Copy selection</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + C">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">V</span>
+                    </div>
+                </td>
+                <td>Paste into active terminal</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + V">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">↑</span> / <span class="key">↓</span>
+                    </div>
+                </td>
+                <td>Scroll up/down</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + ↑ / ↓">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Shift</span> + <span class="key">PgUp</span> / <span class="key">PgDn</span>
+                    </div>
+                </td>
+                <td>Scroll page up/down</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Shift + PgUp / PgDn">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Home</span> / <span class="key">End</span>
+                    </div>
+                </td>
+                <td>Scroll to top/bottom</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Home / End">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Other Shortcuts (from first part of your code) -->
+<div class="table-container">
+    <h2 class="section-title" id="other-shortcuts">Other Shortcuts</h2>
+    <p class="section-description">
+        Additional useful shortcuts for enhanced productivity.
+    </p>
+
+    <table id="other-shortcuts-table" data-category="other">
+        <thead>
+            <tr>
+                <th width="30%">Key Combination</th>
+                <th>Description</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">V</span>
+                    </div>
+                </td>
+                <td>Open Markdown preview</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + Shift + V">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">V</span>
+                    </div>
+                </td>
+                <td>Open Markdown preview to the side</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K V">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="key-combo">
+                        <span class="key">Ctrl</span> + <span class="key">K</span> <span class="key">Z</span>
+                    </div>
+                </td>
+                <td>Zen Mode (Esc Esc to exit)</td>
+                <td class="actions-cell">
+                    <button class="copy-btn tooltip" data-shortcut="Ctrl + K Z">
+                        <i class="fas fa-copy"></i>
+                        <span class="tooltiptext">Click to copy</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+        <div class="back-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+        
+        <div class="notification" id="notification"></div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Shortcut Sensei</h3>
+                <p>Your ultimate guide to mastering keyboard shortcuts. We provide comprehensive guides and tips to help you work faster and more efficiently.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../../home-page.html">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="../../About.htm">About</a></li>
+                    <li><a href="Privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <ul class="social-icons">
+                    <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Subscribe</h3>
+                <form class="subscribe-form">
+                    <input type="email" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Shortcut Sensei. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Menu toggle functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNav = document.querySelector('.main-nav ul');
+    
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('show');
+        });
+        
+        // Dark mode toggle
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+        const darkModeIcon = darkModeToggle.querySelector('i');
+        
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            } else {
+                darkModeIcon.classList.remove('fa-sun');
+                darkModeIcon.classList.add('fa-moon');
+            }
+        });
+        
+        // Filter shortcuts function
+        const filterInput = document.getElementById('shortcut-filter');
+        const noResults = document.getElementById('no-results');
+        
+        filterInput.addEventListener('keyup', () => {
+            const filterValue = filterInput.value.toLowerCase();
+            const tables = document.querySelectorAll('table');
+            let hasVisibleRows = false;
+            
+            tables.forEach(table => {
+                const rows = table.querySelectorAll('tbody tr');
+                let tableHasVisibleRows = false;
+                
+                rows.forEach(row => {
+                    const keyCombo = row.cells[0].textContent.toLowerCase();
+                    const description = row.cells[1].textContent.toLowerCase();
+                    
+                    if (keyCombo.includes(filterValue) || description.includes(filterValue)) {
+                        row.style.display = '';
+                        tableHasVisibleRows = true;
+                        hasVisibleRows = true;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide section titles based on visible rows
+                const sectionTitle = table.previousElementSibling.previousElementSibling;
+                const sectionDesc = table.previousElementSibling;
+                const tableContainer = table.closest('.table-container');
+                
+                if (tableHasVisibleRows) {
+                    tableContainer.style.display = '';
+                    sectionTitle.style.display = '';
+                    sectionDesc.style.display = '';
+                } else {
+                    tableContainer.style.display = 'none';
+                    sectionTitle.style.display = 'none';
+                    sectionDesc.style.display = 'none';
+                }
+            });
+            
+            // Show/hide "no results" message
+            if (hasVisibleRows) {
+                noResults.style.display = 'none';
+            } else {
+                noResults.style.display = 'block';
+            }
+        });
+        
+        // Category filter
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const category = button.getAttribute('data-category');
+                const tables = document.querySelectorAll('table');
+                let hasVisibleTables = false;
+                
+                tables.forEach(table => {
+                    const tableCategory = table.getAttribute('data-category');
+                    const sectionTitle = table.previousElementSibling.previousElementSibling;
+                    const sectionDesc = table.previousElementSibling;
+                    const tableContainer = table.closest('.table-container');
+                    
+                    if (category === 'all' || category === tableCategory) {
+                        tableContainer.style.display = '';
+                        sectionTitle.style.display = '';
+                        sectionDesc.style.display = '';
+                        hasVisibleTables = true;
+                    } else {
+                        tableContainer.style.display = 'none';
+                        sectionTitle.style.display = 'none';
+                        sectionDesc.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide "no results" message
+                if (hasVisibleTables) {
+                    noResults.style.display = 'none';
+                } else {
+                    noResults.style.display = 'block';
+                }
+            });
+        });
+        
+        // Copy shortcut function
+        function copyShortcut(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Show notification
+                showNotification('Shortcut copied to clipboard!');
+            });
+        }
+        
+        // Copy button event listeners
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const shortcut = event.currentTarget.getAttribute('data-shortcut');
+                copyShortcut(shortcut);
+                
+                // Show tooltip
+                const tooltip = event.currentTarget.querySelector('.tooltiptext');
+                tooltip.classList.add('visible');
+                
+                // Hide tooltip after 2 seconds
+                setTimeout(() => {
+                    tooltip.classList.remove('visible');
+                }, 2000);
+            });
+        });
+        
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) { // Show button after scrolling down 300px
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Print button functionality
+        const printButton = document.getElementById('print-btn');
+        printButton.addEventListener('click', () => {
+            window.print();
+        });
+        
+        // Notification function
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Add active class to current page link
+        const currentPage = window.location.pathname.split('/').pop();
+        const navLinks = document.querySelectorAll('.main-nav ul li a');
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPage || (currentPage === 'Homepage.html' && link.getAttribute('href') === 'Homepage.html')) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+    
+    </body>
+    </html>
+    

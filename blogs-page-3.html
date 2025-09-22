@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Tips - Page 3 - Shortcut Sensei</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base styles with CSS variables for easier theming */
+        :root {
+            --primary-color: #06a3be;
+            --primary-hover: #048ea6;
+            --secondary-color: #8a2be2;
+            --secondary-hover: #7a1dc5;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #f4f4f4;
+            --light-bg: #f4f4f4;
+            --light-card: #ffffff;
+            --light-text: #333;
+            --header-footer-bg: #000000;
+            --selection-color: rgba(6, 163, 190, 0.2);
+            --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+        
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        ::selection {
+            background-color: var(--selection-color);
+        }
+        
+        /* Header styles - sticky with shadow */
+        header {
+            background-color: var(--header-footer-bg);
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .main-nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: all var(--transition-speed) ease;
+            border-radius: var(--border-radius);
+        }
+
+        .main-nav ul li a:hover {
+            background-color: #444;
+        }
+        
+        .main-nav ul li a.active {
+            background-color: var(--primary-color);
+        }
+
+        /* Blog page styles */
+        .blog-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .dark-mode .page-subtitle {
+            color: #ccc;
+        }
+
+        /* Blog filters and search */
+        .blog-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-dropdown {
+            position: relative;
+        }
+
+        .filter-dropdown select {
+            background-color: var(--light-card);
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 10px 40px 10px 15px;
+            font-size: 16px;
+            color: var(--light-text);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+
+        .dark-mode .filter-dropdown select {
+            background-color: var(--dark-card);
+            border-color: #555;
+            color: var(--dark-text);
+        }
+
+        .blog-search {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .blog-search i {
+            position: absolute;
+            left: 15px;
+            color: #666;
+            z-index: 1;
+        }
+
+        .blog-search input {
+            padding: 10px 15px 10px 45px;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            width: 300px;
+            background-color: var(--light-card);
+            color: var(--light-text);
+        }
+
+        .dark-mode .blog-search input {
+            background-color: var(--dark-card);
+            border-color: #555;
+            color: var(--dark-text);
+        }
+
+        .blog-search input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Blog grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .blog-card {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: all var(--transition-speed) ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-mode .blog-card {
+            background-color: var(--dark-card);
+            border-color: #444;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .dark-mode .blog-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .blog-category {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            line-height: 1.3;
+            color: var(--light-text);
+        }
+
+        .dark-mode .blog-title {
+            color: var(--dark-text);
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .dark-mode .blog-excerpt {
+            color: #bbb;
+        }
+
+        .blog-read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .blog-read-more:hover {
+            color: var(--primary-hover);
+            gap: 12px;
+        }
+
+        /* Pagination */
+        .blog-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0;
+        }
+
+        .pagination-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            background-color: var(--light-card);
+            color: var(--light-text);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: all var(--transition-speed) ease;
+            font-weight: 500;
+            min-width: 45px;
+        }
+
+        .dark-mode .pagination-btn {
+            background-color: var(--dark-card);
+            border-color: #555;
+            color: var(--dark-text);
+        }
+
+        .pagination-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .dark-mode .pagination-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .pagination-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .pagination-btn.active:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Newsletter section */
+        .newsletter-section {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+            text-align: center;
+        }
+        
+        .dark-mode .newsletter-section {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .newsletter-heading {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .newsletter-description {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color var(--transition-speed);
+        }
+        
+        .newsletter-form input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(6, 163, 190, 0.2);
+        }
+        
+        .dark-mode .newsletter-form input {
+            background-color: #333;
+            border-color: #555;
+            color: var(--dark-text);
+        }
+        
+        .newsletter-form button {
+            padding: 12px 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+            white-space: nowrap;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--header-footer-bg);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            color: #888;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .blog-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .blog-search input {
+                width: 100%;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .pagination-btn {
+                padding: 8px 12px;
+                min-width: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="home-page.html"><i class="fas fa-keyboard logo-icon"></i> Shortcut Sensei</a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="pages/blogs/blogs.html" class="active">Blogs</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="../../About.htm">About</a></li>
+                </ul>
+                <span class="menu-toggle"><i class="fas fa-bars"></i></span>
+            </nav>
+            <div class="search-container">
+                <input type="text" placeholder="Search...">
+                <button type="button"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="dark-mode-toggle">
+              <i class="fa-solid fa-moon"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="blog-main">
+        <!-- Page header -->
+        <div class="page-header">
+            <h1 class="page-title">Productivity Tips - Page 3</h1>
+            <p class="page-subtitle">Explore digital wellness, mindfulness, and sustainable productivity practices for long-term success</p>
+        </div>
+
+        <!-- Blog filters -->
+        <div class="blog-filters">
+            <div class="filter-dropdown">
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="wellness">Digital Wellness</option>
+                    <option value="mindfulness">Mindfulness</option>
+                    <option value="habits">Habits</option>
+                    <option value="communication">Communication</option>
+                    <option value="creativity">Creativity</option>
+                </select>
+            </div>
+            <div class="blog-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="blog-search-input" placeholder="Search blogs...">
+            </div>
+        </div>
+
+        <!-- Blog grid -->
+        <div class="blog-grid">
+            <!-- Blog card 1 -->
+            <div class="blog-card" data-category="wellness">
+                <img src="https://images.unsplash.com/photo-1611095564141-66afa38d9831?w=500&h=300&fit=crop" alt="Digital Detox" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Digital Wellness</span>
+                        <span>March 28, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Digital Detox: Reclaim Your Focus and Mental Health</h2>
+                    <p class="blog-excerpt">Learn how to disconnect from digital distractions, set healthy boundaries with technology, and create space for deeper thinking and creativity.</p>
+                    <a href="https://www.verywellmind.com/why-and-how-to-do-a-digital-detox-4771321" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 2 -->
+            <div class="blog-card" data-category="mindfulness">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop" alt="Mindful Productivity" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Mindfulness</span>
+                        <span>March 26, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Mindful Productivity: Working with Intention</h2>
+                    <p class="blog-excerpt">Discover how mindfulness practices can improve your focus, reduce stress, and help you work with greater intention and awareness.</p>
+                    <a href="https://www.mindful.org/how-to-be-more-productive/" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 3 -->
+            <div class="blog-card" data-category="habits">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=300&fit=crop" alt="Atomic Habits" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Habits</span>
+                        <span>March 24, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Building Atomic Habits for Long-term Success</h2>
+                    <p class="blog-excerpt">Learn James Clear's proven framework for building good habits, breaking bad ones, and mastering the tiny behaviors that lead to remarkable results.</p>
+                    <a href="https://jamesclear.com/atomic-habits" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 4 -->
+            <div class="blog-card" data-category="communication">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop" alt="Effective Communication" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Communication</span>
+                        <span>March 22, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Effective Communication in Remote Teams</h2>
+                    <p class="blog-excerpt">Master the art of clear, efficient communication in distributed teams. Learn tools, techniques, and best practices for remote collaboration.</p>
+                    <a href="https://hbr.org/2016/12/how-to-become-a-better-listener" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 5 -->
+            <div class="blog-card" data-category="creativity">
+                <img src="https://images.unsplash.com/photo-1531989417401-0f85f2aedb99?w=500&h=300&fit=crop" alt="Creative Productivity" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Creativity</span>
+                        <span>March 20, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Balancing Structure and Creativity in Your Workflow</h2>
+                    <p class="blog-excerpt">Discover how to create systems that support creativity while maintaining productivity. Learn when to be structured and when to let ideas flow freely.</p>
+                    <a href="https://99u.adobe.com/articles/7103/stop-setting-goals-start-building-systems" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 6 -->
+            <div class="blog-card" data-category="wellness">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&h=300&fit=crop" alt="Work-Life Balance" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Digital Wellness</span>
+                        <span>March 18, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Creating Sustainable Work-Life Balance</h2>
+                    <p class="blog-excerpt">Learn practical strategies for maintaining boundaries between work and personal life, preventing burnout, and sustaining long-term productivity.</p>
+                    <a href="https://www.betterup.com/blog/work-life-balance" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="blog-pagination">
+            <a href="blogs-page-2.html" class="pagination-btn"><i class="fas fa-chevron-left"></i></a>
+            <a href="pages/blogs/blogs.html" class="pagination-btn">1</a>
+            <a href="blogs-page-2.html" class="pagination-btn">2</a>
+            <a href="blogs-page-3.html" class="pagination-btn active">3</a>
+            <a href="blogs-page-4.html" class="pagination-btn">4</a>
+            <a href="blogs-page-5.html" class="pagination-btn">5</a>
+            <span class="pagination-btn">...</span>
+            <a href="blogs-page-10.html" class="pagination-btn">10</a>
+            <a href="blogs-page-4.html" class="pagination-btn"><i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <!-- Newsletter section -->
+        <div class="newsletter-section">
+            <h2 class="newsletter-heading">Subscribe to Our Newsletter</h2>
+            <p class="newsletter-description">Get the latest shortcuts, productivity tips, and keyboard hacks delivered directly to your inbox. Stay updated with our weekly newsletter.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home-page.html">Home</a></li>
+                    <li><a href="../Applications_final.htm">Applications</a></li>
+                    <li><a href="pages/blogs/blogs.html">Blogs</a></li>
+                    <li><a href="../../About.htm">About</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="https://support.microsoft.com/en-us/windows/keyboard-shortcuts-in-windows-dcc61a57-8ff0-cffe-9796-cb9706c75eec" target="_blank">Windows</a></li>
+                    <li><a href="https://support.apple.com/en-us/HT201236" target="_blank">macOS</a></li>
+                    <li><a href="https://chrome.google.com/webstore/category/extensions" target="_blank">Browsers</a></li>
+                    <li><a href="https://blog.hubspot.com/marketing/productivity-tips" target="_blank">Productivity</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="https://www.twitter.com/shortcutsensei" target="_blank"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="https://www.facebook.com/shortcutsensei" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="https://www.linkedin.com/company/shortcut-sensei" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="https://github.com/shortcut-sensei" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>About Shortcut Sensei</h3>
+                <p>Your ultimate guide to keyboard shortcuts and productivity tips. Master your tools and boost your efficiency with our comprehensive guides.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Shortcut Sensei. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.querySelector('.dark-mode-toggle i');
+            const darkModeToggle = document.querySelector('.dark-mode-toggle');
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                if (themeIcon) themeIcon.className = 'fas fa-sun';
+            }
+            
+            // Add event listener for dark mode toggle
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', function() {
+                    const body = document.body;
+                    const icon = this.querySelector('i');
+                    
+                    body.classList.toggle('dark-mode');
+                    
+                    if (body.classList.contains('dark-mode')) {
+                        icon.className = 'fas fa-sun';
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        icon.className = 'fas fa-moon';
+                        localStorage.setItem('theme', 'light');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

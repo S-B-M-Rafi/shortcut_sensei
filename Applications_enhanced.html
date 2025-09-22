@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Applications - Shortcut Sensei</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header styles */
+        .main-header {
+            background-color: #000000;
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .main-header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .logo a:hover {
+            color: #9c27b0;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        .menu-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-toggle i {
+            font-size: 1.5em;
+            color: #fff;
+        }
+
+        .main-nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1em;
+            padding: 8px 16px;
+            display: block;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .main-nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .get-started a {
+            background-color: #9c27b0;
+            border-radius: 20px !important;
+            padding: 8px 20px !important;
+            font-weight: bold;
+            transition: all 0.3s !important;
+        }
+
+        .get-started a:hover {
+            background-color: #7b1fa2 !important;
+            box-shadow: 0 4px 8px rgba(156, 39, 176, 0.3);
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            padding: 5px 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .search-container:focus-within {
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-container input {
+            border: none;
+            outline: none;
+            padding: 8px 12px;
+            font-size: 0.95em;
+            background: transparent;
+            flex: 1;
+            color: #333;
+        }
+
+        .search-container input::placeholder {
+            color: #666;
+        }
+
+        .search-container button {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 8px;
+            transition: color 0.3s;
+        }
+
+        .search-container button:hover {
+            color: #9c27b0;
+        }
+
+        /* Main content styles */
+        .main-content {
+            padding: 40px 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .page-title p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        /* Category styles */
+        .category-section {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 4px solid #9c27b0;
+        }
+
+        /* Application cards */
+        .app-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .app-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .app-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            padding: 25px;
+            height: 100%;
+        }
+
+        .app-icon-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .app-icon-container i {
+            font-size: 3.5em;
+            color: #9c27b0;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover .app-icon-container i {
+            transform: scale(1.1);
+            background-color: #9c27b0;
+            color: #fff;
+        }
+
+        .app-info h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: #333;
+            text-align: center;
+        }
+
+        .app-info p {
+            color: #666;
+            font-size: 0.95em;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* Search results */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1.2em;
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #9c27b0;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #7b1fa2;
+            transform: translateY(-2px);
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #000000;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-links {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1em;
+        }
+
+        .footer-links li a:hover {
+            text-decoration: underline;
+        }
+
+        .social-icons {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icons li {
+            display: inline;
+        }
+
+        .social-icons li a {
+            color: #fff;
+            font-size: 1.5em;
+            transition: color 0.3s;
+        }
+
+        .social-icons li a:hover {
+            color: #6a1b9a;
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .subscribe-form input[type="email"] {
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            font-size: 1em;
+        }
+
+        .subscribe-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: purple;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-form button:hover {
+            background-color: #6a1b9a;
+        }
+
+        footer p {
+            margin: 20px 0 0;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .app-cards {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .app-cards {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 15px;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header .container {
+                width: 90%;
+                margin: 0 auto;
+            }
+            
+            .logo {
+                order: 1;
+            }
+            
+            .search-container {
+                order: 2;
+                margin-left: auto;
+                margin-right: 15px;
+                max-width: 200px;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                order: 3;
+            }
+            
+            .main-nav {
+                order: 4;
+                width: 100%;
+                height: 0;
+                overflow: hidden;
+                transition: height 0.3s ease;
+            }
+            
+            .main-nav.active {
+                height: auto;
+                margin-top: 15px;
+            }
+            
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+                gap: 0;
+                background-color: #111;
+                border-radius: 8px;
+                padding: 10px 0;
+            }
+            
+            .main-nav ul li {
+                width: 100%;
+            }
+            
+            .main-nav ul li a {
+                padding: 12px 20px;
+                text-align: left;
+                border-radius: 0;
+            }
+            
+            .get-started {
+                margin-top: 10px;
+            }
+            
+            .get-started a {
+                text-align: center;
+                margin: 0 20px;
+            }
+
+            .page-title h1 {
+                font-size: 2em;
+            }
+
+            .app-cards {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 15px 10px;
+            }
+
+            .app-card {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .subscribe-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .subscribe-form input[type="email"] {
+                margin-bottom: 10px;
+                width: 250px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title h1 {
+                font-size: 1.8em;
+            }
+
+            .page-title p {
+                font-size: 1em;
+                padding: 0 10px;
+            }
+
+            .category-title {
+                font-size: 1.5em;
+                padding-left: 15px;
+            }
+
+            .app-cards {
+                padding: 10px 5px;
+            }
+
+            .app-card a {
+                padding: 20px;
+            }
+
+            .app-icon-container i {
+                font-size: 3em;
+                padding: 15px;
+            }
+
+            .app-info h3 {
+                font-size: 1.2em;
+            }
+
+            .app-info p {
+                font-size: 0.9em;
+            }
+
+            .footer-links {
+                gap: 10px;
+                font-size: 0.9em;
+            }
+
+            .social-icons {
+                gap: 15px;
+            }
+
+            .subscribe-form input[type="email"] {
+                width: 200px;
+                font-size: 0.9em;
+            }
+
+            .subscribe-form button {
+                font-size: 0.9em;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="home-page.html">Shortcut Sensei</a>
+            </div>
+
+            <div class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="pages/blogs/blogs.html">Blogs</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li class="get-started"><a href="Applications_enhanced.html">Get Started</a></li>
+                </ul>
+            </nav>
+
+            <div class="search-container">
+                <input type="text" placeholder="Search applications..." id="searchInput" aria-label="Search applications">
+                <button type="button" id="searchButton" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-title">
+                <h1><i class="fas fa-th-large"></i> All Applications</h1>
+                <p>Explore keyboard shortcuts for your favorite software and operating systems.</p>
+            </div>
+
+            <div class="no-results" id="noResults">
+                <i class="fas fa-search-minus"></i>
+                <p>No applications found matching your search.</p>
+            </div>
+
+            <!-- Operating Systems -->
+            <div class="category-section" data-category="operating-systems">
+                <h2 class="category-title">Operating Systems</h2>
+                <div class="app-cards">
+                    <div class="app-card" data-name="windows">
+                        <a href="Windows_11.html" aria-label="View shortcuts for Windows 11">
+                            <div class="app-icon-container">
+                                <i class="fab fa-windows"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Windows</h3>
+                                <p>Master the Windows operating system with essential shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="macos">
+                        <a href="macOS.html" aria-label="View shortcuts for macOS">
+                            <div class="app-icon-container">
+                                <i class="fab fa-apple"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>macOS</h3>
+                                <p>Boost your productivity on Apple devices with these Mac shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Microsoft Office Suite -->
+            <div class="category-section" data-category="microsoft-office">
+                <h2 class="category-title">Microsoft Office Suite</h2>
+                <div class="app-cards">
+                    <div class="app-card" data-name="microsoft excel">
+                        <a href="Microsoft_Excel.html" aria-label="View shortcuts for Microsoft Excel">
+                            <div class="app-icon-container">
+                                <i class="fas fa-file-excel"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Microsoft Excel</h3>
+                                <p>Become an Excel wizard with powerful spreadsheet shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="microsoft word">
+                        <a href="Microsoft_Word.html" aria-label="View shortcuts for Microsoft Word">
+                            <div class="app-icon-container">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Microsoft Word</h3>
+                                <p>Speed up your document creation with Word processing shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="microsoft powerpoint">
+                        <a href="Microsoft_PowerPoint.html" aria-label="View shortcuts for Microsoft PowerPoint">
+                            <div class="app-icon-container">
+                                <i class="fas fa-file-powerpoint"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Microsoft PowerPoint</h3>
+                                <p>Create stunning presentations with PowerPoint shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="microsoft outlook">
+                        <a href="Microsoft_Outlook.html" aria-label="View shortcuts for Microsoft Outlook">
+                            <div class="app-icon-container">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Microsoft Outlook</h3>
+                                <p>Manage emails efficiently with Outlook shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="microsoft onenote">
+                        <a href="Microsoft_OneNote.html" aria-label="View shortcuts for Microsoft OneNote">
+                            <div class="app-icon-container">
+                                <i class="fas fa-sticky-note"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Microsoft OneNote</h3>
+                                <p>Take notes like a pro with OneNote shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="microsoft teams">
+                        <a href="Microsoft_Teams.html" aria-label="View shortcuts for Microsoft Teams">
+                            <div class="app-icon-container">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Microsoft Teams</h3>
+                                <p>Collaborate effectively with Teams shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Browsers -->
+            <div class="category-section" data-category="web-browsers">
+                <h2 class="category-title">Web Browsers</h2>
+                <div class="app-cards">
+                    <div class="app-card" data-name="google chrome">
+                        <a href="Google_Chrome.html" aria-label="View shortcuts for Google Chrome">
+                            <div class="app-icon-container">
+                                <i class="fab fa-chrome"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Google Chrome</h3>
+                                <p>Navigate the web faster with Chrome browser shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="microsoft edge">
+                        <a href="Microsoft_Edge.html" aria-label="View shortcuts for Microsoft Edge">
+                            <div class="app-icon-container">
+                                <i class="fab fa-edge"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Microsoft Edge</h3>
+                                <p>Browse the web faster with Edge shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design & Creativity -->
+            <div class="category-section" data-category="design-creativity">
+                <h2 class="category-title">Design & Creativity</h2>
+                <div class="app-cards">
+                    <div class="app-card" data-name="adobe photoshop">
+                        <a href="Adobe_PhotoShop.html" aria-label="View shortcuts for Adobe Photoshop">
+                            <div class="app-icon-container">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Adobe Photoshop</h3>
+                                <p>Edit photos like a pro with Photoshop design shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="adobe creative cloud">
+                        <a href="Adobe_Creative_Cloud.html" aria-label="View shortcuts for Adobe Creative Cloud">
+                            <div class="app-icon-container">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Adobe Creative Cloud</h3>
+                                <p>Boost creativity with Creative Cloud shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="audacity">
+                        <a href="Audacity.html" aria-label="View shortcuts for Audacity">
+                            <div class="app-icon-container">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Audacity</h3>
+                                <p>Edit audio efficiently with Audacity shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Development -->
+            <div class="category-section" data-category="development">
+                <h2 class="category-title">Development</h2>
+                <div class="app-cards">
+                    <div class="app-card" data-name="visual studio">
+                        <a href="Visual_Studio.html" aria-label="View shortcuts for Visual Studio">
+                            <div class="app-icon-container">
+                                <i class="fab fa-vs-code"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Visual Studio</h3>
+                                <p>Code faster and smarter with Visual Studio Code shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="html cheat sheet">
+                        <a href="Html_Cheat_Sheet.html" aria-label="View HTML cheat sheet shortcuts">
+                            <div class="app-icon-container">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>HTML Cheat Sheet</h3>
+                                <p>Quick HTML reference and shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communication & Collaboration -->
+            <div class="category-section" data-category="communication">
+                <h2 class="category-title">Communication & Collaboration</h2>
+                <div class="app-cards">
+                    <div class="app-card" data-name="discord">
+                        <a href="Discord.html" aria-label="View shortcuts for Discord">
+                            <div class="app-icon-container">
+                                <i class="fab fa-discord"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Discord</h3>
+                                <p>Communicate efficiently with Discord chat shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="slack">
+                        <a href="Slack.html" aria-label="View shortcuts for Slack">
+                            <div class="app-icon-container">
+                                <i class="fab fa-slack"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Slack</h3>
+                                <p>Communicate with your team using Slack shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="telegram">
+                        <a href="Telegram.html" aria-label="View shortcuts for Telegram">
+                            <div class="app-icon-container">
+                                <i class="fab fa-telegram"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Telegram</h3>
+                                <p>Chat faster with Telegram shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="whatsapp">
+                        <a href="Whatsapp.html" aria-label="View shortcuts for WhatsApp">
+                            <div class="app-icon-container">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>WhatsApp</h3>
+                                <p>Message efficiently with WhatsApp shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="skype">
+                        <a href="Skype.html" aria-label="View shortcuts for Skype">
+                            <div class="app-icon-container">
+                                <i class="fab fa-skype"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Skype</h3>
+                                <p>Video call and chat with Skype shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="zoom">
+                        <a href="Zoom.html" aria-label="View shortcuts for Zoom">
+                            <div class="app-icon-container">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Zoom</h3>
+                                <p>Master video conferencing with Zoom shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="trello">
+                        <a href="Trello.html" aria-label="View shortcuts for Trello">
+                            <div class="app-icon-container">
+                                <i class="fab fa-trello"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Trello</h3>
+                                <p>Organize projects with Trello shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Productivity & Utilities -->
+            <div class="category-section" data-category="productivity">
+                <h2 class="category-title">Productivity & Utilities</h2>
+                <div class="app-cards">
+                    <div class="app-card" data-name="file explorer">
+                        <a href="File_Explorer.html" aria-label="View shortcuts for File Explorer">
+                            <div class="app-icon-container">
+                                <i class="fas fa-folder"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>File Explorer</h3>
+                                <p>Navigate files and folders efficiently.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="adobe acrobat reader">
+                        <a href="Acrobat_Adobe_Reader.html" aria-label="View shortcuts for Adobe Acrobat Reader">
+                            <div class="app-icon-container">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Adobe Acrobat Reader</h3>
+                                <p>Handle PDFs efficiently with Acrobat shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="mozilla thunderbird">
+                        <a href="Mozilla_Thunderbird.html" aria-label="View shortcuts for Mozilla Thunderbird">
+                            <div class="app-icon-container">
+                                <i class="fas fa-envelope-open"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Mozilla Thunderbird</h3>
+                                <p>Manage emails with Thunderbird shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="vlc media player">
+                        <a href="VLC_Media_Player.html" aria-label="View shortcuts for VLC Media Player">
+                            <div class="app-icon-container">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>VLC Media Player</h3>
+                                <p>Control media playback with VLC shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="spotify">
+                        <a href="Spotify.html" aria-label="View shortcuts for Spotify">
+                            <div class="app-icon-container">
+                                <i class="fab fa-spotify"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Spotify</h3>
+                                <p>Control music playback with Spotify shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="winrar">
+                        <a href="WinRAR.html" aria-label="View shortcuts for WinRAR">
+                            <div class="app-icon-container">
+                                <i class="fas fa-archive"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>WinRAR</h3>
+                                <p>Compress and extract files with WinRAR shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="7-zip">
+                        <a href="7-zip.html" aria-label="View shortcuts for 7-Zip">
+                            <div class="app-icon-container">
+                                <i class="fas fa-file-archive"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>7-Zip</h3>
+                                <p>Handle archives efficiently with 7-Zip shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="app-card" data-name="microsoft onedrive">
+                        <a href="Microsoft_OneDrive.html" aria-label="View shortcuts for Microsoft OneDrive">
+                            <div class="app-icon-container">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <div class="app-info">
+                                <h3>Microsoft OneDrive</h3>
+                                <p>Manage cloud storage with OneDrive shortcuts.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <ul class="footer-links">
+                <li><a href="Homepage.html">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#news">Latest News</a></li>
+            </ul>
+            <ul class="social-icons">
+                <li><a href="https://www.facebook.com/profile.php?id=100015198880002"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com/RAFI09925204"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://www.linkedin.com/in/rafi-s-b-m-a3492a265/"><i class="fab fa-linkedin-in"></i></a></li>
+                <li><a href="https://www.instagram.com/rafi_s_b_m/"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+            <div class="subscribe-form">
+                <input id="emailInput" type="email" placeholder="Subscribe to our newsletter">
+                <button id="subscribeButton" type="button">Subscribe</button>
+            </div>
+            <p id="confirmationMessage" style="display: none;">Thank you for subscribing to our newsletter!</p>
+            <p>&copy; 2024 Shortcut Sensei. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu toggle functionality
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', function() {
+                    mainNav.classList.toggle('active');
+                });
+            }
+
+            // Live search functionality
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const appCards = document.querySelectorAll('.app-card');
+            const categoryCards = document.querySelectorAll('.category-section');
+            const noResults = document.getElementById('noResults');
+
+            function performSearch() {
+                const query = searchInput.value.trim().toLowerCase();
+                let hasResults = false;
+
+                if (query === '') {
+                    // Show all cards and categories
+                    appCards.forEach(card => {
+                        card.style.display = 'block';
+                    });
+                    categoryCards.forEach(category => {
+                        category.style.display = 'block';
+                    });
+                    noResults.style.display = 'none';
+                    return;
+                }
+
+                // Hide all categories first
+                categoryCards.forEach(category => {
+                    category.style.display = 'none';
+                });
+
+                // Search through cards
+                appCards.forEach(card => {
+                    const appName = card.getAttribute('data-name').toLowerCase();
+                    const category = card.closest('.category-section');
+                    
+                    if (appName.includes(query)) {
+                        card.style.display = 'block';
+                        category.style.display = 'block';
+                        hasResults = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Hide categories with no visible cards
+                categoryCards.forEach(category => {
+                    const visibleCards = category.querySelectorAll('.app-card[style*="block"]');
+                    if (visibleCards.length === 0) {
+                        category.style.display = 'none';
+                    }
+                });
+
+                // Show/hide no results message
+                noResults.style.display = hasResults ? 'none' : 'block';
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', performSearch);
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
+
+            if (searchButton) {
+                searchButton.addEventListener('click', performSearch);
+            }
+
+            // Back to top functionality
+            const backToTop = document.getElementById('backToTop');
+
+            function toggleBackToTop() {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            }
+
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+
+            if (backToTop) {
+                window.addEventListener('scroll', toggleBackToTop);
+                backToTop.addEventListener('click', scrollToTop);
+            }
+
+            // Subscription functionality
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            function subscribe() {
+                const emailInput = document.getElementById('emailInput');
+                const confirmationMessage = document.getElementById('confirmationMessage');
+                const email = emailInput.value.trim();
+
+                if (email === '') {
+                    alert('Please enter your email address.');
+                    return;
+                }
+
+                if (!isValidEmail(email)) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+
+                // Here you can add code to send the email to your server
+                console.log('Subscribed email:', email);
+
+                // Show confirmation message
+                confirmationMessage.style.display = 'block';
+                emailInput.value = '';
+
+                // Hide confirmation message after 3 seconds
+                setTimeout(function() {
+                    confirmationMessage.style.display = 'none';
+                }, 3000);
+            }
+
+            // Add event listener for subscription
+            const subscribeButton = document.getElementById('subscribeButton');
+            if (subscribeButton) {
+                subscribeButton.addEventListener('click', subscribe);
+            }
+
+            const emailInput = document.getElementById('emailInput');
+            if (emailInput) {
+                emailInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        subscribe();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

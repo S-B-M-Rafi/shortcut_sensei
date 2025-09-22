@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortcut Sensei - Sign In/Sign Up</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,800">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            margin: -20px 0 50px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-weight: bold;
+            margin: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 75, 43, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px rgba(255, 75, 43, 0.7); }
+            50% { text-shadow: 0 0 20px rgba(255, 65, 108, 0.9); }
+            100% { text-shadow: 0 0 10px rgba(255, 75, 43, 0.7); }
+        }
+
+        p {
+            font-size: 14px;
+            font-weight: 100;
+            line-height: 20px;
+            letter-spacing: 0.5px;
+            margin: 20px 0 30px;
+        }
+
+        span {
+            font-size: 12px;
+        }
+
+        a {
+            color: #333;
+            font-size: 14px;
+            text-decoration: none;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #FF416C;
+        }
+
+        button {
+            border-radius: 20px;
+            border: 1px solid #FF4B2B;
+            background-color: #FF4B2B;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        button:hover {
+            background-color: #FF416C;
+            box-shadow: 0 0 15px rgba(255, 65, 108, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button.ghost {
+            background-color: transparent;
+            border-color: #FFFFFF;
+        }
+
+        button.ghost:hover {
+            background-color: #FFFFFF;
+            color: #FF416C;
+        }
+
+        form {
+            background-color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 50px;
+            height: 100%;
+            text-align: center;
+        }
+
+        input {
+            background-color: #eee;
+            border: none;
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 100%;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            background-color: #ddd;
+            box-shadow: 0 0 10px rgba(255, 75, 43, 0.3);
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(255, 75, 43, 0.25),
+                        0 10px 10px rgba(255, 75, 43, 0.22);
+            position: relative;
+            overflow: hidden;
+            width: 768px;
+            max-width: 100%;
+            min-height: 480px;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .container.right-panel-active .sign-in-container {
+            transform: translateX(100%);
+        }
+
+        .sign-up-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .container.right-panel-active .sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: show 0.6s;
+        }
+
+        @keyframes show {
+            0%, 49.99% {
+                opacity: 0;
+                z-index: 1;
+            }
+            
+            50%, 100% {
+                opacity: 1;
+                z-index: 5;
+            }
+        }
+
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+
+        .container.right-panel-active .overlay-container {
+            transform: translateX(-100%);
+        }
+
+        .overlay {
+            background: #FF416C;
+            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+            background: linear-gradient(to right, #FF4B2B, #FF416C);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0 0;
+            color: #FFFFFF;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 28" width="56" height="28"><path fill="%23ffffff10" d="M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-.67 0-1.34-.02-2-.07V22a2 2 0 0 0 2 2v2a4 4 0 0 1-3.98-3.6 28.09 28.09 0 0 1-2.8 3.86A8 8 0 0 0 56 30v2a9.99 9.99 0 0 1-8.17-4.23c-.94.95-1.96 1.83-3.03 2.63A13.98 13.98 0 0 0 56 36h-7.75a16.08 16.08 0 0 1-5.1-4.45c-1.12.72-2.3 1.37-3.53 1.93A20.1 20.1 0 0 0 41.72 36h-2.7c-.45-.56-.88-1.14-1.29-1.74-1.3.48-2.63.87-4 1.15.11.2.23.4.36.59H30v-.07a28.4 28.4 0 0 1-4 0V36h-4.09l.37-.59c-1.38-.28-2.72-.67-4.01-1.15-.4.6-.84 1.18-1.3 1.74h-2.69a20.1 20.1 0 0 0 2.1-2.52c-1.23-.56-2.41-1.2-3.54-1.93A16.08 16.08 0 0 1 7.75 36H0c4.58 0 8.65-2.2 11.2-5.6-1.07-.8-2.09-1.68-3.03-2.63A9.99 9.99 0 0 1 0 32v-2a8 8 0 0 0 6.77-3.74c-1.03-1.2-1.97-2.5-2.79-3.86A4 4 0 0 1 0 26v-2a2 2 0 0 0 2-2.07 28.4 28.4 0 0 1-2 .07v-2c9.2 0 17.3-4.78 21.91-12H26l.09.21A28.4 28.4 0 0 1 30 22.99V23z"></path></svg>');
+            animation: animatePattern 30s linear infinite;
+        }
+
+        @keyframes animatePattern {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .container.right-panel-active .overlay {
+            transform: translateX(50%);
+        }
+
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+
+        .container.right-panel-active .overlay-left {
+            transform: translateX(0);
+        }
+
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .container.right-panel-active .overlay-right {
+            transform: translateX(20%);
+        }
+
+        .social-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .social-container a {
+            border: 1px solid #DDDDDD;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            height: 40px;
+            width: 40px;
+            font-size: 18px;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .social-container a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-container a.google:hover {
+            color: #db4437;
+            border-color: #db4437;
+        }
+
+        .social-container a.github:hover {
+            color: #333;
+            border-color: #333;
+        }
+
+        .forgot-password {
+            color: #333;
+            font-size: 12px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #FF416C;
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            max-width: 90%;
+            animation: scaleIn 0.3s;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #FF416C;
+        }
+
+        #resetPasswordForm {
+            padding: 0;
+        }
+
+        #messageContainer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            z-index: 9999;
+            max-width: 400px;
+            word-wrap: break-word;
+            transition: all 0.3s ease;
+        }
+
+        #messageContainer.success {
+            background-color: #4CAF50;
+            border-left: 5px solid #45a049;
+        }
+
+        #messageContainer.error {
+            background-color: #f44336;
+            border-left: 5px solid #da190b;
+        }
+
+        #password-validation {
+            font-size: 11px;
+            text-align: left;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+
+        footer {
+            background-color: rgba(34, 34, 34, 0.8);
+            color: #fff;
+            font-size: 14px;
+            bottom: 0;
+            position: fixed;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 999;
+            padding: 10px 0;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        footer a {
+            color: #3c97bf;
+        }
+
+        .loading {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .loading::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="messageContainer" style="display: none;"></div>
+    <h2>Shortcut Sensei</h2>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form id="registrationForm">
+                <h1>Create Account</h1>
+                <div class="social-container">
+                    <a href="#" class="social google" id="google-signup" title="Sign up with Google">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social github" id="github-signup" title="Sign up with GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <span>or use your email for registration</span>
+                <input type="text" id="signup_name" placeholder="Full Name" required />
+                <input type="email" id="signup_email" placeholder="Email" required />
+                <input type="password" id="signup_password" placeholder="Password" required />
+                <div id="password-validation" style="display: none;"></div>
+                <button type="submit" id="signupBtn">Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form id="loginForm">
+                <h1>Sign in</h1>
+                <div class="social-container">
+                    <a href="#" class="social google" id="google-signin" title="Sign in with Google">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social github" id="github-signin" title="Sign in with GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <span>or use your account</span>
+                <input type="email" id="login_email" placeholder="Email" required />
+                <input type="password" id="login_password" placeholder="Password" required />
+                <span class="forgot-password" id="forgotPassword">Forgot your password?</span>
+                <button type="submit" id="signinBtn">Sign In</button>
+                <div id="verification-section" style="margin-top: 15px;">
+                    <span style="font-size: 12px;">Haven't received verification email?</span>
+                    <button type="button" id="resendVerificationBtn" style="font-size: 12px; background: none; border: none; color: #FF416C; text-decoration: underline; cursor: pointer; padding: 0;">Resend</button>
+                </div>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 style="color: #333; margin-top: 0;">Reset Password</h2>
+            <p style="color: #666;">Enter your email address and we'll send you a link to reset your password.</p>
+            <form id="resetPasswordForm">
+                <input type="email" id="reset_email" placeholder="Email" required />
+                <button type="submit" style="width: 100%;">Send Reset Link</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Shortcut Sensei - All Rights Reserved</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Firebase imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            GoogleAuthProvider,
+            GithubAuthProvider,
+            signInWithPopup,
+            sendPasswordResetEmail,
+            sendEmailVerification,
+            signOut,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { 
+            getFirestore,
+            doc,
+            setDoc,
+            getDoc
+        } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // Firebase Configuration - Your actual project config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDgzylhHW05EQLuJwVIHdXWbVVeJhpQHxU",
+            authDomain: "shortcut-sensei-1305f.firebaseapp.com",
+            projectId: "shortcut-sensei-1305f",
+            storageBucket: "shortcut-sensei-1305f.firebasestorage.app",
+            messagingSenderId: "598536091157",
+            appId: "1:598536091157:web:YOUR_APP_ID_HERE",
+            measurementId: "G-YOUR_MEASUREMENT_ID_HERE"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Configure authentication providers
+        const googleProvider = new GoogleAuthProvider();
+        googleProvider.addScope('email');
+        googleProvider.addScope('profile');
+
+        const githubProvider = new GithubAuthProvider();
+        githubProvider.addScope('user:email');
+
+        // UI Elements
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+        const forgotPasswordLink = document.getElementById('forgotPassword');
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+        const closeModalBtn = document.querySelector('.close');
+        const passwordInput = document.getElementById('signup_password');
+        const passwordValidationMessage = document.getElementById('password-validation');
+        const resendVerificationBtn = document.getElementById('resendVerificationBtn');
+
+        // Message handling function
+        function showMessage(message, type = 'success') {
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.textContent = message;
+            messageContainer.className = type;
+            messageContainer.style.display = 'block';
+
+            setTimeout(() => {
+                messageContainer.style.display = 'none';
+            }, 5000);
+        }
+
+        // Loading state management
+        function setLoadingState(button, isLoading) {
+            if (isLoading) {
+                button.classList.add('loading');
+                button.disabled = true;
+                button.originalText = button.textContent;
+                button.textContent = 'Please wait...';
+            } else {
+                button.classList.remove('loading');
+                button.disabled = false;
+                button.textContent = button.originalText || button.textContent;
+            }
+        }
+
+        // Save user data to Firestore and localStorage
+        async function saveUserData(user, additionalData = {}) {
+            try {
+                const userData = {
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName || additionalData.name || 'User',
+                    emailVerified: user.emailVerified,
+                    photoURL: user.photoURL || null,
+                    createdAt: new Date(),
+                    lastLogin: new Date(),
+                    provider: additionalData.provider || 'email',
+                    ...additionalData
+                };
+
+                // Save to Firestore
+                await setDoc(doc(db, 'users', user.uid), userData, { merge: true });
+
+                // Save essential data to localStorage
+                localStorage.setItem('shortcutSenseiUser', JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: userData.displayName,
+                    emailVerified: user.emailVerified,
+                    photoURL: user.photoURL
+                }));
+
+                return userData;
+            } catch (error) {
+                console.error('Error saving user data:', error);
+                throw error;
+            }
+        }
+
+        // Password validation function
+        function validatePassword(password) {
+            const minLength = password.length >= 8;
+            const hasNumber = /\d/.test(password);
+            const hasLowercase = /[a-z]/.test(password);
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            
+            return {
+                isValid: minLength && hasNumber && hasLowercase && hasUppercase && hasSpecial,
+                minLength,
+                hasNumber,
+                hasLowercase,
+                hasUppercase,
+                hasSpecial
+            };
+        }
+
+        // Live password validation feedback
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            
+            if (password.length === 0) {
+                passwordValidationMessage.style.display = 'none';
+                return;
+            }
+
+            const validation = validatePassword(password);
+            
+            if (!validation.isValid) {
+                let message = 'Password requirements:';
+                if (!validation.minLength) message += '<br>✗ At least 8 characters';
+                else message += '<br>✓ At least 8 characters';
+                
+                if (!validation.hasNumber) message += '<br>✗ One number';
+                else message += '<br>✓ One number';
+                
+                if (!validation.hasLowercase) message += '<br>✗ One lowercase letter';
+                else message += '<br>✓ One lowercase letter';
+                
+                if (!validation.hasUppercase) message += '<br>✗ One uppercase letter';
+                else message += '<br>✓ One uppercase letter';
+                
+                if (!validation.hasSpecial) message += '<br>✗ One special character';
+                else message += '<br>✓ One special character';
+                
+                passwordValidationMessage.innerHTML = message;
+                passwordValidationMessage.style.color = '#f44336';
+                passwordValidationMessage.style.display = 'block';
+            } else {
+                passwordValidationMessage.innerHTML = '✓ Password meets all requirements!';
+                passwordValidationMessage.style.color = '#4caf50';
+                passwordValidationMessage.style.display = 'block';
+            }
+        });
+
+        // Panel switching animation
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+
+        // Social authentication handler
+        async function handleSocialAuth(provider, providerName) {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                // Save user data
+                await saveUserData(user, { provider: providerName });
+
+                showMessage(`Successfully signed in with ${providerName}!`, 'success');
+                
+                setTimeout(() => {
+                    window.location.href = '../../home-page_after-sign-up.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error(`${providerName} authentication error:`, error);
+                
+                if (error.code === 'auth/popup-closed-by-user') {
+                    showMessage('Sign-in popup was closed. Please try again.', 'error');
+                } else if (error.code === 'auth/popup-blocked') {
+                    showMessage('Popup was blocked. Please allow popups and try again.', 'error');
+                } else if (error.code === 'auth/account-exists-with-different-credential') {
+                    showMessage('An account already exists with this email using a different sign-in method.', 'error');
+                } else {
+                    showMessage(`${providerName} sign-in failed. Please try again.`, 'error');
+                }
+            }
+        }
+
+        // Social login event listeners
+        document.getElementById('google-signin').addEventListener('click', (e) => {
+            e.preventDefault();
+            handleSocialAuth(googleProvider, 'Google');
+        });
+
+        document.getElementById('google-signup').addEventListener('click', (e) => {
+            e.preventDefault();
+            handleSocialAuth(googleProvider, 'Google');
+        });
+
+        document.getElementById('github-signin').addEventListener('click', (e) => {
+            e.preventDefault();
+            handleSocialAuth(githubProvider, 'GitHub');
+        });
+
+        document.getElementById('github-signup').addEventListener('click', (e) => {
+            e.preventDefault();
+            handleSocialAuth(githubProvider, 'GitHub');
+        });
+
+        // Email & Password Registration
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('signupBtn');
+            setLoadingState(submitBtn, true);
+            
+            const name = document.getElementById('signup_name').value.trim();
+            const email = document.getElementById('signup_email').value.trim();
+            const password = document.getElementById('signup_password').value;
+            
+            // Validate password
+            const validation = validatePassword(password);
+            if (!validation.isValid) {
+                showMessage("Password doesn't meet security requirements.", "error");
+                setLoadingState(submitBtn, false);
+                return;
+            }
+            
+            try {
+                // Create user with Firebase Authentication
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Send email verification
+                await sendEmailVerification(user);
+                
+                // Save user data
+                await saveUserData(user, { name: name, provider: 'email' });
+                
+                // Sign out the user until they verify their email
+                await signOut(auth);
+                
+                showMessage("Successfully signed up! Please check your email to verify your account before logging in.", "success");
+                document.getElementById('registrationForm').reset();
+                passwordValidationMessage.style.display = 'none';
+                container.classList.remove("right-panel-active");
+                
+            } catch (error) {
+                console.error("Registration error:", error);
+                
+                if (error.code === 'auth/email-already-in-use') {
+                    showMessage("This email is already registered. Please use a different email or sign in.", "error");
+                } else if (error.code === 'auth/weak-password') {
+                    showMessage("Password is too weak. Please choose a stronger password.", "error");
+                } else if (error.code === 'auth/invalid-email') {
+                    showMessage("Please enter a valid email address.", "error");
+                } else {
+                    showMessage("Registration failed. Please try again.", "error");
+                }
+            } finally {
+                setLoadingState(submitBtn, false);
+            }
+        });
+
+        // Email & Password Sign In
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('signinBtn');
+            setLoadingState(submitBtn, true);
+            
+            const email = document.getElementById('login_email').value.trim();
+            const password = document.getElementById('login_password').value;
+            
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Check if email is verified
+                if (!user.emailVerified) {
+                    await signOut(auth);
+                    showMessage("Please verify your email before signing in. Check your inbox and click the verification link.", "error");
+                    setLoadingState(submitBtn, false);
+                    return;
+                }
+                
+                // Save user data
+                await saveUserData(user, { provider: 'email' });
+                
+                showMessage("Sign in successful! Welcome back.", "success");
+                
+                setTimeout(() => {
+                    window.location.href = '../../home-page_after-sign-up.html';
+                }, 1500);
+                
+            } catch (error) {
+                console.error("Login error:", error);
+                
+                if (error.code === 'auth/user-not-found') {
+                    showMessage("No account found with this email address.", "error");
+                } else if (error.code === 'auth/wrong-password') {
+                    showMessage("Incorrect password. Please try again.", "error");
+                } else if (error.code === 'auth/invalid-email') {
+                    showMessage("Please enter a valid email address.", "error");
+                } else if (error.code === 'auth/user-disabled') {
+                    showMessage("This account has been disabled.", "error");
+                } else {
+                    showMessage("Sign in failed. Please check your credentials and try again.", "error");
+                }
+            } finally {
+                setLoadingState(submitBtn, false);
+            }
+        });
+
+        // Resend verification email
+        resendVerificationBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login_email').value.trim();
+            const password = document.getElementById('login_password').value;
+            
+            if (!email || !password) {
+                showMessage("Please enter your email and password first", "error");
+                return;
+            }
+            
+            try {
+                // Temporarily sign in to get user object
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                await sendEmailVerification(user);
+                await signOut(auth);
+                
+                showMessage("Verification email sent! Please check your inbox.", "success");
+            } catch (error) {
+                console.error("Verification email error:", error);
+                showMessage("Failed to send verification email. Please check your credentials.", "error");
+            }
+        });
+
+        // Forgot password modal
+        forgotPasswordLink.addEventListener('click', () => {
+            forgotPasswordModal.style.display = 'block';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            forgotPasswordModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === forgotPasswordModal) {
+                forgotPasswordModal.style.display = 'none';
+            }
+        });
+
+        // Password reset form
+        document.getElementById('resetPasswordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('reset_email').value.trim();
+            
+            try {
+                await sendPasswordResetEmail(auth, email);
+                showMessage("Password reset email sent! Check your inbox.", "success");
+                forgotPasswordModal.style.display = 'none';
+                document.getElementById('resetPasswordForm').reset();
+            } catch (error) {
+                console.error("Password reset error:", error);
+                
+                if (error.code === 'auth/user-not-found') {
+                    showMessage("No account found with this email address.", "error");
+                } else if (error.code === 'auth/invalid-email') {
+                    showMessage("Please enter a valid email address.", "error");
+                } else {
+                    showMessage("Failed to send password reset email. Please try again.", "error");
+                }
+            }
+        });
+
+        // Check authentication state on page load
+        onAuthStateChanged(auth, (user) => {
+            if (user && user.emailVerified) {
+                // User is signed in and verified, redirect to main app
+                window.location.href = '../../home-page_after-sign-up.html';
+            }
+        });
+
+        // Page visibility API to refresh auth state
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                // Page became visible, check auth state
+                const user = auth.currentUser;
+                if (user) {
+                    user.reload();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

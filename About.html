@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Shortcut Sensei - Keyboard Mastery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header styles */
+        .main-header {
+            background-color: #000000;
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .main-nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .main-nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url("assets/images/about-hero.jpg") no-repeat center center/cover;
+            background-color: #4b4949;
+            color: #fff;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin: 0 0 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .hero .btn {
+            background-color: #9c27b0;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+
+        .hero .btn:hover {
+            background-color: #7b1fa2;
+        }
+
+        /* Main Content Sections */
+        .section {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .section:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .section p {
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #555;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #9c27b0;
+        }
+
+        .team-member h3 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            color: #777;
+            font-size: 0.95em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item h3 {
+            font-size: 2.5em;
+            color: #9c27b0;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form button {
+            background-color: #9c27b0;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #7b1fa2;
+        }
+
+        .contact-info {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .contact-info p {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .contact-info p i {
+            margin-right: 10px;
+            color: #9c27b0;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: #9c27b0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #9c27b0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .main-header .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .main-nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            .team-grid, .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="home-page.html">Shortcut Sensei</a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="home-page.html">Home</a></li>
+                    <li><a href="Applications.html">Applications</a></li>
+                    <li><a href="pages/blogs/blogs.html">Blogs</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="https://shortcut-sensei-2459c.web.app" target="_blank">Quizzes</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="content">
+                <h1>About Shortcut Sensei</h1>
+                <p>We're on a mission to transform digital workflows through keyboard mastery, helping professionals save time and boost productivity.</p>
+                <a href="#our-story" class="btn">Learn More</a>
+                <a href="#contact" class="btn">Contact Us</a>
+            </div>
+        </section>
+
+        <section id="our-story" class="section">
+            <div class="container">
+                <h2>Our Story</h2>
+                <p>Shortcut Sensei was born from a simple observation: professionals waste countless hours using inefficient navigation methods when powerful keyboard shortcuts exist right at their fingertips.</p>
+                <p>Founded in 2025 by a team of productivity enthusiasts and tech professionals, we set out to create a comprehensive platform dedicated to keyboard shortcut mastery. We believe that small efficiency gains, multiplied over time, lead to extraordinary productivity improvements.</p>
+                <p>Today, Shortcut Sensei serves a global community of professionals, students, and organizations committed to optimizing their digital workflows and reclaiming valuable time in their day.</p>
+            </div>
+        </section>
+
+        <section id="our-mission" class="section">
+            <div class="container">
+                <h2>Our Mission</h2>
+                <p>At Shortcut Sensei, we're dedicated to empowering individuals and organizations to work smarter, not harder. Our mission is to transform digital workflows by making keyboard mastery accessible to everyone.</p>
+                <p>We believe that productivity isn't about working more hours—it's about maximizing your impact during the hours you work. By mastering keyboard shortcuts and efficient workflows, you can focus on what truly matters: creating, innovating, and making an impact in your field.</p>
+            </div>
+        </section>
+
+        <section id="our-team" class="section">
+            <div class="container">
+                <h2>Meet Our Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="assets/images/team-rafi.jpg" alt="S.B.M.Rafi">
+                        <h3>S.B.M.Rafi</h3>
+                        <p>Founder & CEO</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="assets/images/team-rasheed.jpg" alt="Sk.Rasheed">
+                        <h3>Sk.Rasheed</h3>
+                        <p>Lead Developer</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="stats" class="section">
+            <div class="container">
+                <h2>Shortcut Sensei By The Numbers</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>20+</h3>
+                        <p>Active Users</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>2100+</h3>
+                        <p>Keyboard Shortcuts</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>30+</h3>
+                        <p>Applications Covered</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Get In Touch</h2>
+                <div class="contact-form">
+                    <form action="#">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject">
+
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" required></textarea>
+
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> Our Location Pedakakani, Guntur, 522510, Andhra Pradesh, India</p>
+                    <p><i class="fas fa-envelope"></i> Email Us 786sbmrafi999@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> Call Us +91 7671966605</p>
+                    <p><i class="fas fa-clock"></i> Business Hours Monday - Friday: 9:00 AM - 5:00 PM</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>⌨️ Shortcut Sensei</h3>
+                    <p>Master every keyboard shortcut and boost your productivity. Your journey to becoming a true keyboard sensei starts here.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>⚡ Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="home-page.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="Applications_final.html"><i class="fas fa-th-large"></i> All Applications</a></li>
+                        <li><a href="pages/blogs/blogs.html"><i class="fas fa-blog"></i> Blogs & Tips</a></li>
+                        <li><a href="About.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>⭐ Popular Apps</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-chrome"></i> Google Chrome</a></li>
+                        <li><a href="#"><i class="fas fa-file-excel"></i> Microsoft Excel</a></li>
+                        <li><a href="#"><i class="fas fa-file-word"></i> Microsoft Word</a></li>
+                        <li><a href="#"><i class="fas fa-paint-brush"></i> Photoshop</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>📧 Stay Updated</h3>
+                    <p>Get the latest shortcuts and productivity tips delivered to your inbox.</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Shortcut Sensei. All rights reserved. | Made with ❤️ for productivity enthusiasts</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,50 @@
+<header>
+    <div class="container">
+        <div class="logo">
+            <a href="home-page.html">
+                Shortcut Sensei
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="home-page.html">Home</a></li>
+                <li><a href="Applications_final.html">Applications</a></li>
+                <li><a href="pages/blogs/blogs.html">Blogs</a></li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="https://shortcut-sensei-2459c.web.app" target="_blank" rel="noopener noreferrer">Quizzes</a></li>
+            </ul>
+            <span class="menu-toggle"><i class="fas fa-bars"></i></span>
+        </nav>
+        <div class="search-container">
+            <input type="text" placeholder="Search applications..." id="headerSearchInput">
+            <button type="button" id="headerSearchButton"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+    
+    <script>
+        // Search functionality for header
+        document.addEventListener('DOMContentLoaded', function() {
+            const headerSearchInput = document.getElementById('headerSearchInput');
+            const headerSearchButton = document.getElementById('headerSearchButton');
+            
+            function performHeaderSearch() {
+                const query = headerSearchInput.value.trim();
+                if (query) {
+                    window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+                }
+            }
+            
+            if (headerSearchButton) {
+                headerSearchButton.addEventListener('click', performHeaderSearch);
+            }
+            
+            if (headerSearchInput) {
+                headerSearchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        performHeaderSearch();
+                    }
+                });
+            }
+        });
+    </script>
+</header>

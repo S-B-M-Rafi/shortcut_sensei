@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications - Shortcut Sensei</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: #000000;
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .main-nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav ul li {
+            position: relative;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
+
+        .main-nav ul li a:hover {
+            background-color: #444;
+            border-radius: 4px;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8em;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .search-container {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 25px;
+            padding: 5px 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; /* Position the container relatively */
+        }
+
+        .search-container input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-container button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: purple;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            outline: none;
+            transition: background-color 0.3s;
+            position: absolute;
+            right: 10px; /* Adjusted right position */
+            top: 50%; /* Align the icon vertically in the middle */
+            transform: translateY(-50%); /* Adjust vertical alignment */
+        }
+
+        .search-container button:hover {
+            background-color: #6a1b9a;
+        }
+
+        .search-container button i {
+            color: #fff;
+        }
+
+        /* Application cards */
+        .app-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .app-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            overflow: hidden;
+            position: relative; /* Ensure relative positioning for the image zoom */
+            transition: transform 0.3s ease;
+        }
+
+        .app-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .app-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .app-card h2 {
+            font-size: 1.5em;
+            margin: 15px 0;
+        }
+
+        .app-card p {
+            padding: 0 15px 15px;
+            display: none; /* Hide description */
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #000000;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-links {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1em;
+        }
+
+        .footer-links li a:hover {
+            text-decoration: underline;
+        }
+
+        .social-icons {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icons li {
+            display: inline;
+        }
+
+        .social-icons li a {
+            color: #fff;
+            font-size: 1.5em;
+            transition: color 0.3s;
+        }
+
+        .social-icons li a:hover {
+            color: #6a1b9a;
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .subscribe-form input[type="email"] {
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            font-size: 1em;
+        }
+
+        .subscribe-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: purple;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-form button:hover {
+            background-color: #6a1b9a;
+        }
+
+        footer p {
+            margin: 20px 0 0;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: #000000;
+                width: 100%;
+                z-index: 10;
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .main-nav ul.show {
+                display: flex;
+            }
+
+            .main-nav ul li a {
+                color: #fff;
+                text-decoration: none;
+                padding: 10px 15px;
+                display: block;
+            }
+
+            .main-nav ul li a:hover {
+                background-color: #444;
+                border-radius: 4px;
+            }
+
+            .search-container input[type="text"] {
+                width: calc(100% - 85px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Include global scripts and styles -->
+<script src="assets/js/global.js"></script>
+
+<div id="header-placeholder">
+    <!-- Fallback header if includes don't work -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../home-page.html">
+                    <span class="logo-icon">⌨️</span>
+                    Shortcut Sensei
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../home-page.html">Home</a></li>
+                    <li><a href="Applications_final.htm">Applications</a></li>
+                    <li><a href="blogs/blogs.html">Blogs</a></li>
+                    <li><a href="../About.htm">About</a></li>
+                    <li><a href="https://shortcut-sensei-2459c.web.app" target="_blank" rel="noopener noreferrer">Quizzes</a></li>
+                </ul>
+                <span class="menu-toggle"><i class="fas fa-bars"></i></span>
+            </nav>
+            <div class="search-container">
+                <input type="text" placeholder="Search applications...">
+                <button type="button"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </header>
+</div>
+
+<!-- Filter Section -->
+<div class="filter-container">
+    <h3>Filter Applications</h3>
+    <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
+    <button class="filter-btn" onclick="filterByCategory('microsoft')">Microsoft</button>
+    <button class="filter-btn" onclick="filterByCategory('google')">Google</button>
+    <button class="filter-btn" onclick="filterByCategory('adobe')">Adobe</button>
+    <button class="filter-btn" onclick="filterByCategory('communication')">Communication</button>
+</div>
+
+<h1 class="page-title">Applications</h1>
+// Applications Page - Simple & Clean JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Applications page loaded successfully');
+    
+    // Enhanced search functionality
+    setupSearchFeatures();
+    
+    // Simple visual enhancements
+    addMinimalEnhancements();
+});
+
+function setupSearchFeatures() {
+    const searchInput = document.querySelector('.search-container input[type="text"]');
+    const searchButton = document.querySelector('.search-container button');
+    
+    if (searchInput && searchButton) {
+        // Enhanced search on button click
+        searchButton.addEventListener('click', function() {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                performApplicationSearch(searchTerm);
+            }
+        });
+        
+        // Search on Enter key
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.trim();
+                if (searchTerm) {
+                    performApplicationSearch(searchTerm);
+                }
+            }
+        });
+        
+        // Live search suggestions
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            if (searchTerm.length > 0) {
+                showSearchSuggestions(searchTerm);
+            } else {
+                hideSearchSuggestions();
+            }
+        });
+    }
+}
+
+function performApplicationSearch(searchTerm) {
+    // Simple search that filters visible apps
+    const appCards = document.querySelectorAll('.app-card');
+    let foundResults = 0;
+    
+    appCards.forEach(card => {
+        const appName = card.textContent.toLowerCase();
+        if (appName.includes(searchTerm.toLowerCase())) {
+            card.style.display = 'block';
+            foundResults++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    showNotification(`Found ${foundResults} applications matching "${searchTerm}"`);
+    
+    // If no results, show all apps again after 3 seconds
+    if (foundResults === 0) {
+        setTimeout(() => {
+            appCards.forEach(card => card.style.display = 'block');
+            showNotification('Showing all applications');
+        }, 3000);
+    }
+}
+
+function showSearchSuggestions(searchTerm) {
+    const suggestions = [
+        'Microsoft Word', 'Microsoft Excel', 'Microsoft PowerPoint', 'Google Chrome',
+        'Discord', 'Spotify', 'Adobe Photoshop', 'Visual Studio', 'Telegram'
+    ];
+    
+    const matches = suggestions.filter(app => 
+        app.toLowerCase().includes(searchTerm)
+    ).slice(0, 5);
+    
+    if (matches.length > 0) {
+        showSuggestionsDropdown(matches);
+    } else {
+        hideSearchSuggestions();
+    }
+}
+
+function showSuggestionsDropdown(suggestions) {
+    // Remove existing dropdown
+    hideSearchSuggestions();
+    
+    const searchContainer = document.querySelector('.search-container');
+    const dropdown = document.createElement('div');
+    dropdown.id = 'search-suggestions';
+    dropdown.style.cssText = `
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        z-index: 1000;
+    `;
+    
+    dropdown.innerHTML = suggestions.map(suggestion => `
+        <div style="padding: 10px; cursor: pointer; border-bottom: 1px solid #eee;" 
+             onmouseover="this.style.backgroundColor='#f0f0f0'" 
+             onmouseout="this.style.backgroundColor='white'"
+             onclick="selectSuggestion('${suggestion}')">${suggestion}</div>
+    `).join('');
+    
+    searchContainer.style.position = 'relative';
+    searchContainer.appendChild(dropdown);
+}
+
+function hideSearchSuggestions() {
+    const existingDropdown = document.getElementById('search-suggestions');
+    if (existingDropdown) {
+        existingDropdown.remove();
+    }
+}
+
+function selectSuggestion(appName) {
+    const searchInput = document.querySelector('.search-container input[type="text"]');
+    if (searchInput) {
+        searchInput.value = appName;
+        performApplicationSearch(appName);
+    }
+    hideSearchSuggestions();
+}
+
+function addMinimalEnhancements() {
+    // Add simple hover effects to app cards
+    const appCards = document.querySelectorAll('.app-card');
+    appCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+            this.style.transition = 'all 0.3s ease';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // Add a simple "back to top" button
+    addBackToTopButton();
+    
+    // Add category filter buttons
+    addSimpleFilters();
+}
+
+function addBackToTopButton() {
+    const backToTop = document.createElement('button');
+    backToTop.innerHTML = '↑';
+    backToTop.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #6a5acd;
+        color: white;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        display: none;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    `;
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTop.style.display = 'block';
+        } else {
+            backToTop.style.display = 'none';
+        }
+    });
+    
+    backToTop.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    document.body.appendChild(backToTop);
+}
+
+function addSimpleFilters() {
+    const filterContainer = document.createElement('div');
+    filterContainer.style.cssText = `
+        text-align: center;
+        margin: 20px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+    `;
+    
+    const filters = [
+        { name: 'All', value: 'all' },
+        { name: 'Microsoft', value: 'microsoft' },
+        { name: 'Google', value: 'google' },
+        { name: 'Adobe', value: 'adobe' },
+        { name: 'Communication', value: 'communication' }
+    ];
+    
+    filterContainer.innerHTML = `
+        <h3 style="margin-bottom: 15px; color: #333;">Filter Applications</h3>
+        ${filters.map(filter => `
+            <button onclick="filterByCategory('${filter.value}')" style="
+                margin: 5px;
+                padding: 8px 16px;
+                border: 1px solid #ddd;
+                border-radius: 20px;
+                background: white;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            " onmouseover="this.style.backgroundColor='#6a5acd'; this.style.color='white';" 
+               onmouseout="this.style.backgroundColor='white'; this.style.color='black';">${filter.name}</button>
+        `).join('')}
+    `;
+    
+    // Insert after the header
+    const header = document.querySelector('header');
+    if (header) {
+        header.parentNode.insertBefore(filterContainer, header.nextSibling);
+    }
+}
+
+function filterByCategory(category) {
+    const appCards = document.querySelectorAll('.app-card');
+    
+    if (category === 'all') {
+        appCards.forEach(card => card.style.display = 'block');
+        showNotification('Showing all applications');
+        return;
+    }
+    
+    const categoryMap = {
+        'microsoft': ['word', 'excel', 'powerpoint', 'outlook', 'teams', 'edge', 'onedrive', 'onenote'],
+        'google': ['chrome', 'google'],
+        'adobe': ['photoshop', 'adobe', 'reader', 'creative'],
+        'communication': ['discord', 'slack', 'teams', 'skype', 'telegram', 'whatsapp', 'zoom']
+    };
+    
+    const categoryApps = categoryMap[category] || [];
+    let foundApps = 0;
+    
+    appCards.forEach(card => {
+        const appName = card.textContent.toLowerCase();
+        const matches = categoryApps.some(categoryApp => appName.includes(categoryApp));
+        
+        if (matches) {
+            card.style.display = 'block';
+            foundApps++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    showNotification(`Found ${foundApps} ${category} applications`);
+}
+
+function showNotification(message) {
+    // Remove existing notifications
+    const existingNotification = document.getElementById('notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    const notification = document.createElement('div');
+    notification.id = 'notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 120px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(106, 90, 205, 0.9);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 25px;
+        z-index: 10000;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        animation: slideDown 0.3s ease-out;
+    `;
+    
+    // Add CSS animation
+    if (!document.getElementById('notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-styles';
+        style.textContent = `
+            @keyframes slideDown {
+                from { top: 80px; opacity: 0; }
+                to { top: 120px; opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 3000);
+}
+
+// Global click handler that doesn't interfere with existing links
+document.addEventListener('click', function(e) {
+    const target = e.target;
+    
+    // Only handle clicks that don't already have href attributes working properly
+    if (target.tagName === 'IMG' && target.parentElement && target.parentElement.tagName === 'A') {
+        // Let the parent link handle it naturally
+        return;
+    }
+    
+    // Handle clicks outside search suggestions
+    if (!target.closest('.search-container')) {
+        hideSearchSuggestions();
+    }
+});
+
+console.log('Applications page JavaScript loaded successfully!');
+</script>
+
+<header>
+    <div class="container">
+        <div class="logo">
+            <a href="Homepage_after_sign_up.html">Shortcut Sensei</a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#news">Blogs</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="../About.htm">About</a></li>
+                <li><a href="https://shortcut-sensei-2459c.web.app" target="_blank" rel="noopener noreferrer">Quizs</a></li>
+
+            </ul>
+            <span class="menu-toggle"><i class="fas fa-bars"></i></span>
+        </nav>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button type="button"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+</header>
+
+<h1 style="text-align: center; margin-top: 20px;">Applications</h1>
+
+<div class="app-cards">
+    <div class="app-card">
+        <a href="Microsoft Word.htm"><img src="word.webp" alt="Microsoft Word"></a>
+        <h2>Microsoft Word</h2>
+    </div>
+    <div class="app-card">
+        <a href="Microsoft Excell.htm"><img src="excell1.jpg" alt="Microsoft Excel"></a>
+        <h2>Microsoft Excel</h2>
+    </div>
+    <div class="app-card">
+        <a href="Microsoft PowerPoint.htm"><img src="power.jpg" alt="Microsoft PowerPoint"></a>
+        <h2>Microsoft PowerPoint</h2>
+    </div>
+    <div class="app-card">
+        <a href="Microsoft Outlook.html"><img src="Microsoft_Outlook.jpg" alt="Microsoft Outlook"></a>
+        <h2>Microsoft Outlook</h2>
+    </div>
+    <div class="app-card">
+        <a href="Microsoft OneNote.html"><img src="Microsoft OneNote.avif" alt="Microsoft OneNote"></a>
+        <h2>Microsoft OneNote</h2>
+    </div>
+    <div class="app-card">
+        <a href="Microsoft OneDrive.html"><img src="onedrive.png" alt="Microsoft OneDrive"></a>
+        <h2>Microsoft OneDrive</h2>
+    </div>
+    <div class="app-card">
+        <a href="Microsoft Teams.html"><img src="Microsoft Teams.jpg" alt="Microsoft Teams"></a>
+        <h2>Microsoft Teams</h2>
+    </div>
+    <div class="app-card">
+        <a href="Microsoft Edge.html"><img src="edge1.jpg" alt="Microsoft Edge"></a>
+        <h2>Microsoft Edge</h2>
+    </div>
+
+    <div class="app-card">
+        <a href="File Explorer.htm"><img src="File Explorer.jpg" alt="File Explorer"></a>
+        <h2>File Explorer</h2>
+    </div>
+
+   
+    <div class="app-card">
+        <a href="Slack.htm"><img src="Slack.png" alt="Slack"></a>
+        <h2>Slack</h2>
+    </div>
+    
+    <div class="app-card">
+        <a href="Adobe PhotoShop.html"><img src="ps.jpg" alt="Adobe PhotoShop"></a>
+        <h2>Adobe PhotoShop</h2>
+    </div>
+    <div class="app-card">
+        <a href="Adobe Creative Cloud.html"><img src="Adobe Creative Cloud.jpg" alt="Adobe Creative Cloud"></a>
+        <h2>Adobe Creative Cloud</h2>
+    </div>
+    <div class="app-card">
+        <a href="Acrobat Adobe Reader.html"><img src="reader.webp" alt="Acrobat Adobe Reader"></a>
+        <h2>Acrobat Adobe Reader</h2>
+    </div>
+
+    <div class="app-card">
+        <a href="Mozilla Thunderbird.html"><img src="thunder2.jpg" alt="Mozilla Firefox"></a>
+        <h2>Mozilla Thunderbird</h2>
+    </div>
+
+
+    <div class="app-card">
+        <a href="Html Cheat Sheet.html"><img src="html.jpg" alt="Html Cheat Sheet"></a>
+        <h2>Html Cheat Sheet</h2>
+    </div>
+
+    <div class="app-card">
+        <a href="Audacity.html"><img src="audacity.gif" alt="Audacity"></a>
+        <h2>Audacity</h2>
+    </div>
+    <div class="app-card">
+        <a href="VLC Media Player.html"><img src="VLC.jpg" alt="VLC Media Player"></a>
+        <h2>VLC Media Player</h2>
+    </div>
+    
+    
+    <div class="app-card">
+        <a href="Visual Studio.html"><img src="vscode.jpeg" alt="Visual Studio"></a>
+        <h2>Visual Studio</h2>
+    </div>
+    
+    <div class="app-card">
+        <a href="Windows_11.html"><img src="win11.jpg" alt="Windows 11"></a>
+        <h2>Windows 11</h2>
+    </div>
+
+    
+    <div class="app-card">
+        <a href="Google Chrome.html"><img src="google chrome.webp" alt="Google Chrome"></a>
+        <h2>Google Chrome</h2>
+    </div>
+
+
+    <div class="app-card">
+        <a href="Telegram.html"><img src="Telegram.jpg" alt="Telegram"></a>
+        <h2>Telegram</h2>
+    </div>
+
+
+    <div class="app-card">
+        <a href="Discord.html"><img src="discord.jpg" alt="Discord"></a>
+        <h2>Discord</h2>
+    </div>
+
+    <div class="app-card">
+        <a href="Whatsapp.html"><img src="whatsapp.jpeg" alt="Whatsapp"></a>
+        <h2>Whatsapp</h2>
+    </div>
+
+    <div class="app-card">
+        <a href="Skype.html"><img src="skype.jpeg" alt="Skype"></a>
+        <h2>Skype</h2>
+    </div>
+    
+    <div class="app-card">
+        <a href="Zoom.html"><img src="zoom0.png" alt="Zoom"></a>
+        <h2>Zoom</h2>
+    </div>
+    <div class="app-card">
+        <a href="Trello.html"><img src="trello0.png" alt="Trello"></a>
+        <h2>Trello</h2>
+    </div>
+    <div class="app-card">
+        <a href="Spotify.html"><img src="spotify0.jpg" alt="Spotify"></a>
+        <h2>Spotify</h2>
+    </div>
+    <div class="app-card">
+        <a href="WinRAR.html"><img src="winRAR0.jpg" alt="WinRAR"></a>
+        <h2>WinRAR</h2>
+    </div>
+   
+   
+    <div class="app-card">
+        <a href="7-zip.html"><img src="7-zip0.png" alt="7-zip"></a>
+        <h2>7-zip</h2>
+    </div>
+</div>
+
+<div id="footer-placeholder">
+    <!-- Fallback footer if includes don't work -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>⌨️ Shortcut Sensei</h3>
+                <p>Master every keyboard shortcut and boost your productivity. Your journey to becoming a true keyboard sensei starts here.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>⚡ Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../home-page.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Applications_final.htm"><i class="fas fa-th-large"></i> All Applications</a></li>
+                    <li><a href="blogs/blogs.html"><i class="fas fa-blog"></i> Blogs & Tips</a></li>
+                    <li><a href="../About.htm"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="user_com.htm"><i class="fas fa-users"></i> Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>⭐ Popular Apps</h3>
+                <ul class="footer-links">
+                    <li><a href="Google Chrome.html"><i class="fab fa-chrome"></i> Google Chrome</a></li>
+                    <li><a href="Microsoft Excell.htm"><i class="fas fa-file-excel"></i> Microsoft Excel</a></li>
+                    <li><a href="Microsoft Word.htm"><i class="fas fa-file-word"></i> Microsoft Word</a></li>
+                    <li><a href="Adobe PhotoShop.html"><i class="fas fa-paint-brush"></i> Photoshop</a></li>
+                    <li><a href="Discord.html"><i class="fab fa-discord"></i> Discord</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>📧 Stay Updated</h3>
+                <p>Get the latest shortcuts and productivity tips delivered to your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+                <div style="margin-top: 20px;">
+                    <h4>📞 Contact</h4>
+                    <p style="color: #ccc; font-size: 14px; margin-top: 8px;">
+                        <i class="fas fa-envelope"></i> hello@shortcutsensei.com<br>
+                        <i class="fas fa-globe"></i> shortcutsensei.com
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Shortcut Sensei. All rights reserved. | Made with ❤️ for productivity enthusiasts</p>
+        </div>
+    </footer>
+</div>
+
+<script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav ul');
+
+    menuToggle.addEventListener('click', () => {
+        mainNav.classList.toggle('show');
+    });
+</script>
+
+</body>
+</html>

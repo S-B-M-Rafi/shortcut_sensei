@@ -6,18 +6,8 @@
     <title>Shortcut Sensei</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <!-- Gamification System Styles -->
-    <link rel="stylesheet" href="styles/gamification.css">
-    
     <style>
 
-
-
-
-
-
-/* Header styles */
 .main-header {
     background-color: #000000;
     color: #fff;
@@ -77,7 +67,7 @@
     transform: translateY(-2px);
 }
 
-.get-started a {
+.sign-up-btn a {
     background-color: #9c27b0;
     border-radius: 20px !important;
     padding: 8px 20px !important;
@@ -85,30 +75,11 @@
     transition: all 0.3s !important;
 }
 
-.get-started a:hover {
+.sign-up-btn a:hover {
     background-color: #7b1fa2 !important;
     box-shadow: 0 4px 8px rgba(156, 39, 176, 0.3);
 }
 
-/* Get Started style for standalone buttons */
-.get-started-style {
-    background-color: #9c27b0 !important;
-    border-radius: 20px !important;
-    padding: 8px 20px !important;
-    font-weight: bold !important;
-    transition: all 0.3s !important;
-    color: #fff !important;
-    text-decoration: none !important;
-    display: inline-block !important;
-}
-
-.get-started-style:hover {
-    background-color: #7b1fa2 !important;
-    box-shadow: 0 4px 8px rgba(156, 39, 176, 0.3) !important;
-    transform: translateY(-2px) !important;
-}
-
-/* Search container styles */
 .search-container {
     position: relative;
     display: flex;
@@ -162,7 +133,6 @@
     color: #fff;
 }
 
-/* Search results styles */
 .search-results {
     position: absolute;
     top: 100%;
@@ -193,7 +163,6 @@
     border-bottom: none;
 }
 
-/* Menu toggle for mobile */
 .menu-toggle {
     display: none;
     font-size: 1.5em;
@@ -212,7 +181,6 @@
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Responsive styles */
 @media (max-width: 992px) {
     .search-container {
         order: 2;
@@ -257,11 +225,11 @@
         border-radius: 0;
     }
     
-    .get-started {
+    .sign-up-btn {
         margin-top: 10px;
     }
     
-    .get-started a {
+    .sign-up-btn a {
         text-align: center;
         margin: 0 20px;
     }
@@ -281,14 +249,6 @@
     }
 }
 
-
-
-
-
-
-
-
-        /* Base styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -298,7 +258,6 @@ body {
     line-height: 1.6;
 }
 
-/* Header styles */
 header {
     background-color: #000000;
     color: #fff;
@@ -345,7 +304,6 @@ header {
     border-radius: 4px;
 }
 
-/* CSS for the menu toggle */
 .menu-toggle {
     display: none;
     font-size: 1.8em;
@@ -391,8 +349,6 @@ header {
     }
 }
 
-
-
 .search-container {
     flex-shrink: 0;
     display: flex;
@@ -425,12 +381,10 @@ header {
     outline: none;
     transition: background-color 0.3s;
     position: absolute;
-    right: 10px; /* Adjusted right position */
-    top: 50%; /* Align the icon vertically in the middle */
-    transform: translateY(-50%); /* Adjust vertical alignment */
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%);
 }
-
-
 
 .search-container button:hover {
     background-color: #6a1b9a;
@@ -440,11 +394,6 @@ header {
     color: #fff;
 }
 
-
-
-
-
-/* CSS for the search results dropdown */
 .search-container {
     position: relative;
 }
@@ -478,16 +427,8 @@ header {
 }
 
 
-
-
-
-
-
-
-
-        /* Hero Section */
         .hero {
-            background: url('images/apps/vscode.jpeg') no-repeat center center/cover;
+            background: url('hero-image.jpg') no-repeat center center/cover;
             background-color: #4b4949;
             color: #fff;
             text-align: center;
@@ -535,150 +476,62 @@ header {
             background-color: #6a1b9a;
         }
 
-
-
-
-
-/* Shortcut of the Day Section */
 .shortcut-of-day {
-    background: linear-gradient(135deg, #8B5FBF 0%, #6A4C93 100%);
-    padding: 40px 20px;
-    margin: 20px 0;
+    background-color: #f0e6f5;
+    padding: 30px 20px;
+    margin: 0;
+    text-align: center;
+}
+
+.shortcut-of-day h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
 }
 
 .shortcut-container {
     max-width: 800px;
     margin: 0 auto;
-    background: white;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    position: relative;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.section-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 25px;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 15px;
-    position: relative;
-}
-
-.section-header h2 {
-    margin: 0;
-    color: #333;
-    font-size: 1.8em;
-    font-weight: 600;
-    text-align: center;
-    flex: 1;
-}
-
-.date-time-display {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 0.9em;
-    color: #8B5FBF;
-    font-weight: 500;
-    text-align: right;
-    line-height: 1.3;
-    background: #f8f9fa;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-}
-
-.shortcut-content {
-    text-align: center;
-}
-
-.application-name {
-    font-size: 1.2em;
-    color: white;
-    background: #8B5FBF;
-    display: inline-block;
-    padding: 8px 20px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-    font-weight: 500;
-}
-
-.shortcut-keys {
+.shortcut-display {
     margin: 20px 0;
-    font-size: 1.4em;
 }
 
-.shortcut-keys kbd {
-    background: #f8f9fa;
-    border: 2px solid #dee2e6;
-    border-radius: 6px;
-    padding: 10px 16px;
-    margin: 0 8px;
-    font-family: 'Courier New', monospace;
-    font-weight: 600;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.shortcut-display kbd {
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
     color: #333;
+    display: inline-block;
+    font-size: 1.2em;
+    font-weight: bold;
+    line-height: 1;
+    padding: 8px 12px;
+    margin: 0 4px;
+}
+
+.shortcut-info {
+    margin-top: 15px;
     font-size: 1.1em;
+    line-height: 1.6;
 }
 
-@media (max-width: 768px) {
-    .shortcut-of-day {
-        padding: 30px 15px;
-        margin: 15px 0;
-    }
-    
-    .shortcut-container {
-        padding: 20px;
-    }
-    
-    .section-header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-    
-    .date-time-display {
-        position: static;
-        align-self: center;
-    }
-    
-    .section-header h2 {
-        font-size: 1.5em;
-    }
-    
-    .shortcut-keys {
-        font-size: 1.2em;
-    }
-    
-    .shortcut-keys kbd {
-        padding: 8px 12px;
-        margin: 0 4px;
-        font-size: 1em;
-    }
+.shortcut-app {
+    background-color: purple;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    display: inline-block;
 }
 
-@media (max-width: 480px) {
-    .section-title {
-        font-size: 2em;
-    }
-    
-    .shortcut-card {
-        padding: 25px 15px;
-    }
-    
-    .shortcut-key-display .key {
-        padding: 10px 12px;
-        font-size: 1em;
-    }
-}
-
-
-
-
-
-        /* Features Section */
         .features {
             padding: 50px 20px;
             text-align: center;
@@ -742,7 +595,6 @@ header {
             background-color: #6a1b9a;
         }
 
-        /* Testimonials Section */
         .testimonials {
             padding: 50px 20px;
             background-color: #fff;
@@ -781,7 +633,6 @@ header {
             font-weight: bold;
         }
 
-        /* Latest News Section */
         .latest-news {
     padding: 50px 20px;
     background-color: #f9f9f9;
@@ -849,9 +700,8 @@ header {
         }
     }
 
-        /* Footer styles */
         footer {
-            background-color: #000000; /* Changed to black */
+            background-color: #000000; 
             color: #fff;
             padding: 20px 0;
             text-align: center;
@@ -935,13 +785,11 @@ header {
         footer p {
             margin: 20px 0 0;
         }
-/* Responsive Styles */
 @media (max-width: 768px) {
    
 
     .latest-news article {
         flex-basis: calc(100% - 20px);
-        /* Adjusted width for smaller screens */
     }
 
     .main-nav ul {
@@ -995,338 +843,6 @@ header {
     }
 }
 
-/* ===== HOVER ANIMATIONS ===== */
-
-/* Hero Section Hover Animations */
-.hero .content {
-    transition: none; /* Remove global content hover */
-}
-
-/* Remove the hero section-wide hover effect */
-/* .hero:hover .content {
-    transform: translateY(-10px);
-} */
-
-.hero .cta {
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero .cta::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.hero .cta:hover::before {
-    left: 100%;
-}
-
-.hero .cta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(106, 27, 154, 0.4);
-}
-
-/* Features Section Hover Animations */
-.feature {
-    transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-
-.feature::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(139, 95, 191, 0.1), rgba(106, 76, 147, 0.1));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.feature:hover::before {
-    opacity: 1;
-}
-
-.feature:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    border-left: 4px solid #8B5FBF;
-}
-
-.feature h3 {
-    transition: color 0.3s ease;
-}
-
-.feature:hover h3 {
-    color: #8B5FBF;
-}
-
-/* About Section Hover Animations */
-.about {
-    transition: background-color 0.3s ease;
-}
-
-.about:hover {
-    background-color: #2a2a2a !important;
-}
-
-.about .cta {
-    transition: all 0.4s ease;
-    position: relative;
-}
-
-.about .cta:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(139, 95, 191, 0.4);
-}
-
-/* Testimonials Section Hover Animations */
-.testimonials blockquote {
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.testimonials blockquote:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    background-color: #f8f4ff;
-    border-left: 5px solid #8B5FBF;
-}
-
-/* Latest News Section Hover Animations */
-.latest-news article {
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.latest-news article:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    background-color: #f8f4ff;
-}
-
-.latest-news article h3 {
-    transition: color 0.3s ease;
-}
-
-.latest-news article:hover h3 {
-    color: #8B5FBF;
-}
-
-.latest-news article p {
-    transition: color 0.3s ease;
-}
-
-.latest-news article:hover p {
-    color: #555;
-}
-
-/* Navigation Hover Animations */
-.main-nav ul li a {
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.main-nav ul li a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background-color: #8B5FBF;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
-
-.main-nav ul li a:hover::after {
-    width: 100%;
-}
-
-.main-nav ul li a:hover {
-    color: #8B5FBF;
-}
-
-/* Footer Hover Animations */
-.social-icons li a {
-    transition: all 0.3s ease;
-}
-
-.social-icons li a:hover {
-    transform: translateY(-3px) scale(1.2);
-    color: #8B5FBF !important;
-}
-
-.subscribe-form input[type="email"] {
-    transition: all 0.3s ease;
-}
-
-.subscribe-form input[type="email"]:focus {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(139, 95, 191, 0.3);
-}
-
-.subscribe-form button {
-    transition: all 0.3s ease;
-}
-
-.subscribe-form button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(139, 95, 191, 0.4);
-}
-
-/* Search Container Hover Animations */
-.search-container {
-    transition: all 0.3s ease;
-}
-
-.search-container:hover {
-    transform: scale(1.02);
-}
-
-.search-container input[type="text"]:focus {
-    box-shadow: 0 5px 15px rgba(139, 95, 191, 0.3);
-}
-
-/* Logo Hover Animation */
-.logo a {
-    transition: all 0.3s ease;
-}
-
-.logo a:hover {
-    transform: scale(1.05);
-    color: #8B5FBF;
-}
-
-/* Menu Toggle Hover Animation */
-.menu-toggle:hover {
-    transform: rotate(90deg);
-    background-color: rgba(139, 95, 191, 0.3) !important;
-}
-
-/* Shortcut Card Additional Hover Effects */
-.shortcut-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.shortcut-os-tag {
-    transition: all 0.3s ease;
-}
-
-.shortcut-os-tag:hover {
-    transform: scale(1.05);
-    background: #6A4C93;
-}
-
-.shortcut-key-display .key {
-    transition: all 0.3s ease;
-}
-
-.shortcut-key-display .key:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    background: #e8d5f0;
-}
-
-/* --- Live Clock Styles --- */
-.live-clock-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px 25px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    min-width: 250px;
-}
-
-.live-date {
-    font-size: 0.9em;
-    font-weight: 600;
-    color: #666;
-    letter-spacing: 0.5px;
-    text-align: center;
-}
-
-.live-time {
-    font-family: 'Courier New', monospace;
-    font-size: 2em;
-    font-weight: 700;
-    color: #333;
-    letter-spacing: 1px;
-}
-
-.milliseconds {
-    font-size: 0.6em !important;
-    color: #888 !important;
-    margin-left: 4px;
-    vertical-align: super;
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .shortcut-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 25px;
-    }
-}
-
-@media (max-width: 768px) {
-    .shortcut-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
-    
-    .shortcut-header h2 {
-        font-size: 2.2em;
-    }
-    
-    .shortcut-card {
-        padding: 30px 25px;
-        margin: 0 15px;
-    }
-    
-    .shortcut-key-display {
-        font-size: 1.4em;
-        gap: 10px;
-    }
-    
-    .shortcut-key-display .key {
-        padding: 10px 15px;
-        min-width: 50px;
-    }
-    
-    .shortcut-description {
-        font-size: 1.1em;
-    }
-    
-    .live-clock-container {
-        min-width: 200px;
-        padding: 15px 20px;
-    }
-    
-    .live-time {
-        font-size: 1.6em;
-    }
-}
-
     </style>
 </head>
 <body>
@@ -1334,7 +850,7 @@ header {
 <header class="main-header">
     <div class="container">
         <div class="logo">
-            <a href="index.html">Shortcut Sensei</a>
+            <a href="home-page.html">Shortcut Sensei</a>
         </div>
 
         <div class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
@@ -1343,16 +859,16 @@ header {
 
         <nav class="main-nav" id="mainNav">
             <ul>
-                                <li><a href="pages/blogs/blogs.html">Blogs</a></li>
+                <li><a href="#news">Blogs</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="About.htm">About</a></li>
-                                    <li class="get-started"><a href="Applications.html">Get Started</a></li>
+                <li class="sign-up-btn"><a href="log.htm">Sign up</a></li>
             </ul>
         </nav>
 
         <div class="search-container">
-            <input type="text" placeholder="Search new.." id="app" aria-label="Search applications">
+            <input type="text" placeholder="Search apps..." id="app" aria-label="Search applications">
             <button type="button" id="btn" aria-label="Search">
                 <i class="fas fa-search"></i>
             </button>
@@ -1364,22 +880,19 @@ header {
     <div  class="content">
         <h1>Welcome to Shortcut Sensei</h1>
         <p>Your ultimate guide to keyboard shortcuts and productivity tips.</p>
-        <a href="pages/user/user_com.htm" class="get-started-style">Join our Community</a>
+        <a href="user_com.htm" class="cta">Join our Community</a>
+    </div>
 </section>
 
-<!-- Shortcut of the Day Section -->
 <section class="shortcut-of-day">
+    <h2>Shortcut of the Day</h2>
     <div class="shortcut-container">
-        <div class="section-header">
-            <h2>Shortcut of the Day</h2>
-            <div class="date-time-display" id="dateTimeDisplay"></div>
+        <div class="shortcut-app" id="shortcutApp">Microsoft Word</div>
+        <div class="shortcut-display">
+            <span id="shortcutKeys"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd></span>
         </div>
-        
-        <div class="shortcut-content">
-            <div class="application-name" id="appName">Microsoft Word</div>
-            <div class="shortcut-keys" id="shortcutKeys">
-                <kbd>Ctrl</kbd> + <kbd>C</kbd>
-            </div>
+        <div class="shortcut-info" id="shortcutInfo">
+            Paste content without formatting. This is useful when you want to paste text but keep the formatting of your document.
         </div>
     </div>
 </section>
@@ -1405,14 +918,14 @@ header {
 <section style="background-color: #333;"id="about" class="about">
     <h2 style="color: #fff;">About Us</h2>
     <p style="color: #fff;">Shortcut Sensei is dedicated to helping you become more productive with less effort. Learn more about our mission and team.</p>
-    <a href="About.html#contact-section-id" class="get-started-style">Contact Us</a>
+    <a href="https://www.linkedin.com/in/rafi-s-b-m-a3492a265/" class="cta">Contact Us</a>
 </section>
 
 <section id="testimonials" class="testimonials">
     <h2>What Our Users Say</h2>
     <blockquote>
         <p>"Shortcut Sensei has revolutionized the way I work. Highly recommended!"</p>
-er</cite>
+        <cite>- Sarah K., Graphic Designer</cite>
     </blockquote>
     <blockquote>
         <p>"A must-have tool for anyone looking to improve their productivity."</p>
@@ -1428,9 +941,9 @@ er</cite>
         <a href="https://shortcut-sensei.hashnode.dev/from-click-to-command-the-ultimate-shortcut-revolution">Read More</a>
     </article>
     <article style="background-color: #eedfdf;">
-        <h3>How to Customize Your Shortcuts</h3>
+        <h3>Speedup Blogs</h3>
         <p>Personalize your shortcuts for even greater efficiency.</p>
-        <a href="https://support.microsoft.com/en-us/office/customize-keyboard-shortcuts-9a92343e-a781-4d5a-92f1-0f32e3ba5b4d">Read More</a>
+        <a href="pages/blogs/blogs.html">Let's Level Up!!</a>
     </article>
 
 </section>
@@ -1438,9 +951,9 @@ er</cite>
 <footer>
     <div class="footer-content">
         <ul class="footer-links">
-            <li><a href="Homepage.html">Home</a></li>
+            <li><a href="home-page.html">Home</a></li>
             <li><a href="#features">Features</a></li>
-            <li><a href="About.html">About</a></li>
+            <li><a href="About.htm">About</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#news">Latest News</a></li>
         </ul>
@@ -1460,14 +973,10 @@ er</cite>
 </footer>
 
 <script>
-
-     // Function to validate email address
      function isValidEmail(email) {
         var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     }
-
-    // Function to handle subscription
     function subscribe() {
         var email = document.getElementById('emailInput').value.trim();
 
@@ -1475,139 +984,58 @@ er</cite>
             alert('Please enter a valid email address.');
             return;
         }
-
-        // You can replace this part with your actual subscription logic
         console.log('Subscribing user with email:', email);
-
-        // Hide the subscription form
         document.querySelector('.subscribe-form').style.display = 'none';
-        // Show the confirmation message
         document.getElementById('confirmationMessage').style.display = 'block';
-    
-
-    // Subscribe button click event listener
-    //document.getElementById('subscribeButton').addEventListener('click', subscribe);
-
-    // Trigger firework animation
-   
+       
         }
 
         document.getElementById('subscribeButton').addEventListener('click', subscribe);
 
-   
-// Add this JavaScript for rotating shortcuts
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // --- 1. LIVE CLOCK FUNCTIONALITY ---
-
-    const dateElement = document.getElementById('live-date');
-    const hoursElement = document.getElementById('time-hours');
-    const minutesElement = document.getElementById('time-minutes');
-    const secondsElement = document.getElementById('time-seconds');
-    const millisecondsElement = document.getElementById('time-milliseconds');
-
-    // Helper function to add a leading zero if number is less than 10
-    function padZero(num) {
-        return num < 10 ? '0' + num : num;
-    }
-
-    // Helper function to pad milliseconds to 3 digits
-    function padMilliseconds(num) {
-        if (num < 10) return '00' + num;
-        if (num < 100) return '0' + num;
-        return num;
-    }
-
-    function updateLiveClock() {
-        const now = new Date();
-
-        // Set Date (e.g., Sunday, September 14, 2025)
-        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        if (dateElement) {
-             dateElement.textContent = now.toLocaleDateString('en-US', dateOptions);
-        }
-       
-        // Set Time
-        if (hoursElement) hoursElement.textContent = padZero(now.getHours());
-        if (minutesElement) minutesElement.textContent = padZero(now.getMinutes());
-        if (secondsElement) secondsElement.textContent = padZero(now.getSeconds());
-        if (millisecondsElement) millisecondsElement.textContent = padMilliseconds(now.getMilliseconds());
-    }
-
-    // Date and time display for shortcut section
-    function updateDateTime() {
-        const now = new Date();
-        const dateString = now.toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
-        const timeString = now.toLocaleTimeString('en-US', { 
-            hour: '2-digit', 
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        });
-        
-        const dateTimeElement = document.getElementById('dateTimeDisplay');
-        if (dateTimeElement) {
-            dateTimeElement.innerHTML = `${dateString}<br><strong>${timeString}</strong>`;
-        }
-    }
-
-    // Shortcut data
     const shortcuts = [
         {
             app: "Microsoft Word",
-            keys: ["Ctrl", "C"]
+            keys: "<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd>",
+            info: "Paste content without formatting. This is useful when you want to paste text but keep the formatting of your document."
         },
         {
-            app: "Microsoft Excel", 
-            keys: ["Ctrl", "V"]
+            app: "Microsoft Excel",
+            keys: "<kbd>Ctrl</kbd> + <kbd>Arrow Down</kbd>",
+            info: "Jump to the last cell with content in the current column."
         },
         {
             app: "Google Chrome",
-            keys: ["Ctrl", "T"]
+            keys: "<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd>",
+            info: "Reopen the last closed tab. You can press this multiple times to restore multiple closed tabs."
         },
         {
             app: "Windows",
-            keys: ["Win", "V"]
+            keys: "<kbd>Win</kbd> + <kbd>V</kbd>",
+            info: "Open the clipboard history to paste items you've previously copied."
         },
         {
-            app: "VS Code",
-            keys: ["Ctrl", "Shift", "P"]
+            app: "MacOS",
+            keys: "<kbd>Cmd</kbd> + <kbd>Space</kbd>",
+            info: "Open Spotlight search to quickly find files, apps, or perform calculations."
         }
     ];
-
-    function updateShortcutDisplay() {
-        const today = new Date();
-        const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-        const todaysShortcut = shortcuts[dayOfYear % shortcuts.length];
-
-        document.getElementById('appName').textContent = todaysShortcut.app;
-        document.getElementById('shortcutKeys').innerHTML = todaysShortcut.keys
-            .map(key => `<kbd>${key}</kbd>`)
-            .join(' + ');
+    
+    function getRandomShortcut() {
+        const randomIndex = Math.floor(Math.random() * shortcuts.length);
+        return shortcuts[randomIndex];
     }
+    const todaysShortcut = getRandomShortcut();
+    document.getElementById('shortcutApp').textContent = todaysShortcut.app;
+    document.getElementById('shortcutKeys').innerHTML = todaysShortcut.keys;
+    document.getElementById('shortcutInfo').textContent = todaysShortcut.info;
+});
 
-    // Update date/time every second
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
-    updateShortcutDisplay();
-
-// Add this JavaScript for the menu toggle functionality
 document.querySelector('.menu-toggle').addEventListener('click', function() {
     document.querySelector('.main-nav ul').classList.toggle('show');
 });
 
-
-
-
-
-//Search button functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // List of all applications with their page URLs
     const applications = [
         { name: "microsoft word", url: "Microsoft Word.htm" },
         { name: "word", url: "Microsoft Word.htm" },
@@ -1623,16 +1051,13 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: "mozilla firefox", url: "Firefox.htm" },
         { name: "photoshop", url: "Photoshop.htm" },
         { name: "adobe photoshop", url: "Photoshop.htm" }
-        // Add more applications as needed
     ];
 
     const searchInput = document.getElementById('app');
     const searchButton = document.getElementById('btn');
     const searchResults = document.getElementById('searchResults');
 
-    // Function to display search results
     function displaySearchResults(query) {
-        // Clear previous results
         searchResults.innerHTML = '';
         
         if (!query) {
@@ -1642,7 +1067,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         query = query.toLowerCase().trim();
         
-        // Filter applications based on query
         const matchingApps = applications.filter(app => app.name.includes(query));
         
         if (matchingApps.length === 0) {
@@ -1650,7 +1074,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Create and display results
         matchingApps.forEach(app => {
             const resultItem = document.createElement('div');
             resultItem.className = 'search-result-item';
@@ -1666,17 +1089,25 @@ document.addEventListener('DOMContentLoaded', function() {
         searchResults.style.display = 'block';
     }
     
-    // Function to handle search submission
     function handleSearch() {
-        const query = searchInput.value.trim();
+        const query = searchInput.value.toLowerCase().trim();
         
         if (!query) return;
         
-        // Redirect to search results page instead of showing recommendations
-        window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+        const matchingApp = applications.find(app => app.name === query);
+        
+        if (matchingApp) {
+            window.location.href = matchingApp.url;
+        } else {
+            const partialMatch = applications.find(app => app.name.includes(query));
+            if (partialMatch) {
+                window.location.href = partialMatch.url;
+            } else {
+                alert("No matching application found for: " + query);
+            }
+        }
     }
 
-    // Event listeners
     searchInput.addEventListener('input', function() {
         displaySearchResults(this.value);
     });
@@ -1690,7 +1121,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     searchButton.addEventListener('click', handleSearch);
     
-    // Close results when clicking outside
     document.addEventListener('click', function(e) {
         if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
             searchResults.style.display = 'none';
@@ -1698,12 +1128,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle functionality
     const menuToggle = document.getElementById('menuToggle');
     const mainNav = document.getElementById('mainNav');
     
@@ -1712,8 +1137,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mainNav.classList.toggle('active');
         });
     }
-    
-    // Shrink header on scroll
+
     window.addEventListener('scroll', function() {
         const header = document.querySelector('.main-header');
         if (window.scrollY > 50) {
@@ -1723,31 +1147,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // List of all applications with their page URLs
     const applications = [
-        { name: "microsoft word", url: "Microsoft Word.htm" },
-        { name: "word", url: "Microsoft Word.htm" },
-        { name: "microsoft excel", url: "Microsoft Excell.htm" },
-        { name: "excel", url: "Microsoft Excell.htm" },
-        { name: "microsoft excell", url: "Microsoft Excell.htm" },
-        { name: "excell", url: "Microsoft Excell.htm" },
-        { name: "powerpoint", url: "Microsoft PowerPoint.htm" },
-        { name: "microsoft powerpoint", url: "Microsoft PowerPoint.htm" },
-        { name: "chrome", url: "Chrome.htm" },
-        { name: "google chrome", url: "Chrome.htm" },
-        { name: "firefox", url: "Firefox.htm" },
-        { name: "mozilla firefox", url: "Firefox.htm" },
-        { name: "photoshop", url: "Photoshop.htm" },
-        { name: "adobe photoshop", url: "Photoshop.htm" }
-    ];
+    { name: "microsoft word", url: "Microsoft Word.htm" },
+    { name: "word", url: "Microsoft Word.htm" },
+    { name: "microsoft excel", url: "Microsoft Excel.htm" },
+    { name: "excel", url: "Microsoft Excel.htm" },
+    { name: "microsoft powerpoint", url: "Microsoft PowerPoint.htm" },
+    { name: "powerpoint", url: "Microsoft PowerPoint.htm" },
+    { name: "microsoft outlook", url: "Microsoft Outlook.htm" },
+    { name: "outlook", url: "Microsoft Outlook.htm" },
+    { name: "microsoft onenote", url: "Microsoft OneNote.htm" },
+    { name: "onenote", url: "Microsoft OneNote.htm" },
+    { name: "microsoft onedrive", url: "Microsoft OneDrive.htm" },
+    { name: "onedrive", url: "Microsoft OneDrive.htm" },
+    { name: "microsoft teams", url: "Microsoft Teams.htm" },
+    { name: "teams", url: "Microsoft Teams.htm" },
+    { name: "microsoft edge", url: "Microsoft Edge.htm" },
+    { name: "edge", url: "Microsoft Edge.htm" },
+    { name: "file explorer", url: "File Explorer.htm" },
+    { name: "explorer", url: "File Explorer.htm" },
+    { name: "slack", url: "Slack.htm" },
+    { name: "adobe photoshop", url: "Photoshop.htm" },
+    { name: "photoshop", url: "Photoshop.htm" },
+    { name: "adobe creative cloud", url: "Creative Cloud.htm" },
+    { name: "creative cloud", url: "Creative Cloud.htm" },
+    { name: "acrobat adobe reader", url: "Adobe Reader.htm" },
+    { name: "adobe reader", url: "Adobe Reader.htm" },
+    { name: "mozilla thunderbird", url: "Thunderbird.htm" },
+    { name: "thunderbird", url: "Thunderbird.htm" },
+    { name: "html cheat sheet", url: "HTML Cheat Sheet.htm" },
+    { name: "audacity", url: "Audacity.htm" },
+    { name: "vlc media player", url: "VLC.htm" },
+    { name: "vlc", url: "VLC.htm" },
+    { name: "visual studio", url: "Visual Studio.htm" },
+    { name: "windows 11", url: "Windows 11.htm" },
+    { name: "google chrome", url: "Chrome.htm" },
+    { name: "chrome", url: "Chrome.htm" },
+    { name: "telegram", url: "Telegram.htm" },
+    { name: "skype", url: "Skype.htm" },
+    { name: "zoom", url: "Zoom.htm" },
+    { name: "trello", url: "Trello.htm" },
+    { name: "spotify", url: "Spotify.htm" },
+    { name: "winrar", url: "WinRAR.htm" },
+    { name: "7-zip", url: "7zip.htm" }
+];
 
     const searchInput = document.getElementById('app');
     const searchButton = document.getElementById('btn');
     const searchResults = document.getElementById('searchResults');
 
-    // Function to display search results
     function displaySearchResults(query) {
-        // Clear previous results
         searchResults.innerHTML = '';
         
         if (!query) {
@@ -1756,16 +1205,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         query = query.toLowerCase().trim();
-        
-        // Filter applications based on query
+
         const matchingApps = applications.filter(app => app.name.includes(query));
         
         if (matchingApps.length === 0) {
             searchResults.style.display = 'none';
             return;
         }
-        
-        // Create and display results
+
         matchingApps.forEach(app => {
             const resultItem = document.createElement('div');
             resultItem.className = 'search-result-item';
@@ -1781,17 +1228,24 @@ document.addEventListener('DOMContentLoaded', function() {
         searchResults.style.display = 'block';
     }
     
-    // Function to handle search submission
     function handleSearch() {
-        const query = searchInput.value.trim();
+        const query = searchInput.value.toLowerCase().trim();
         
         if (!query) return;
         
-        // Redirect to search results page instead of showing recommendations
-        window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+        const matchingApp = applications.find(app => app.name === query);
+        
+        if (matchingApp) {
+            window.location.href = matchingApp.url;
+        } else {
+            const partialMatch = applications.find(app => app.name.includes(query));
+            if (partialMatch) {
+                window.location.href = partialMatch.url;
+            } else {
+                alert("No matching application found for: " + query);
+            }
+        }
     }
-
-    // Event listeners
     if (searchInput) {
         searchInput.addEventListener('input', function() {
             displaySearchResults(this.value);
@@ -1808,8 +1262,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (searchButton) {
         searchButton.addEventListener('click', handleSearch);
     }
-    
-    // Close results when clicking outside
     document.addEventListener('click', function(e) {
         if (searchInput && searchResults && !searchInput.contains(e.target) && !searchResults.contains(e.target)) {
             searchResults.style.display = 'none';
@@ -1820,39 +1272,142 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+import { 
+  getAuth, 
+  onAuthStateChanged, 
+  signOut 
+} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+let currentUser = null;
+
+// Authentication state observer
+function initAuth() {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in
+      currentUser = user;
+      
+      // Update UI for logged-in user
+      updateUserUI(user);
+      
+      // You can add page-specific logic here if needed
+      // e.g., If on profile page, load user data
+      const currentPage = window.location.pathname.split('/').pop();
+      
+      if (currentPage === "profile.html") {
+        loadUserProfile(user);
+      }
+      
+      console.log("User is logged in:", user.email);
+    } else {
+      // User is signed out
+      currentUser = null;
+      
+      // Redirect to login page if not already there
+      const currentPage = window.location.pathname.split('/').pop();
+      if (currentPage !== "login.html" && currentPage !== "signup.html") {
+        window.location.href = "login.html";
+      }
+    }
+  });
+}
+
+// Update UI elements based on logged-in user
+function updateUserUI(user) {
+  // Get all user display elements across the site
+  const userAvatars = document.querySelectorAll('.user-avatar');
+  const userNames = document.querySelectorAll('.user-name');
+  const userEmails = document.querySelectorAll('.user-email');
+  
+  // Update avatar images
+  userAvatars.forEach(avatar => {
+    if (user.photoURL) {
+      avatar.src = user.photoURL;
+    } else {
+      // Generate avatar from initials
+      const initials = user.displayName ? 
+        user.displayName.split(' ').map(n => n[0]).join('').toUpperCase() : 
+        user.email.substring(0, 2).toUpperCase();
+      
+      avatar.textContent = initials;
+      // Remove image src if it exists and add background color
+      avatar.removeAttribute('src');
+      avatar.style.backgroundColor = generateColorFromEmail(user.email);
+      avatar.style.color = "#ffffff";
+      avatar.style.display = "flex";
+      avatar.style.alignItems = "center";
+      avatar.style.justifyContent = "center";
+    }
+  });
+  
+  // Update user names
+  userNames.forEach(element => {
+    element.textContent = user.displayName || user.email.split('@')[0];
+  });
+  
+  // Update user emails
+  userEmails.forEach(element => {
+    element.textContent = user.email;
+  });
+}
+
+// Function to handle user logout
+function logoutUser() {
+  signOut(auth).then(() => {
+    // Sign-out successful, will trigger onAuthStateChanged
+    console.log("User signed out");
+  }).catch((error) => {
+    // An error happened
+    console.error("Logout error:", error);
+  });
+}
+
+// Helper function to generate a color based on email
+function generateColorFromEmail(email) {
+  let hash = 0
+  for (let i = 0; i < email.length; i++) {
+    hash = email.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  
+  const color = '#' + ('00000' + (hash & 0xFFFFFF).toString(16)).slice(-6);
+  return color;
+}
+
+// Function to load user profile data - implement as needed
+function loadUserProfile(user) {
+  // Implement based on your application needs
+  console.log("Loading profile for:", user.email);
+  // This would fetch and display user-specific data
+}
+
+// Export functions to make them available to other scripts
+window.shortcutSensei = window.shortcutSensei || {};
+window.shortcutSensei.auth = {
+  getCurrentUser: () => currentUser,
+  logout: logoutUser,
+  updateUserUI: updateUserUI
+};
+
+// Initialize authentication state listener when the script loads
+initAuth();
+
+
+
 </script>
 
-<!-- Gamification System Scripts -->
-<script src="scripts/badge-system.js"></script>
-<script src="scripts/streak-system.js"></script>
-<!-- <script src="scripts/shortcut-of-the-day.js"></script> Disabled to keep clean design -->
-<script src="scripts/progress-tracker.js"></script>
-<script src="scripts/gamification-integration.js"></script>
-<script src="scripts/gamification-demo.js"></script>
-
-<!-- Gamification Notifications Container -->
-<div id="gamification-notifications" class="notification-container"></div>
-
-<script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const searchInput = document.querySelector(".search-container input[type=\"text\"]");
-            const searchButton = document.querySelector(".search-container button");
-
-            function performSearch() {
-                const query = searchInput.value.trim();
-                if (query) {
-                    window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
-                }
-            }
-
-            searchButton.addEventListener("click", performSearch);
-
-            searchInput.addEventListener("keypress", function(e) {
-                if (e.key === "Enter") {
-                    performSearch();
-                }
-            });
-        });
-    </script>
 </body>
 </html>

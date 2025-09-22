@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Tips - Page 2 - Shortcut Sensei</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base styles with CSS variables for easier theming */
+        :root {
+            --primary-color: #06a3be;
+            --primary-hover: #048ea6;
+            --secondary-color: #8a2be2;
+            --secondary-hover: #7a1dc5;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #f4f4f4;
+            --light-bg: #f4f4f4;
+            --light-card: #ffffff;
+            --light-text: #333;
+            --header-footer-bg: #000000;
+            --selection-color: rgba(6, 163, 190, 0.2);
+            --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+        
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        ::selection {
+            background-color: var(--selection-color);
+        }
+        
+        /* Header styles - sticky with shadow */
+        header {
+            background-color: var(--header-footer-bg);
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .main-nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: all var(--transition-speed) ease;
+            border-radius: var(--border-radius);
+        }
+
+        .main-nav ul li a:hover,
+        .main-nav ul li a.active {
+            background-color: var(--primary-color);
+        }
+
+        .utility-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .utility-icons a {
+            color: #fff;
+            font-size: 1.2em;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .utility-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        .search-container {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 25px;
+            padding: 5px 15px;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            transition: all var(--transition-speed);
+        }
+        
+        .dark-mode .search-container {
+            background-color: #333;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .search-container input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 16px;
+            outline: none;
+            background-color: transparent;
+            color: var(--light-text);
+            transition: color var(--transition-speed);
+        }
+        
+        .dark-mode .search-container input[type="text"] {
+            color: var(--dark-text);
+        }
+        
+        .search-container input[type="text"]::placeholder {
+            color: #888;
+        }
+
+        .search-container button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            outline: none;
+            transition: background-color var(--transition-speed);
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .search-container button:hover {
+            background-color: var(--secondary-hover);
+        }
+        
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: 15px;
+            position: relative;
+            user-select: none;
+        }
+        
+        .dark-mode-toggle i {
+            font-size: 24px;
+            transition: transform 0.4s ease;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8em;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        /* Main content styles */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        body.dark-mode .page-subtitle {
+            color: #aaa;
+        }
+
+        /* Filter and search styles */
+        .filter-section {
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: border-color var(--transition-speed);
+            background-color: var(--light-card);
+            color: var(--light-text);
+        }
+
+        body.dark-mode .search-input {
+            background-color: var(--dark-card);
+            color: var(--dark-text);
+            border-color: #444;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .search-btn {
+            padding: 12px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+            font-size: 16px;
+        }
+
+        .search-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-size: 14px;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Blog grid styles */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .blog-card {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+            transition: all var(--transition-speed) ease;
+        }
+
+        body.dark-mode .blog-card {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        body.dark-mode .blog-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+        }
+
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        body.dark-mode .blog-meta {
+            color: #aaa;
+        }
+
+        .blog-category {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .blog-title {
+            font-size: 1.4em;
+            margin-bottom: 12px;
+            color: var(--light-text);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        body.dark-mode .blog-title {
+            color: var(--dark-text);
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .blog-excerpt {
+            color: #ccc;
+        }
+
+        .blog-read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color var(--transition-speed);
+        }
+
+        .blog-read-more:hover {
+            color: var(--primary-hover);
+        }
+
+        .blog-read-more i {
+            transition: transform var(--transition-speed);
+        }
+
+        .blog-read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 12px 16px;
+            background-color: var(--light-card);
+            color: var(--light-text);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            border: 2px solid #ddd;
+            transition: all var(--transition-speed);
+        }
+
+        body.dark-mode .pagination a,
+        body.dark-mode .pagination span {
+            background-color: var(--dark-card);
+            color: var(--dark-text);
+            border-color: #444;
+        }
+
+        .pagination a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .pagination .current {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Newsletter section */
+        .newsletter-section {
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-light);
+            transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+            text-align: center;
+        }
+        
+        .dark-mode .newsletter-section {
+            background-color: var(--dark-card);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .newsletter-heading {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .newsletter-description {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color var(--transition-speed);
+        }
+        
+        .newsletter-form input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(6, 163, 190, 0.2);
+        }
+        
+        .dark-mode .newsletter-form input {
+            background-color: #333;
+            border-color: #555;
+            color: var(--dark-text);
+        }
+        
+        .newsletter-form button {
+            padding: 12px 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+            white-space: nowrap;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: var(--header-footer-bg);
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5em;
+            margin: 0 15px;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .utility-icons {
+                order: -1;
+            }
+
+            .page-title {
+                font-size: 2.2em;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-bar {
+                max-width: none;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .pagination a,
+            .pagination span {
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                font-size: 1.8em;
+            }
+
+            .blog-content {
+                padding: 20px;
+            }
+
+            .blog-title {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../../home-page.html"><i class="fas fa-keyboard logo-icon"></i> Shortcut Sensei</a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="blogs.html" class="active">Blogs</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="../../About.htm">About</a></li>
+                </ul>
+                <span class="menu-toggle"><i class="fas fa-bars"></i></span>
+            </nav>
+            <div class="search-container">
+                <input type="text" placeholder="Search...">
+                <button type="button"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="dark-mode-toggle">
+              <i class="fa-solid fa-moon"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page header -->
+        <div class="page-header">
+            <h1 class="page-title">Productivity Tips - Page 2</h1>
+            <p class="page-subtitle">Discover advanced productivity techniques and strategies to enhance your workflow</p>
+        </div>
+
+        <!-- Filter section -->
+        <div class="filter-section">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search for productivity tips..." id="searchInput">
+                <button class="search-btn" onclick="searchBlogs()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="category-filters">
+                <button class="filter-btn active" onclick="filterCategory('all')">All</button>
+                <button class="filter-btn" onclick="filterCategory('time-management')">Time Management</button>
+                <button class="filter-btn" onclick="filterCategory('workflow')">Workflow</button>
+                <button class="filter-btn" onclick="filterCategory('automation')">Automation</button>
+                <button class="filter-btn" onclick="filterCategory('focus')">Focus</button>
+                <button class="filter-btn" onclick="filterCategory('organization')">Organization</button>
+            </div>
+        </div>
+
+        <!-- Blog grid -->
+        <div class="blog-grid">
+            <!-- Blog card 1 -->
+            <div class="blog-card" data-category="time-management">
+                <img src="https://images.unsplash.com/photo-1606868306217-dbf5046868d2?w=500&h=300&fit=crop" alt="Pomodoro Technique" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Time Management</span>
+                        <span>March 25, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Master the Pomodoro Technique for Better Focus</h2>
+                    <p class="blog-excerpt">Learn how to use the famous Pomodoro Technique to break your work into focused intervals and dramatically improve your productivity and concentration.</p>
+                    <a href="https://pomofocus.io/" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 2 -->
+            <div class="blog-card" data-category="workflow">
+                <img src="https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=500&h=300&fit=crop" alt="Email Management" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Workflow</span>
+                        <span>March 24, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Email Management Strategies That Actually Work</h2>
+                    <p class="blog-excerpt">Transform your inbox from chaos to clarity with proven email management techniques that save time and reduce stress.</p>
+                    <a href="https://www.boomeranggmail.com/blog/email-management/" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 3 -->
+            <div class="blog-card" data-category="automation">
+                <img src="https://images.unsplash.com/photo-1526378800651-c32d170fe6f8?w=500&h=300&fit=crop" alt="Automation Tools" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Automation</span>
+                        <span>March 21, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Top 10 Automation Tools to Save Time</h2>
+                    <p class="blog-excerpt">Explore the best automation tools like Zapier, IFTTT, and Microsoft Power Automate to streamline repetitive tasks and boost productivity.</p>
+                    <a href="https://zapier.com/blog/best-automation-tools/" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 4 -->
+            <div class="blog-card" data-category="focus">
+                <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?w=500&h=300&fit=crop" alt="Deep Work" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Focus</span>
+                        <span>March 19, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Deep Work: How to Focus in a Distracted World</h2>
+                    <p class="blog-excerpt">Master the art of sustained concentration and create valuable work that stands out in our increasingly connected world.</p>
+                    <a href="https://calnewport.com/deep-work-rules-for-focused-success-in-a-distracted-world/" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 5 -->
+            <div class="blog-card" data-category="organization">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=300&fit=crop" alt="Getting Things Done" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Organization</span>
+                        <span>March 17, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Getting Things Done: The Ultimate Guide</h2>
+                    <p class="blog-excerpt">Discover David Allen's revolutionary productivity system that helps you capture, organize, and execute all your tasks and projects efficiently.</p>
+                    <a href="https://gettingthingsdone.com/what-is-gtd/" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog card 6 -->
+            <div class="blog-card" data-category="time-management">
+                <img src="https://images.unsplash.com/photo-1495364141860-b0d03eccd065?w=500&h=300&fit=crop" alt="Time Blocking" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">Time Management</span>
+                        <span>March 15, 2025</span>
+                    </div>
+                    <h2 class="blog-title">Time Blocking: Schedule Your Way to Success</h2>
+                    <p class="blog-excerpt">Learn how to use time blocking to take control of your calendar, increase focus, and ensure important tasks get the attention they deserve.</p>
+                    <a href="https://blog.clockify.me/time-blocking/" target="_blank" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <a href="blogs.html">&laquo; Previous</a>
+            <a href="blogs.html">1</a>
+            <span class="current">2</span>
+            <a href="blogs-page-3.html">3</a>
+            <a href="blogs-page-4.html">4</a>
+            <a href="blogs-page-5.html">5</a>
+            <a href="blogs-page-6.html">6</a>
+            <a href="blogs-page-7.html">7</a>
+            <a href="blogs-page-8.html">8</a>
+            <a href="blogs-page-9.html">9</a>
+            <a href="blogs-page-10.html">10</a>
+            <a href="blogs-page-3.html">Next &raquo;</a>
+        </div>
+    </main>
+
+    <!-- Newsletter section -->
+    <div class="newsletter-section">
+        <h2 class="newsletter-heading">Subscribe to Our Newsletter</h2>
+        <p class="newsletter-description">Get the latest shortcuts, productivity tips, and keyboard hacks delivered directly to your inbox. Stay updated with our weekly newsletter.</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Your email address" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://www.facebook.com/shortcutsensei" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.twitter.com/shortcutsensei" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/company/shortcut-sensei" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.youtube.com/c/shortcutsensei" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2024 Shortcut Sensei. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.querySelector('.theme-toggle i');
+            
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.querySelector('.theme-toggle i');
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeIcon.className = 'fas fa-sun';
+            }
+        });
+
+        // Filter functionality
+        function filterCategory(category) {
+            const cards = document.querySelectorAll('.blog-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search functionality
+        function searchBlogs() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.blog-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.blog-title').textContent.toLowerCase();
+                const excerpt = card.querySelector('.blog-excerpt').textContent.toLowerCase();
+                const category = card.querySelector('.blog-category').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || excerpt.includes(searchTerm) || category.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchBlogs();
+            }
+        });
+
+        // Smooth scroll for pagination
+        document.querySelectorAll('.pagination a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
