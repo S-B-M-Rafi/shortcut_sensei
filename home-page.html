@@ -352,16 +352,19 @@
 
 .main-nav ul li a {
     color: #fff;
-    text-decoration: none;
+    text-decoration: none; /* Ensures no underlines */
     padding: 10px 15px;
     display: block;
     transition: all 0.3s;
     border-radius: 4px;
+    outline: none; /* Removes focus outlines */
 }
 
-.main-nav ul li a:hover {
+.main-nav ul li a:hover,
+.main-nav ul li a:focus {
     background-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
+    text-decoration: none; /* Explicitly prevent underlines on hover */
 }
 
 .get-started a {
@@ -1385,36 +1388,122 @@ header {
             }
         }
 
-        /* About Section */
-        .about {
-            padding: 50px 20px;
-            background-color: #f9f9f9;
-            text-align: center;
+        /* ====================================================== */
+        /*      START: NEW "ABOUT US" STYLES                     */
+        /* ====================================================== */
+
+        /* 1. Main Section Container */
+        .about-us-section {
+            background-color: #ffffff; /* The clean white background */
+            padding: 80px 20px;
+            overflow: hidden;
         }
 
-        .about h2 {
-            font-size: 2.5em;
-            margin-bottom: 30px;
+        .about-us-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex; /* Creates the two-column layout */
+            align-items: center;
+            gap: 60px; /* Space between the text and the visual */
         }
 
-        .about p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            line-height: 1.6;
+        /* 2. Left Column (Text) */
+        .about-us-text {
+            flex: 1; /* Takes up half the space */
+            max-width: 600px;
         }
 
-        .about .cta {
+        .about-us-text h2 {
+            font-size: 2.8em;
+            font-weight: 800;
+            margin-bottom: 24px;
+            position: relative;
+            padding-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        /* Adds the purple underline accent */
+        .about-us-text h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #9333EA; /* Your brand purple */
+        }
+
+        /* Styling for the two-line headline */
+        .h2-subtitle {
+            display: block; /* This is what forces it to the next line */
+            font-size: 0.7em; /* Makes it slightly smaller than the main title */
+            font-weight: 400; /* Makes it look like a true subtitle */
+            color: #555;     /* A softer color for contrast */
+            margin-top: 8px;
+        }
+
+        .about-us-text p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .about-us-text strong {
+            color: #9333EA; /* Highlight the key sentence */
+        }
+
+        /* 3. The Call-to-Action Button */
+        .about-us-cta {
             display: inline-block;
-            padding: 10px 25px;
-            background-color: purple;
+            background-color: #9333EA;
             color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
             text-decoration: none;
-            border-radius: 25px;
-            transition: background-color 0.3s;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
 
-        .about .cta:hover {
-            background-color: #6a1b9a;
+        .about-us-cta:hover {
+            background-color: #7e22ce;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+        }
+
+        /* ====================================================== */
+        /*      FIXED SCROLL ANIMATION STYLES                    */
+        /* ====================================================== */
+
+        /* 1. The visual container MUST clip the animation */
+        .about-us-visual {
+            flex: 1;
+            max-width: 400px;
+            opacity: 0.7;
+            position: relative; /* Establishes a boundary */
+            overflow: hidden;   /* KEY FIX: Clips anything outside this div, including the bullet */
+        }
+
+        /* 2. Hide elements by default */
+        .shot-marker,
+        #bullet {
+            opacity: 0;
+            transform-origin: center center;
+            transform: scale(0);
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .about-us-container {
+                flex-direction: column; /* Stack columns on mobile */
+                gap: 40px;
+            }
+            .about-us-visual {
+                display: none; /* Hide the decorative SVG on small screens to save space */
+            }
+            .about-us-text h2 {
+                font-size: 2.2em;
+            }
         }
 
         /* Testimonials Section */
@@ -1429,84 +1518,159 @@ header {
             margin-bottom: 30px;
         }
 
-        .testimonials blockquote {
-            font-size: 1.2em;
-            font-style: italic;
-            margin: 0 auto 30px;
-            max-width: 700px;
-            line-height: 1.6;
+        /* ====================================================== */
+        /*      UPGRADED TESTIMONIALS STYLES                     */
+        /* ====================================================== */
+
+        /* This centers the main headline and adds the purple accent line */
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 40px; /* More space below the headline */
             position: relative;
-            padding: 20px;
-            background-color: #f4f4f4;
-            border-left: 5px solid purple;
+            padding-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .testimonials h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%); /* Centering the line */
+            width: 60px;
+            height: 4px;
+            background-color: #9333EA;
         }
 
+        .testimonials blockquote {
+            background-color: #ffffff; /* Use a clean white background */
+            border: 1px solid #f3e8ff; /* A very subtle lavender border */
+            border-radius: 16px;       /* Slightly larger radius for a softer look */
+            padding: 32px;
+            margin: 20px auto;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.07); /* A soft, purple-tinted shadow */
+            text-align: left; /* Align text to the left for better readability */
+        }
+
+        /* The subtle decorative quote mark */
         .testimonials blockquote::before {
-            content: open-quote;
-            font-size: 3em;
-            color: purple;
+            content: '"';
             position: absolute;
-            top: 0;
-            left: 10px;
+            top: 15px;
+            left: 20px;
+            font-size: 50px;
+            color: #e9d5ff; /* Light, subtle purple */
+            font-family: serif;
+            z-index: 1;
+        }
+
+        .testimonials blockquote p {
+            position: relative;
+            z-index: 2;
+            font-size: 1.15em;
+            font-style: italic;
+            color: #333;
+            line-height: 1.7;
+            padding-left: 40px; /* Indent the text to make space for the quote mark */
+            margin: 0;
         }
 
         .testimonials blockquote cite {
             display: block;
-            margin-top: 10px;
+            margin-top: 20px;
+            padding-left: 40px; /* Align the citation with the text */
             font-weight: bold;
+            font-style: normal;
+            color: #9333EA;
+            z-index: 2;
+            position: relative;
         }
 
-        /* Latest News Section */
+        /* ====================================================== */
+        /*      ELEVATED DARK-THEME BLOG SECTION                 */
+        /* ====================================================== */
         .latest-news {
-    padding: 50px 20px;
-    background-color: #f9f9f9;
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
+            background-color: #111827; /* Use the rich, dark charcoal */
+            padding: 80px 20px;
+            text-align: center; /* This centers the H2 headline */
+        }
 
         .latest-news h2 {
+            color: #ffffff; /* White headline for dark background */
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 10px;
+            display: inline-block; /* Allows the underline to be sized to the text */
             font-size: 2.5em;
-            margin-bottom: 30px;
+        }
+        .latest-news h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: #9333EA; /* Purple accent looks great on dark */
         }
 
+        /* This is the new grid container */
+        .blog-grid {
+            display: flex;
+            justify-content: center; /* Centers the cards within the container */
+            gap: 30px; /* Space between the cards */
+            flex-wrap: wrap; /* Allows cards to wrap to the next line on smaller screens */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* This is the key change for the cards */
         .latest-news article {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 45%;
-    padding: 20px;
-    margin: 10px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
+            background-color: #1F2937; /* A lighter shade of charcoal */
+            border: 1px solid #374151; /* Subtle border for definition */
+            border-radius: 16px;
+            padding: 32px;
+            width: 100%;
+            max-width: 400px; /* Control the max width of each card */
+            text-align: left;
+            transition: all 0.3s ease;
+            box-shadow: none; /* Remove the old shadow */
+        }
+
+        /* A very classy hover effect for dark cards */
+        .latest-news article:hover {
+            transform: translateY(-5px); /* Professional hover effect */
+            border-color: #9333EA; /* The border glows with your brand color */
+        }
 
         .latest-news article h3 {
             font-size: 1.5em;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            color: #F9FAFB; /* A bright, clean white for titles */
         }
 
         .latest-news article p {
             font-size: 1em;
-            margin-bottom: 20px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            color: #9CA3AF; /* A softer gray for body text */
         }
 
+        /* The button looks great as-is on a dark background */
         .latest-news article a {
             display: inline-block;
-            padding: 10px 20px;
-            background-color: purple;
+            background-color: #9333EA;
             color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
             text-decoration: none;
-            border-radius: 20px;
-            transition: background-color 0.3s;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
         }
 
         .latest-news article a:hover {
-            background-color: #6a1b9a;
+            background-color: #7e22ce;
         }
 
         @keyframes burst {
@@ -1576,35 +1740,134 @@ header {
         }
 
         .social-icons li a:hover {
-            color: #6a1b9a;
+            transform: translateY(-8px) rotate(360deg) scale(1.1);
+            box-shadow: 0 10px 25px rgba(156, 39, 176, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        /* Specific colors for each social platform */
+        .social-icons li:nth-child(1) a:hover { 
+            background-color: #3b5998 !important; 
+            color: #fff !important; 
+        } /* Facebook */
+        .social-icons li:nth-child(2) a:hover { 
+            background-color: #1da1f2 !important; 
+            color: #fff !important; 
+        } /* Twitter */
+        .social-icons li:nth-child(3) a:hover { 
+            background-color: #0077b5 !important; 
+            color: #fff !important; 
+        } /* LinkedIn */
+        .social-icons li:nth-child(4) a:hover { 
+            background-color: #e4405f !important; 
+            color: #fff !important; 
+        } /* Instagram */
 
         .subscribe-form {
             display: flex;
+            justify-content: center;
             gap: 10px;
+            margin: 20px 0;
         }
 
         .subscribe-form input[type="email"] {
-            padding: 10px;
+            padding: 12px 20px;
+            min-width: 280px;
+            font-size: 14px;
             border: none;
-            border-radius: 20px;
+            border-radius: 25px;
             outline: none;
-            font-size: 1em;
         }
 
         .subscribe-form button {
-            padding: 10px 20px;
+            padding: 12px 25px;
+            font-size: 14px;
             border: none;
-            border-radius: 20px;
-            background-color: purple;
+            border-radius: 25px;
+            background-color: #9c27b0;
             color: #fff;
             cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
 
         .subscribe-form button:hover {
-            background-color: #6a1b9a;
+            background-color: #7b1fa2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+        }
+
+        /* Fireworks Animation Styles */
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .firework {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: firework 2s ease-out forwards;
+        }
+
+        @keyframes firework {
+            0% {
+                transform: translateY(100vh) scale(1);
+                opacity: 1;
+            }
+            15% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(20vh) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(20vh) scale(0);
+                opacity: 0;
+                box-shadow: 0 0 50px 25px currentColor;
+            }
+        }
+
+        .firework.burst {
+            animation: burst 1.5s ease-out forwards;
+        }
+
+        @keyframes burst {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+                box-shadow: 0 0 100px 50px currentColor;
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: particle 2s ease-out forwards;
+        }
+
+        @keyframes particle {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0) translateX(var(--dx)) translateY(var(--dy));
+                opacity: 0;
+            }
         }
 
         footer p {
@@ -2154,16 +2417,67 @@ header {
 
 
 
-<section style="background-color: #333;"id="about" class="about">
-    <h2 style="color: #fff;">Our Philosophy: The Path to Mastery</h2>
-    <p style="color: #fff;">In a world of endless clicks and wasted motion, we saw a need for a different path—a path of focus, efficiency, and command. We believe that true productivity isn't about working harder; it's about working smarter.</p>
-    <p style="color: #fff;">Shortcut Sensei was born from a simple idea: every user deserves to feel like a master of their tools.</p>
-    <p style="color: #fff;">Our mission is to be your guide on this journey. We are a dedicated team of productivity enthusiasts and developers committed to curating the wisdom and techniques that separate the novice from the Sensei. We're here to help you trade tedious habits for powerful commands and reclaim your most valuable asset: your time.</p>
-    <a href="About.html#contact-section-id" class="get-started-style">Learn More About Our Mission</a>
+<!-- ====================================================== -->
+<!--      START: NEW "ABOUT US" SECTION                  -->
+<!-- ====================================================== -->
+<section id="about" class="about-us-section">
+    <div class="about-us-container">
+        <!-- Left Column: The Text -->
+        <div class="about-us-text">
+            <h2>Our Philosophy: <span class="h2-subtitle">The Path to Mastery</span></h2>
+            <p>
+                In a world of endless clicks and wasted motion, we saw a need for a different path—a path of focus, efficiency, and command. We believe that true productivity isn't about working harder; it's about working smarter.
+            </p>
+            <p>
+                <strong>Shortcut Sensei was born from a simple idea: every user deserves to feel like a master of their tools.</strong>
+            </p>
+            <p>
+                Our mission is to be your guide on this journey. We are a dedicated team of productivity enthusiasts and developers committed to curating the wisdom and techniques that separate the novice from the Sensei.
+            </p>
+            <a href="About.html#contact-section-id" class="about-us-cta">Learn More About Our Mission</a>
+        </div>
+
+        <!-- Right Column: The ANIMATED Visual -->
+        <div class="about-us-visual">
+            <!-- This SVG has been updated with "shot" markers for animation -->
+            <svg width="100%" height="100%" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Filter for bullet glow effect -->
+                <defs>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- The Target Rings -->
+                <path d="M200 0V400" stroke="#E9D5FF" stroke-width="2"/>
+                <path d="M0 200H400" stroke="#E9D5FF" stroke-width="2"/>
+                <circle id="outer-ring" cx="200" cy="200" r="150" stroke="#C084FC" stroke-width="3" stroke-dasharray="8 8"/>
+                <circle id="inner-ring" cx="200" cy="200" r="100" stroke="#9333EA" stroke-width="4"/>
+                <circle id="bullseye" cx="200" cy="200" r="50" fill="#A855F7"/>
+
+                <!-- The "Shots" - Initially Hidden -->
+                <circle class="shot-marker" id="shot1" cx="350" cy="200" r="8" fill="#FF4136"/> <!-- Miss #1 -->
+                <circle class="shot-marker" id="shot2" cx="120" cy="80" r="8" fill="#FF4136"/>  <!-- Miss #2 -->
+                <circle class="shot-marker" id="shot3" cx="130" cy="200" r="8" fill="#FF851B"/> <!-- Close #1 -->
+                <circle class="shot-marker" id="shot4" cx="270" cy="150" r="8" fill="#FFDC00"/> <!-- Close #2 -->
+                <circle class="shot-marker" id="shot5" cx="200" cy="200" r="10" fill="#2ECC40"/> <!-- Center Hit! -->
+                
+                <!-- The "Bullet" Projectile -->
+                <circle id="bullet" r="6" fill="#111827" filter="url(#glow)" cx="0" cy="0"/>
+            </svg>
+        </div>
+    </div>
 </section>
+<!-- ====================================================== -->
+<!--       END: NEW "ABOUT US" SECTION                   -->
+<!-- ====================================================== -->
 
 <section id="testimonials" class="testimonials">
-    <h2>What Our Users Say</h2>
+    <h2>Wisdom from the Dojo</h2>
     <blockquote>
         <p>"I'm easily saving an hour every day. That's five hours a week I get back for strategic planning instead of being stuck in menial tasks. Shortcut Sensei didn't just teach me shortcuts; it fundamentally changed my relationship with my work."</p>
         <cite>- Sarah M., Project Manager</cite>
@@ -2174,19 +2488,20 @@ header {
     </blockquote>
 </section>
 
-<section style="background-color: #fff;"id="news" class="latest-news">
-    <h2>Latest Blog Posts</h2>
-    <article style="background-color: #eedfdf;">
-        <h3>Unleashing the Power of Shortcuts</h3>
-        <p>From Click to Command: The Ultimate Shortcut Revolution.</p>
-        <a href="https://shortcut-sensei.hashnode.dev/from-click-to-command-the-ultimate-shortcut-revolution">Read More</a>
-    </article>
-    <article style="background-color: #eedfdf;">
-        <h3>How to Customize Your Shortcuts</h3>
-        <p>Personalize your shortcuts for even greater efficiency.</p>
-        <a href="https://support.microsoft.com/en-us/office/customize-keyboard-shortcuts-9a92343e-a781-4d5a-92f1-0f32e3ba5b4d">Read More</a>
-    </article>
-
+<section id="news" class="latest-news">
+    <h2>The Sensei's Scrolls</h2> <!-- Using the on-brand headline -->
+    <div class="blog-grid"> <!-- This is the new wrapper -->
+        <article>
+            <h3>Unleashing the Power of Shortcuts</h3>
+            <p>From Click to Command: The Ultimate Shortcut Revolution.</p>
+            <a href="https://shortcut-sensei.hashnode.dev/from-click-to-command-the-ultimate-shortcut-revolution">Read More</a>
+        </article>
+        <article>
+            <h3>How to Customize Your Shortcuts</h3>
+            <p>Personalize your shortcuts for even greater efficiency.</p>
+            <a href="https://support.microsoft.com/en-us/office/customize-keyboard-shortcuts-9a92343e-a781-4d5a-92f1-0f32e3ba5b4d">Read More</a>
+        </article>
+    </div>
 </section>
 
 <footer>
@@ -2221,6 +2536,50 @@ header {
         return emailRegex.test(email);
     }
 
+    // Function to create fireworks animation
+    function createFireworks() {
+        // Create fireworks container
+        const fireworksContainer = document.createElement('div');
+        fireworksContainer.className = 'fireworks-container';
+        document.body.appendChild(fireworksContainer);
+
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#fab1a0', '#fd79a8', '#fdcb6e'];
+        
+        // Create multiple fireworks
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = Math.random() * 100 + '%';
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                fireworksContainer.appendChild(firework);
+
+                // Create explosion particles
+                setTimeout(() => {
+                    for (let j = 0; j < 12; j++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = firework.style.left;
+                        particle.style.bottom = '80vh';
+                        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        particle.style.setProperty('--dx', (Math.random() - 0.5) * 200 + 'px');
+                        particle.style.setProperty('--dy', (Math.random() - 0.5) * 200 + 'px');
+                        fireworksContainer.appendChild(particle);
+                        
+                        setTimeout(() => particle.remove(), 2000);
+                    }
+                    firework.remove();
+                }, 1000);
+                
+            }, i * 200);
+        }
+
+        // Remove fireworks container after animation
+        setTimeout(() => {
+            fireworksContainer.remove();
+        }, 4000);
+    }
+
     // Function to handle subscription
     function subscribe() {
         var email = document.getElementById('emailInput').value.trim();
@@ -2237,20 +2596,15 @@ header {
         document.querySelector('.subscribe-form').style.display = 'none';
         // Show the confirmation message
         document.getElementById('confirmationMessage').style.display = 'block';
-    
+        
+        // Trigger fireworks animation
+        createFireworks();
+    }
 
-    // Subscribe button click event listener
-    //document.getElementById('subscribeButton').addEventListener('click', subscribe);
-
-    // Trigger firework animation
-   
-        }
-
-        document.getElementById('subscribeButton').addEventListener('click', subscribe);
-
-   
 // Add this JavaScript for rotating shortcuts
 document.addEventListener('DOMContentLoaded', function() {
+    // Attach newsletter subscription event listener
+    document.getElementById('subscribeButton').addEventListener('click', subscribe);
     
     // --- 1. LIVE CLOCK FUNCTIONALITY ---
 
@@ -2742,5 +3096,75 @@ document.addEventListener('DOMContentLoaded', function() {
         // Re-randomize every 45 seconds with smooth transitions
         setInterval(randomizeFloatingIcons, 45000);
     </script>
+
+    <!-- ====================================================== -->
+    <!--      START: DEFINITIVE ANIMATION SCRIPT BLOCK       -->
+    <!-- ====================================================== -->
+
+    <!-- 1. Load the GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- 2. The Animation Code -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Ensure GSAP and ScrollTrigger are loaded before running the code
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+            console.error("GSAP or ScrollTrigger is not loaded!");
+            return;
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".about-us-section",
+                start: "center center",  // Only start when section is centered on screen
+                end: "bottom center",    // End when bottom of section hits center
+                scrub: 10,               // Ultra-slow scroll resistance for smooth animation
+                
+                // Debug markers removed for clean experience
+                // markers: true, 
+            }
+        });
+
+        function createShotAnimation(targetId, startX, startY) {
+            const target = document.getElementById(targetId);
+            if (!target) return gsap.timeline(); // Return empty timeline if target not found
+
+            const endX = parseFloat(target.getAttribute('cx'));
+            const endY = parseFloat(target.getAttribute('cy'));
+
+            const shotTl = gsap.timeline();
+            shotTl
+                .set("#bullet", { x: startX, y: startY, scale: 1, opacity: 1 })
+                .to("#bullet", { x: endX, y: endY, duration: 6, ease: "power1.in" }) // EVEN SLOWER: 6 seconds for bullet flight
+                .set("#bullet", { opacity: 0 })
+                .to(target, { scale: 1, opacity: 1, duration: 3 }); // SLOWER: 3 seconds for marker appearance
+            return shotTl;
+        }
+        
+        // Define off-screen start points relative to the SVG box (0,0 is top-left)
+        const startPoints = [
+            { x: -50, y: 200 }, // From left
+            { x: 120, y: -50 }, // From top
+            { x: 450, y: 200 }, // From right
+            { x: -50, y: 100 }, // From left again
+            { x: 200, y: 450 }  // From bottom for the bullseye
+        ];
+
+        tl.add(createShotAnimation("shot1", startPoints[0].x, startPoints[0].y));
+        tl.add(createShotAnimation("shot2", startPoints[1].x, startPoints[1].y), "+=5"); // MUCH LONGER: 5 seconds between shots
+        tl.add(createShotAnimation("shot3", startPoints[2].x, startPoints[2].y), "+=5");
+        tl.add(createShotAnimation("shot4", startPoints[3].x, startPoints[3].y), "+=5");
+        
+        const bullseyeShot = createShotAnimation("shot5", startPoints[4].x, startPoints[4].y);
+        bullseyeShot.to("#shot5", { scale: 1.5, repeat: 1, yoyo: true, duration: 2 }); // SLOWER: 2 second bullseye pop
+        tl.add(bullseyeShot, "+=6"); // LONGEST: 6 second pause before final shot
+    });
+    </script>
+    <!-- ====================================================== -->
+    <!--       END: DEFINITIVE ANIMATION SCRIPT BLOCK        -->
+    <!-- ====================================================== -->
 </body>
 </html>
