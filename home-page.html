@@ -139,6 +139,126 @@
             document.body.style.visibility = 'visible';
         }, 3000);
     </script>
+
+    <!-- Shortcut of the Day JavaScript -->
+    <script>
+        // Array of daily shortcuts with rotation
+        const dailyShortcuts = [
+            {
+                app: "Microsoft Word",
+                shortcut: ["Ctrl", "C"],
+                description: "Copy selected text",
+                usage: "Text Editor / Document Processing"
+            },
+            {
+                app: "Google Chrome",
+                shortcut: ["Ctrl", "T"],
+                description: "Open new tab",
+                usage: "Web Browser / Navigation"
+            },
+            {
+                app: "Windows Explorer",
+                shortcut: ["Ctrl", "Shift", "N"],
+                description: "Create new folder",
+                usage: "File Management / Organization"
+            },
+            {
+                app: "Adobe Photoshop",
+                shortcut: ["Ctrl", "Z"],
+                description: "Undo last action",
+                usage: "Image Editing / Design"
+            },
+            {
+                app: "Visual Studio Code",
+                shortcut: ["Ctrl", "Shift", "P"],
+                description: "Open command palette",
+                usage: "Code Editor / Development"
+            },
+            {
+                app: "Slack",
+                shortcut: ["Ctrl", "Shift", "A"],
+                description: "View all unreads",
+                usage: "Communication / Messaging"
+            },
+            {
+                app: "Excel",
+                shortcut: ["Ctrl", "Shift", "L"],
+                description: "Add/remove filters",
+                usage: "Spreadsheet / Data Analysis"
+            }
+        ];
+
+        // Live timer functionality
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Day display
+            const dayOptions = { weekday: 'long' };
+            const dayName = now.toLocaleDateString('en-US', dayOptions);
+            
+            // Month and Year display
+            const monthYearOptions = { 
+                month: 'long', 
+                year: 'numeric' 
+            };
+            const monthYear = now.toLocaleDateString('en-US', monthYearOptions);
+            
+            // Time formatting with 12-hour format and milliseconds
+            let hours = now.getHours();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // 0 should be 12
+            const hoursStr = hours.toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const milliseconds = now.getMilliseconds().toString().padStart(3, '0');
+            const formattedTime = `${hoursStr}:${minutes}:${seconds}.${milliseconds} ${ampm}`;
+            
+            // Update displays
+            const dayDisplay = document.getElementById('dayDisplay');
+            const monthYearDisplay = document.getElementById('monthYearDisplay');
+            const liveClock = document.getElementById('liveClock');
+            
+            if (dayDisplay) dayDisplay.textContent = dayName;
+            if (monthYearDisplay) monthYearDisplay.textContent = monthYear;
+            if (liveClock) liveClock.textContent = formattedTime;
+        }
+
+        // Get shortcut for today based on date
+        function getTodayShortcut() {
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+            return dailyShortcuts[dayOfYear % dailyShortcuts.length];
+        }
+
+        // Update shortcut display
+        function updateShortcutDisplay(shortcutData) {
+            const appName = document.getElementById('appName');
+            const shortcutDescription = document.getElementById('shortcutDescription');
+            const shortcutKeys = document.getElementById('shortcutKeys');
+            const usageContext = document.getElementById('usageContext');
+
+            if (appName) appName.textContent = shortcutData.app;
+            if (shortcutDescription) shortcutDescription.textContent = shortcutData.description;
+            if (usageContext) usageContext.textContent = shortcutData.usage;
+            
+            if (shortcutKeys) {
+                shortcutKeys.innerHTML = shortcutData.shortcut
+                    .map(key => `<kbd>${key}</kbd>`)
+                    .join(' + ');
+            }
+        }
+
+        // Initialize everything when DOM loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize shortcut display
+            updateShortcutDisplay(getTodayShortcut());
+            
+            // Start live timer
+            updateDateTime();
+            setInterval(updateDateTime, 10); // Update every 10ms for smooth milliseconds
+        });
+    </script>
     
     <style>
 
@@ -803,8 +923,9 @@ header {
             background-color: #000000;
             color: #fff;
             text-align: center;
-            padding: 100px 20px;
+            padding: 100px 20px 120px; /* Increased bottom padding for more space after button */
             position: relative;
+            margin-bottom: 0 !important; /* Ensures no space below the hero section */
         }
 
         .hero::before {
@@ -854,148 +975,283 @@ header {
 
 
 
-/* Shortcut of the Day Section */
+/* Shortcut of the Day Section - Horizontal Strip Design */
 .shortcut-of-day {
-    background: linear-gradient(135deg, #8B5FBF 0%, #6A4C93 100%);
-    padding: 40px 20px;
-    margin: 20px 0;
+    background-color: #000000; /* The seamless black background */
+    padding: 0 20px;          /* Side padding for the card */
+    margin-top: -60px;        /* Pulls the section up for the overlap effect */
+    position: relative;       /* CRITICAL: Establishes the positioning context for the animation */
+    overflow: hidden;         /* CRITICAL: Hides icons before they float in */
+    padding-bottom: 250px;    /* KEY CHANGE: Adds 250px of black space at the bottom for the animation to live in */
+    z-index: 10;
 }
 
-.shortcut-container {
-    max-width: 800px;
+.shortcut-strip {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for better contrast */
+    overflow: hidden;
+    max-width: 1200px;
     margin: 0 auto;
-    background: white;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    position: relative;
+    display: flex;
+    align-items: stretch;
+    min-height: 120px;
+    position: relative; /* Good practice for z-index stacking */
+    z-index: 5;         /* Ensures card is above the icons if they overlap */
 }
 
-.section-header {
+/* Left Section - Date */
+.date-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 40px;
+    background: none;         /* Remove the old gray/lavender background */
+    border-right: 1px solid #e0e0e0; /* Use a single, subtle divider */
+}
+
+.day-display {
+    font-size: 2.2em;
+    font-weight: 800;
+    color: #4a148c;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.month-year-display {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #7b1fa2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Middle Section - Shortcut */
+.shortcut-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 40px;
+    text-align: center;
+    background: none;         /* Remove the old white background */
+    border-right: 1px solid #e0e0e0;
+}
+
+.shortcut-heading {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #9c27b0;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.shortcut-section .application-name {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.shortcut-section .shortcut-keys {
+    margin: 12px 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 25px;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 15px;
-    position: relative;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
-.section-header h2 {
-    margin: 0;
-    color: #333;
-    font-size: 1.8em;
-    font-weight: 600;
-    text-align: center;
-    flex: 1;
-}
-
-.date-time-display {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 0.9em;
-    color: #8B5FBF;
-    font-weight: 500;
-    text-align: right;
-    line-height: 1.3;
-    background: #f8f9fa;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-}
-
-.shortcut-content {
-    text-align: center;
-}
-
-.application-name {
-    font-size: 1.2em;
+.shortcut-section .shortcut-keys kbd {
+    background: linear-gradient(145deg, #9c27b0, #7b1fa2);
     color: white;
-    background: #8B5FBF;
-    display: inline-block;
-    padding: 8px 20px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-    font-weight: 500;
-}
-
-.shortcut-keys {
-    margin: 20px 0;
-    font-size: 1.4em;
-}
-
-.shortcut-keys kbd {
-    background: #f8f9fa;
-    border: 2px solid #dee2e6;
+    border: none;
     border-radius: 6px;
-    padding: 10px 16px;
-    margin: 0 8px;
+    padding: 8px 12px;
     font-family: 'Courier New', monospace;
-    font-weight: 600;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: #333;
-    font-size: 1.1em;
+    font-weight: 700;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
 }
 
+.shortcut-section .shortcut-keys kbd:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(156, 39, 176, 0.4);
+    background: linear-gradient(145deg, #7b1fa2, #6a1b9a);
+}
+
+.shortcut-section .shortcut-description {
+    font-size: 0.9em;
+    color: #666;
+    line-height: 1.4;
+    margin-top: 8px;
+    max-width: 300px;
+}
+
+/* Right Section - Timer */
+.timer-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 30px 40px;
+    background: none;         /* Remove the old gray/lavender background */
+    border-right: none;       /* Ensure the last section doesn't have a right border */
+    text-align: right;
+}
+
+.live-clock {
+    font-size: 1.8em;
+    font-weight: 800;
+    color: #4a148c;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.motivational-quote {
+    font-size: 0.95em;
+    color: #7b1fa2;
+    font-style: italic;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.attribution {
+    font-size: 0.8em;
+    color: #9c27b0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .shortcut-of-day {
-        padding: 30px 15px;
-        margin: 15px 0;
-    }
-    
-    .shortcut-container {
-        padding: 20px;
-    }
-    
-    .section-header {
+    .shortcut-strip {
         flex-direction: column;
-        gap: 15px;
+        min-height: auto;
+    }
+    
+    .date-section, .shortcut-section, .timer-section {
+        border-right: none;
+        border-bottom: 2px solid #dee2e6;
+        padding: 20px 30px;
+    }
+    
+    .timer-section {
+        border-bottom: none;
+        align-items: center;
         text-align: center;
     }
     
-    .date-time-display {
-        position: static;
-        align-self: center;
+    .day-display {
+        font-size: 1.8em;
     }
     
-    .section-header h2 {
+    .live-clock {
         font-size: 1.5em;
-    }
-    
-    .shortcut-keys {
-        font-size: 1.2em;
-    }
-    
-    .shortcut-keys kbd {
-        padding: 8px 12px;
-        margin: 0 4px;
-        font-size: 1em;
     }
 }
 
 @media (max-width: 480px) {
-    .section-title {
-        font-size: 2em;
+    .shortcut-strip {
+        margin: 0 10px;
+        border-radius: 12px;
+        overflow: hidden;
     }
     
-    .shortcut-card {
-        padding: 25px 15px;
+    .date-section, .shortcut-section, .timer-section {
+        padding: 15px 20px;
     }
     
-    .shortcut-key-display .key {
-        padding: 10px 12px;
-        font-size: 1em;
+    .shortcut-section .shortcut-keys kbd {
+        padding: 6px 10px;
+        font-size: 0.8em;
     }
 }
 
+/* ====================================================== */
+/*      START: UNIFIED CARD & ANIMATION STYLES           */
+/* ====================================================== */
 
+/* 3. The Animation's Container/Stage */
+.icons-wrapper {
+    position: absolute; /* Takes it out of the normal flow */
+    bottom: 0;          /* Pins it to the very bottom of the .shortcut-of-day parent */
+    left: 0;
+    width: 100%;
+    height: 250px;      /* Defines the height of the animation "stage" */
+    z-index: 1;         /* Sits behind the card */
+}
 
+/* 4. Animation Keyframes */
+@keyframes float {
+    0% {
+        transform: translateY(250px); /* Start from the bottom of the wrapper */
+        opacity: 0;
+    }
+    2% {
+        opacity: 0.9; /* Fade in very quickly */
+    }
+    98% {
+        opacity: 0.9; /* Stay fully visible for 98% of the journey - almost the entire way */
+    }
+    100% {
+        transform: translateY(-250px); /* End much higher above the wrapper */
+        opacity: 0;
+    }
+}
 
+/* 5. Base Icon Styles */
+.floating-icon {
+    position: absolute;
+    bottom: -100px;
+    opacity: 0.8;
+    font-size: 40px;
+    animation: float linear infinite;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* 6. Individual Icon Randomization */
+.floating-icon:nth-child(1) { left: 3%; font-size: 45px; animation-duration: 15s; animation-delay: -5s; }
+.floating-icon:nth-child(2) { left: 15%; font-size: 50px; animation-duration: 18s; animation-delay: -2s; }
+.floating-icon:nth-child(3) { left: 27%; font-size: 35px; animation-duration: 12s; animation-delay: -10s; }
+.floating-icon:nth-child(4) { left: 38%; font-size: 55px; animation-duration: 20s; animation-delay: -7s; }
+.floating-icon:nth-child(5) { left: 51%; font-size: 40px; animation-duration: 14s; animation-delay: -1s; }
+.floating-icon:nth-child(6) { left: 63%; font-size: 50px; animation-duration: 16s; animation-delay: -12s; }
+.floating-icon:nth-child(7) { left: 76%; font-size: 45px; animation-duration: 13s; animation-delay: -6s; }
+.floating-icon:nth-child(8) { left: 88%; font-size: 40px; animation-duration: 19s; animation-delay: -8s; }
+.floating-icon:nth-child(9) { left: 9%; font-size: 55px; animation-duration: 11s; animation-delay: -3s; }
+.floating-icon:nth-child(10) { left: 21%; font-size: 35px; animation-duration: 17s; animation-delay: -9s; }
+.floating-icon:nth-child(11) { left: 33%; font-size: 50px; animation-duration: 21s; animation-delay: -4s; }
+.floating-icon:nth-child(12) { left: 45%; font-size: 40px; animation-duration: 15s; animation-delay: -11s; }
+.floating-icon:nth-child(13) { left: 57%; font-size: 45px; animation-duration: 18s; animation-delay: -1s; }
+.floating-icon:nth-child(14) { left: 69%; font-size: 38px; animation-duration: 22s; animation-delay: -5s; }
+.floating-icon:nth-child(15) { left: 81%; font-size: 52px; animation-duration: 14s; animation-delay: -8s; }
+.floating-icon:nth-child(16) { left: 93%; font-size: 42px; animation-duration: 16s; animation-delay: -2s; }
+.floating-icon:nth-child(17) { left: 6%; font-size: 48px; animation-duration: 20s; animation-delay: -6s; }
+.floating-icon:nth-child(18) { left: 18%; font-size: 36px; animation-duration: 13s; animation-delay: -10s; }
+.floating-icon:nth-child(19) { left: 30%; font-size: 54px; animation-duration: 19s; animation-delay: -3s; }
+.floating-icon:nth-child(20) { left: 42%; font-size: 44px; animation-duration: 17s; animation-delay: -7s; }
+.floating-icon:nth-child(21) { left: 54%; font-size: 40px; animation-duration: 15s; animation-delay: -9s; }
+.floating-icon:nth-child(22) { left: 66%; font-size: 46px; animation-duration: 21s; animation-delay: -4s; }
+.floating-icon:nth-child(23) { left: 78%; font-size: 38px; animation-duration: 18s; animation-delay: -12s; }
+.floating-icon:nth-child(24) { left: 90%; font-size: 50px; animation-duration: 16s; animation-delay: -1s; }
+.floating-icon:nth-child(25) { left: 12%; font-size: 42px; animation-duration: 14s; animation-delay: -8s; }
+
+/* ====================================================== */
+/*       END: UNIFIED CARD & ANIMATION STYLES            */
+/* ====================================================== */
 
         /* Features Section */
         .features {
-            padding: 50px 20px;
+            margin-top: 0; /* This removes the gap and the stray line */
+            padding-top: 70px; /* Adds the space back INSIDE the section's white background */
+            padding: 70px 20px 50px;
             text-align: center;
             background-color: #fff;
         }
@@ -1706,22 +1962,75 @@ header {
 
 <!-- Shortcut of the Day Section -->
 <section class="shortcut-of-day">
-    <div class="shortcut-container">
-        <div class="section-header">
-            <h2>Shortcut of the Day</h2>
-            <div class="date-time-display" id="dateTimeDisplay"></div>
+    <div class="shortcut-strip">
+        <!-- Left Section -->
+        <div class="date-section">
+            <div class="day-display" id="dayDisplay">Saturday</div>
+            <div class="month-year-display" id="monthYearDisplay">September 2025</div>
         </div>
         
-        <div class="shortcut-content">
-            <div class="application-name" id="appName">Microsoft Word</div>
+        <!-- Middle Section -->
+        <div class="shortcut-section">
+            <div class="shortcut-heading">Shortcut of the Day</div>
+            <div class="application-name" id="appName">Visual Studio Code</div>
             <div class="shortcut-keys" id="shortcutKeys">
-                <kbd>Ctrl</kbd> + <kbd>C</kbd>
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>
             </div>
+            <div class="shortcut-description" id="shortcutDescription">Open command palette for quick access to all VS Code features</div>
+        </div>
+        
+        <!-- Right Section -->
+        <div class="timer-section">
+            <div class="live-clock" id="liveClock">03:16:21 PM</div>
+            <div class="motivational-quote">Time waits for no one</div>
+            <div class="attribution">~ Rafi.S.B.M</div>
         </div>
     </div>
-</section>
 
-<section id="features" class="features">
+    <!-- 2. The Animation Wrapper (now placed INSIDE the same section) -->
+    <div class="icons-wrapper">
+        <!-- Operating Systems -->
+        <i class="fab fa-windows floating-icon" style="color: #0078d4;"></i>
+        <i class="fab fa-apple floating-icon" style="color: #000000;"></i>
+        
+        <!-- Microsoft Office -->
+        <i class="fas fa-file-excel floating-icon" style="color: #217346;"></i>
+        <i class="fas fa-file-word floating-icon" style="color: #2b579a;"></i>
+        <i class="fas fa-file-powerpoint floating-icon" style="color: #d24726;"></i>
+        <i class="fas fa-envelope floating-icon" style="color: #0078d4;"></i>
+        <i class="fas fa-sticky-note floating-icon" style="color: #7719aa;"></i>
+        <i class="fas fa-users floating-icon" style="color: #6264a7;"></i>
+        
+        <!-- Web Browsers -->
+        <i class="fab fa-chrome floating-icon" style="color: #4285f4;"></i>
+        <i class="fab fa-edge floating-icon" style="color: #0078d7;"></i>
+        
+        <!-- Design & Creativity -->
+        <i class="fas fa-paint-brush floating-icon" style="color: #31a8ff;"></i>
+        <i class="fas fa-palette floating-icon" style="color: #ff61f6;"></i>
+        <i class="fas fa-music floating-icon" style="color: #f37021;"></i>
+        
+        <!-- Development -->
+        <i class="fab fa-vs-code floating-icon" style="color: #007acc;"></i>
+        <i class="fas fa-code floating-icon" style="color: #f1e05a;"></i>
+        
+        <!-- Communication -->
+        <i class="fab fa-discord floating-icon" style="color: #5865f2;"></i>
+        <i class="fab fa-slack floating-icon" style="color: #4a154b;"></i>
+        <i class="fab fa-telegram floating-icon" style="color: #0088cc;"></i>
+        <i class="fab fa-whatsapp floating-icon" style="color: #25d366;"></i>
+        <i class="fab fa-skype floating-icon" style="color: #00aff0;"></i>
+        <i class="fas fa-video floating-icon" style="color: #2d8cff;"></i>
+        
+        <!-- Productivity -->
+        <i class="fab fa-trello floating-icon" style="color: #0079bf;"></i>
+        <i class="fas fa-folder floating-icon" style="color: #ffd700;"></i>
+        <i class="fas fa-file-pdf floating-icon" style="color: #ff0000;"></i>
+        <i class="fab fa-spotify floating-icon" style="color: #1db954;"></i>
+        <i class="fas fa-play floating-icon" style="color: #ff6500;"></i>
+    </div>
+
+</section>
     <h2>Our Features</h2>
     <div class="feature">
         <h3>Comprehensive Guides</h3>
@@ -2190,6 +2499,98 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
+
+        // Randomize floating icons positions and timing on each page load
+        function randomizeFloatingIcons() {
+            const icons = document.querySelectorAll('.floating-icon');
+            
+            // Divide screen into equal sections to ensure even distribution
+            const sections = [];
+            const sectionWidth = 90 / icons.length; // Divide 90% width by number of icons
+            
+            // Create sections array
+            for (let i = 0; i < icons.length; i++) {
+                sections.push({
+                    min: 5 + (i * sectionWidth),
+                    max: 5 + ((i + 1) * sectionWidth),
+                    used: false
+                });
+            }
+            
+            // Shuffle sections for random distribution
+            for (let i = sections.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [sections[i], sections[j]] = [sections[j], sections[i]];
+            }
+            
+            icons.forEach((icon, index) => {
+                // Assign each icon to a unique section
+                const section = sections[index];
+                const randomLeft = Math.random() * (section.max - section.min) + section.min;
+                
+                // Random font size (38px to 52px) - consistent range
+                const randomSize = Math.random() * 14 + 38;
+                
+                // Random animation duration (15s to 25s) - longer durations
+                const randomDuration = Math.random() * 10 + 15;
+                
+                // Spread delays more evenly to prevent clustering in time
+                const baseDelay = -(index * 2.5); // Each icon starts 2.5s apart
+                const randomOffset = Math.random() * -5; // Add some randomness
+                const randomDelay = baseDelay + randomOffset;
+                
+                // Consistent opacity
+                const randomOpacity = 0.75 + Math.random() * 0.15; // 0.75 to 0.9
+                
+                // SMOOTH SLIDING TRANSITION EFFECT
+                // First, add smooth transition for position changes
+                icon.style.transition = 'left 2s cubic-bezier(0.4, 0, 0.2, 1), font-size 1.5s ease, opacity 1s ease';
+                
+                // Apply new position with smooth slide
+                icon.style.left = randomLeft + '%';
+                icon.style.fontSize = randomSize + 'px';
+                icon.style.opacity = randomOpacity;
+                
+                // After the slide transition, update animation timing
+                setTimeout(() => {
+                    // Remove transition temporarily to reset animation
+                    icon.style.transition = 'none';
+                    icon.style.animation = 'none';
+                    
+                    // Apply new animation after a brief pause
+                    setTimeout(() => {
+                        icon.style.animation = `float ${randomDuration}s linear infinite ${randomDelay}s`;
+                        
+                        // Restore transition for future changes
+                        setTimeout(() => {
+                            icon.style.transition = 'left 2s cubic-bezier(0.4, 0, 0.2, 1), font-size 1.5s ease, opacity 1s ease';
+                        }, 100);
+                    }, 200);
+                }, 2000); // Wait for slide transition to complete
+            });
+        }
+
+        // Smooth initial setup
+        function initializeFloatingIcons() {
+            const icons = document.querySelectorAll('.floating-icon');
+            
+            icons.forEach((icon, index) => {
+                // Set initial transition for smooth loading
+                icon.style.transition = 'all 1s ease';
+                icon.style.opacity = '0';
+                
+                // Fade in icons one by one
+                setTimeout(() => {
+                    randomizeFloatingIcons();
+                }, index * 200); // Stagger the initial appearance
+            });
+        }
+
+        // Run initialization when page loads
+        window.addEventListener('load', initializeFloatingIcons);
+        
+        // Re-randomize every 45 seconds with smooth transitions
+        setInterval(randomizeFloatingIcons, 45000);
     </script>
 </body>
 </html>
