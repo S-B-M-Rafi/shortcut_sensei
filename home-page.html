@@ -1249,36 +1249,140 @@ header {
 
         /* Features Section */
         .features {
-            margin-top: 0; /* This removes the gap and the stray line */
-            padding-top: 70px; /* Adds the space back INSIDE the section's white background */
-            padding: 70px 20px 50px;
+            margin-top: 0;
+            padding: 80px 20px 60px;
             text-align: center;
-            background-color: #fff;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(156, 39, 176, 0.03) 0%, transparent 70%);
+            animation: pulse 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.1) rotate(180deg); opacity: 0.1; }
         }
 
         .features h2 {
-            font-size: 2.5em;
-            margin-bottom: 30px;
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .features h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #9c27b0, #7b1fa2);
+            border-radius: 2px;
+        }
+
+        .features > p {
+            font-size: 1.1em;
+            color: #6c757d;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .feature {
             display: inline-block;
             width: 30%;
-            padding: 20px;
-            margin: 10px;
-            background-color: #f4f4f4;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-width: 280px;
+            padding: 35px 25px;
+            margin: 15px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid rgba(156, 39, 176, 0.1);
+        }
+
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #9c27b0, #7b1fa2, #4a148c);
+            border-radius: 15px 15px 0 0;
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(156, 39, 176, 0.15);
+            border-color: rgba(156, 39, 176, 0.2);
         }
 
         .feature h3 {
-            font-size: 1.5em;
-            margin-bottom: 15px;
+            font-size: 1.6em;
+            margin-bottom: 18px;
+            color: #2c3e50;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .feature:hover h3 {
+            color: #9c27b0;
         }
 
         .feature p {
             font-size: 1em;
-            line-height: 1.5;
+            line-height: 1.6;
+            color: #5a6c7d;
+            margin-bottom: 0;
+        }
+
+        /* Responsive Design for Features */
+        @media (max-width: 992px) {
+            .feature {
+                width: 45%;
+                min-width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .features {
+                padding: 60px 15px 40px;
+            }
+            
+            .features h2 {
+                font-size: 2.2em;
+            }
+            
+            .feature {
+                width: 90%;
+                max-width: 400px;
+                margin: 20px auto;
+                display: block;
+            }
         }
 
         /* About Section */
@@ -2031,6 +2135,8 @@ header {
     </div>
 
 </section>
+
+<section id="features" class="features">
     <h2>Our Features</h2>
     <div class="feature">
         <h3>Comprehensive Guides</h3>
@@ -2049,19 +2155,21 @@ header {
 
 
 <section style="background-color: #333;"id="about" class="about">
-    <h2 style="color: #fff;">About Us</h2>
-    <p style="color: #fff;">Shortcut Sensei is dedicated to helping you become more productive with less effort. Learn more about our mission and team.</p>
-    <a href="About.html#contact-section-id" class="get-started-style">Contact Us</a>
+    <h2 style="color: #fff;">Our Philosophy: The Path to Mastery</h2>
+    <p style="color: #fff;">In a world of endless clicks and wasted motion, we saw a need for a different path—a path of focus, efficiency, and command. We believe that true productivity isn't about working harder; it's about working smarter.</p>
+    <p style="color: #fff;">Shortcut Sensei was born from a simple idea: every user deserves to feel like a master of their tools.</p>
+    <p style="color: #fff;">Our mission is to be your guide on this journey. We are a dedicated team of productivity enthusiasts and developers committed to curating the wisdom and techniques that separate the novice from the Sensei. We're here to help you trade tedious habits for powerful commands and reclaim your most valuable asset: your time.</p>
+    <a href="About.html#contact-section-id" class="get-started-style">Learn More About Our Mission</a>
 </section>
 
 <section id="testimonials" class="testimonials">
     <h2>What Our Users Say</h2>
     <blockquote>
-        <p>"Shortcut Sensei has revolutionized the way I work. Highly recommended!"</p>
+        <p>"I'm easily saving an hour every day. That's five hours a week I get back for strategic planning instead of being stuck in menial tasks. Shortcut Sensei didn't just teach me shortcuts; it fundamentally changed my relationship with my work."</p>
         <cite>- Sarah M., Project Manager</cite>
     </blockquote>
     <blockquote>
-        <p>"A must-have tool for anyone looking to improve their productivity."</p>
+        <p>"This is about more than speed—it's about focus. I'm no longer breaking my flow state to reach for the mouse, which is a game-changer for any developer."</p>
         <cite>- David L., Software Developer</cite>
     </blockquote>
 </section>
@@ -2500,8 +2608,56 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
+        // Simple and stable scroll-based animation control
+        let animationsPaused = false;
+        let scrollCheckInterval = null;
+        
+        function checkScrollPosition() {
+            const shortcutSection = document.querySelector('.shortcut-of-day');
+            if (!shortcutSection) return;
+            
+            const rect = shortcutSection.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            // Simple check: is more than half of the section visible?
+            const sectionMiddle = rect.top + (rect.height / 2);
+            const isMoreThanHalfVisible = sectionMiddle < windowHeight && rect.bottom > (windowHeight / 2);
+            
+            const icons = document.querySelectorAll('.floating-icon');
+            
+            if (!isMoreThanHalfVisible && !animationsPaused) {
+                // PAUSE - very simple
+                animationsPaused = true;
+                icons.forEach(icon => {
+                    icon.style.animationPlayState = 'paused';
+                    icon.style.opacity = '0.1';
+                });
+            } else if (isMoreThanHalfVisible && animationsPaused) {
+                // RESUME - very simple  
+                animationsPaused = false;
+                icons.forEach(icon => {
+                    icon.style.animationPlayState = 'running';
+                    icon.style.opacity = '0.8';
+                });
+            }
+        }
+        
+        // Use a very slow interval instead of scroll events to prevent dancing
+        function startScrollMonitoring() {
+            if (scrollCheckInterval) clearInterval(scrollCheckInterval);
+            
+            // Check every 200ms instead of on every scroll event
+            scrollCheckInterval = setInterval(checkScrollPosition, 200);
+        }
+        
+        // Start monitoring after page loads
+        setTimeout(startScrollMonitoring, 1000);
+
         // Randomize floating icons positions and timing on each page load
         function randomizeFloatingIcons() {
+            // Don't randomize if user is currently scrolled away from the section
+            if (animationsPaused) return;
+            
             const icons = document.querySelectorAll('.floating-icon');
             
             // Divide screen into equal sections to ensure even distribution
@@ -2539,33 +2695,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 const randomOffset = Math.random() * -5; // Add some randomness
                 const randomDelay = baseDelay + randomOffset;
                 
-                // Consistent opacity
-                const randomOpacity = 0.75 + Math.random() * 0.15; // 0.75 to 0.9
-                
-                // SMOOTH SLIDING TRANSITION EFFECT
-                // First, add smooth transition for position changes
-                icon.style.transition = 'left 2s cubic-bezier(0.4, 0, 0.2, 1), font-size 1.5s ease, opacity 1s ease';
+                // SIMPLE transition - no complex opacity management during randomization
+                icon.style.transition = 'left 2s cubic-bezier(0.4, 0, 0.2, 1), font-size 1.5s ease';
                 
                 // Apply new position with smooth slide
                 icon.style.left = randomLeft + '%';
                 icon.style.fontSize = randomSize + 'px';
-                icon.style.opacity = randomOpacity;
+                
+                // Keep opacity simple and stable
+                if (!animationsPaused) {
+                    icon.style.opacity = '0.8';
+                }
                 
                 // After the slide transition, update animation timing
                 setTimeout(() => {
-                    // Remove transition temporarily to reset animation
-                    icon.style.transition = 'none';
+                    // Reset animation cleanly
                     icon.style.animation = 'none';
                     
                     // Apply new animation after a brief pause
                     setTimeout(() => {
                         icon.style.animation = `float ${randomDuration}s linear infinite ${randomDelay}s`;
-                        
-                        // Restore transition for future changes
-                        setTimeout(() => {
-                            icon.style.transition = 'left 2s cubic-bezier(0.4, 0, 0.2, 1), font-size 1.5s ease, opacity 1s ease';
-                        }, 100);
-                    }, 200);
+                    }, 100);
                 }, 2000); // Wait for slide transition to complete
             });
         }
