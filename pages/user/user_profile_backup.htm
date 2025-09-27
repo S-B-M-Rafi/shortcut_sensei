@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Shortcut Sensei</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Authentication Protection -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9FmWlWXqswDprmvaILZQnamrjBCsfgVs",
+            authDomain: "shortcut-sensei-1305f.firebaseapp.com",
+            projectId: "shortcut-sensei-1305f",
+            storageBucket: "shortcut-sensei-1305f.firebasestorage.app",
+            messagingSenderId: "598536091157",
+            appId: "1:598536091157:web:eff79326d42c5bba8e001c",
+            measurementId: "G-WZCS73D2W5"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Protect this page - redirect to login if not authenticated
+        onAuthStateChanged(auth, (user) => {
+            if (!user || !user.emailVerified) {
+                window.location.href = 'login_page_firebase.html';
+                return;
+            }
+            
+            // User is authenticated, show the page content
+            document.body.style.visibility = 'visible';
+            
+            // Update user profile data
+            updateUserProfile(user);
+        });
+        
+        // Update profile with user data
+        function updateUserProfile(user) {
+            document.getElementById('userName').textContent = user.displayName || 'User';
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('profileName').textContent = user.displayName || user.email.split('@')[0];
+            document.getElementById('profileEmail').textContent = user.email;
+            document.getElementById('memberSince').textContent = new Date(user.metadata.creationTime).toLocaleDateString();
+            
+            // Set profile avatar
+            const avatar = user.photoURL || 'https://via.placeholder.com/150/8B5FBF/FFFFFF?text=' + (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
+            document.getElementById('profileAvatar').src = avatar;
+            document.getElementById('headerAvatar').src = avatar;
+        }
+        
+        // Make functions globally available
+        window.logout = async function() {
+            try {
+                await signOut(auth);
+                window.location.href = 'login_page_firebase.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Failed to logout. Please try again.');
+            }
+        };
+        
+        window.toggleUserMenu = function() {
+            const menu = document.getElementById('userDropdownMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        };
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenuContainer');
+            const dropdown = document.getElementById('userDropdownMenu');
+            if (userMenu && dropdown && !userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+        
+        // Initially hide the page content until authentication is verified
+        document.body.style.visibility = 'hidden';
+    </script>
+    
+    <style>
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; 
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header styles */
+.main-header {
+    background-color: #000000;
+    color: #fff;
+    padding: 15px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.main-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.logo a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.8em;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.logo a:hover {
+    color: #9c27b0;
+}
+
+.main-nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.main-nav ul li {
+    position: relative;
+}
+
+.main-nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: all 0.3s;
+    border-radius: 4px;
+}
+
+.main-nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Search container styles */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 25px;
+    padding: 5px 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    max-width: 300px;
+    width: 100%;
+}
+
+.search-container:focus-within {
+    box-shadow: 0 0 0 2px #9c27b0;
+}
+
+.search-container input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 16px;
+    outline: none;
+    background: transparent;
+    width: calc(100% - 40px);
+}
+
+.search-container button {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background-color: #9c27b0;
+    color: #000000;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-container button:hover {
+    background-color: #7b1fa2;
+}
+
+.search-container button i {
+    color: #fff;
+}
+
+/* User Menu Styles */
+.user-menu-container {
+    position: relative;
+    margin-left: 15px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #9c27b0;
+    transition: all 0.3s ease;
+    object-fit: cover;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05);
+    border-color: #7b1fa2;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    padding: 10px 0;
+    min-width: 200px;
+    margin-top: 10px;
+    display: none;
+    z-index: 1001;
+}
+
+.user-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 15px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.user-dropdown a:hover {
+    background-color: #f8f9fa;
+}
+
+.user-dropdown .dropdown-divider {
+    height: 1px;
+    background-color: #e9ecef;
+    margin: 5px 0;
+}
+
+/* Profile Page Styles */
+.profile-main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.profile-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.profile-sidebar {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+}
+
+.profile-avatar-container {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.profile-avatar-large {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #9c27b0;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.profile-email {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.profile-stats {
+    border-top: 1px solid #e9ecef;
+    padding-top: 20px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 8px 0;
+}
+
+.stat-label {
+    color: #666;
+    font-weight: 500;
+}
+
+.stat-value {
+    color: #333;
+    font-weight: 600;
+}
+
+.profile-content {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.profile-header h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.profile-header p {
+    color: #666;
+    font-size: 16px;
+}
+
+.profile-section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-title i {
+    color: #9c27b0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #9c27b0;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: #9c27b0;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #7b1fa2;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Menu toggle for mobile */
+.menu-toggle {
+    display: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.menu-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Footer Styles */
+footer {
+    background-color: #000;
+    color: #fff;
+    padding: 40px 0;
+    margin-top: 50px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.footer-content h3 {
+    margin-bottom: 20px;
+    color: #9c27b0;
+}
+
+.footer-content p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .main-header .container {
+        width: 95%;
+    }
+    
+    .menu-toggle {
+        display: flex;
+    }
+    
+    .main-nav {
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        transition: height 0.3s ease;
+    }
+    
+    .main-nav.active {
+        height: auto;
+        margin-top: 15px;
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+        background-color: #111;
+        border-radius: 8px;
+        padding: 10px 0;
+    }
+    
+    .search-container {
+        max-width: 200px;
+    }
+    
+    .user-menu-container {
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .profile-main {
+        padding: 0 15px;
+    }
+    
+    .profile-sidebar,
+    .profile-content {
+        padding: 20px;
+    }
+    
+    .logo a {
+        font-size: 1.4em;
+    }
+}
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f6f8fa;
+            color: #24292e;
+            line-height: 1.5;
+        }
+
+        /* Profile Container */
+        .profile-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 2rem auto;
+            gap: 2rem;
+        }
+
+        /* Profile Sidebar */
+        .profile-sidebar {
+            width: 300px;
+            background-color: #fff;
+            border-radius: 6px;
+            border: 1px solid #e1e4e8;
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .profile-image-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #e1e4e8;
+        }
+
+        #profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-upload-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 0.3rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-upload-overlay label {
+            cursor: pointer;
+        }
+
+        .image-upload-overlay svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        #image-upload {
+            display: none;
+        }
+
+        .profile-sidebar h2 {
+            text-align: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .profile-sidebar p {
+            text-align: center;
+            color: #586069;
+            margin-bottom: 1rem;
+        }
+
+        #user-bio {
+            padding: 0 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            padding: 1rem 0;
+            border-top: 1px solid #e1e4e8;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #24292e;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #586069;
+        }
+
+        /* Social stats - followers/following */
+        .profile-social-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        .social-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .social-stat-number {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #24292e;
+        }
+
+        .social-stat-label {
+            font-size: 0.875rem;
+            color: #586069;
+        }
+
+        .profile-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            color: #586069;
+        }
+
+        .detail-item svg {
+            margin-right: 0.5rem;
+            min-width: 16px;
+        }
+
+        .detail-item a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        .detail-item a:hover {
+            text-decoration: underline;
+        }
+
+        .edit-profile-btn {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #fafbfc;
+            border: 1px solid rgba(27, 31, 35, 0.15);
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #24292e;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .edit-profile-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        /* Profile Content */
+        .profile-content {
+            flex: 1;
+            background-color: #fff;
+            border-radius: 6px;
+            border: 1px solid #e1e4e8;
+            overflow: hidden;
+        }
+
+        .profile-tabs {
+            display: flex;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #586069;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: #24292e;
+        }
+
+        .tab-btn.active {
+            color: #24292e;
+            border-bottom-color: #f9826c;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Shortcuts tab */
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .shortcut-card {
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .shortcut-card h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .shortcut-card p {
+            color: #586069;
+            margin-bottom: 1rem;
+        }
+
+        .shortcut-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .resume-btn {
+            padding: 0.25rem 0.5rem;
+            background-color: #2ea44f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        /* Badges tab */
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .badge-item {
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .badge-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-item h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .badge-item p {
+            font-size: 0.75rem;
+            color: #586069;
+        }
+
+        /* Activity tab */
+        .activity-timeline {
+            border-left: 2px solid #e1e4e8;
+            padding-left: 1.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .activity-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .activity-item::before {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #0366d6;
+            left: -2rem;
+            top: 0.25rem;
+        }
+
+        .activity-date {
+            font-size: 0.75rem;
+            color: #586069;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Saved tab */
+        .saved-shortcuts {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .saved-shortcut {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+        }
+
+        .shortcut-key {
+            background-color: #f6f8fa;
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-family: monospace;
+            margin-right: 1rem;
+        }
+
+        .shortcut-details {
+            flex: 1;
+        }
+
+        .shortcut-details h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .shortcut-details p {
+            font-size: 0.875rem;
+            color: #586069;
+        }
+
+        .practice-btn {
+            padding: 0.25rem 0.5rem;
+            background-color: #0366d6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        /* Contributions tab */
+        .contribution-section {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .contribution-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        #contribution-year {
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #e1e4e8;
+            border-radius: 4px;
+            background-color: #f6f8fa;
+        }
+
+        .contribution-legend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .legend-item {
+            width: 12px;
+            height: 12px;
+            border: 1px solid rgba(27, 31, 35, 0.1);
+            border-radius: 2px;
+        }
+
+        .contribution-graph {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .days-column {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-right: 5px;
+        }
+
+        .day-label {
+            height: 15px;
+            font-size: 0.75rem;
+            color: #586069;
+            text-align: left;
+        }
+
+        .week-column {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .month-label {
+            height: 20px;
+            font-size: 0.75rem;
+            color: #586069;
+            text-align: center;
+        }
+
+        .contribution-cube {
+            width: 15px;
+            height: 15px;
+            border-radius: 2px;
+            background-color: #ebedf0;
+            border: 1px solid rgba(27, 31, 35, 0.06);
+        }
+
+        .contribution-cube.empty {
+            background-color: transparent;
+            border: none;
+        }
+
+        .contribution-summary {
+            padding-top: 1rem;
+            border-top: 1px solid #e1e4e8;
+        }
+
+        /* Default avatar selection in modal */
+        .default-avatars {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .default-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .default-avatar.selected {
+            border-color: #0366d6;
+        }
+
+        /* Edit Profile Modal */
+        .edit-profile-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 6px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .close-btn {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e1e4e8;
+            border-radius: 4px;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .form-section-title {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #24292e;
+            border-bottom: 1px solid #e1e4e8;
+            padding-bottom: 0.5rem;
+        }
+        
+        .save-btn {
+            padding: 0.5rem 1rem;
+            background-color: #2ea44f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            float: right;
+            margin-top: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+            }
+
+            .profile-sidebar {
+                width: 100%;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+<script>
+// Universal button functionality for User Profile page
+document.addEventListener('DOMContentLoaded', function() {
+    const navigationMappings = {
+        'home': 'home-page.html',
+        'applications': 'Applications_final.htm',
+        'apps': 'Applications_final.htm',
+        'about': 'About.htm',
+        'profile': 'user_profile.htm',
+        'login': 'login_page_new copy 2.htm',
+        'sign up': 'login_page_new copy 2.htm',
+        'signup': 'login_page_new copy 2.htm',
+        'log in': 'login_page_new copy 2.htm',
+        'comments': 'user_com.htm',
+        'blog': 'blogs.html',
+        'blogs': 'blogs.html',
+        'log': 'log.htm',
+        'edit profile': 'user_profile.htm',
+        'settings': 'user_profile.htm',
+        'logout': 'home-page.html',
+        'sign out': 'home-page.html'
+    };
+
+    function navigateToPage(pageUrl) {
+        try {
+            window.location.href = pageUrl;
+        } catch (error) {
+            console.error('Navigation error:', error);
+        }
+    }
+
+    // Add click handlers to all clickable elements
+    const allClickableElements = document.querySelectorAll('button, a, .btn, .nav-item, [onclick]');
+    
+    allClickableElements.forEach(element => {
+        element.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            const text = this.textContent.toLowerCase().trim();
+            
+            // If it has a valid href, use it
+            if (href && (href.endsWith('.html') || href.endsWith('.htm')) && !href.startsWith('http')) {
+                e.preventDefault();
+                navigateToPage(href);
+                return;
+            }
+            
+            // Check if button text matches navigation mapping
+            if (navigationMappings[text]) {
+                e.preventDefault();
+                navigateToPage(navigationMappings[text]);
+                return;
+            }
+        });
+    });
+
+    // Handle forms
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const action = this.getAttribute('action');
+            if (action && (action.endsWith('.html') || action.endsWith('.htm'))) {
+                navigateToPage(action);
+            } else {
+                // Handle profile update or other form submissions
+                alert('Profile updated successfully!');
+            }
+        });
+    });
+});
+</script>
+    <div class="profile-container">
+        <div class="profile-sidebar">
+            <div class="profile-image-container">
+                <img id="profile-image" src="default-avatar.png" alt="Profile Picture">
+                <div class="image-upload-overlay">
+                    <label for="image-upload">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    </label>
+                    <input type="file" id="image-upload" accept="image/*">
+                </div>
+            </div>
+            <h2 id="user-name">Rafi.S.B.M</h2>
+            <p id="user-handle">rafi_s_b_m</p>
+            <p id="user-bio">Japanese Lover</p>
+            <div class="profile-stats">
+                <div class="stat">
+                    <span class="stat-number">5</span>
+                    <span class="stat-label">Shortcuts Mastered</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Learning Streak</span>
+                </div>
+            </div>
+            <!-- Adding followers and following stats -->
+            <div class="profile-social-stats">
+                <div class="social-stat">
+                    <span id="follower-count" class="social-stat-number">0</span>
+                    <span class="social-stat-label">Followers</span>
+                </div>
+                <div class="social-stat">
+                    <span id="following-count" class="social-stat-number">0</span>
+                    <span class="social-stat-label">Following</span>
+                </div>
+            </div>
+            <div class="profile-details">
+                <div class="detail-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span id="user-location">Location</span>
+                </div>
+                <div class="detail-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <span id="user-occupation">Occupation</span>
+                </div>
+                <div class="detail-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <span id="user-email">Email</span>
+                </div>
+                <div class="detail-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    <span id="user-website">Website</span>
+                </div>
+                <!-- Adding social media links -->
+                <div id="social-links-container">
+                    <div class="detail-item" id="instagram-link-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        <a id="instagram-link" href="#" target="_blank">Instagram</a>
+                    </div>
+                    <div class="detail-item" id="linkedin-link-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        <a id="linkedin-link" href="#" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="detail-item" id="youtube-link-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                        <a id="youtube-link" href="#" target="_blank">YouTube</a>
+                    </div>
+                </div>
+            </div>
+            <button class="edit-profile-btn">Edit Profile</button>
+        </div>
+        <div class="profile-content">
+            <div class="profile-tabs">
+                <button class="tab-btn active" data-tab="shortcuts">Shortcuts</button>
+                <button class="tab-btn" data-tab="badges">Badges</button>
+                <button class="tab-btn" data-tab="activity">Activity</button>
+                <button class="tab-btn" data-tab="saved">Saved</button>
+                <button class="tab-btn" data-tab="contributions">Contributions</button>
+            </div>
+            <div class="tab-content active" id="shortcuts-tab">
+                <h3>Your Shortcut Collections</h3>
+                <div class="shortcut-grid">
+                    <!-- Example shortcut collection -->
+                    <div class="shortcut-card">
+                        <h4>Productivity Essentials</h4>
+                        <p>20 shortcuts for daily productivity</p>
+                        <div class="shortcut-card-footer">
+                            <span>8/20 Mastered</span>
+                            <button class="resume-btn">Resume Learning</button>
+                        </div>
+                    </div>
+                    <!-- More shortcut collections -->
+                    <div class="shortcut-card">
+                        <h4>VS Code Pro</h4>
+                        <p>35 shortcuts for coding efficiency</p>
+                        <div class="shortcut-card-footer">
+                            <span>12/35 Mastered</span>
+                            <button class="resume-btn">Resume Learning</button>
+                        </div>
+                    </div>
+                    <div class="shortcut-card">
+                        <h4>Photoshop Master</h4>
+                        <p>40 shortcuts for design workflow</p>
+                        <div class="shortcut-card-footer">
+                            <span>3/40 Mastered</span>
+                            <button class="resume-btn">Resume Learning</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="badges-tab">
+                <h3>Earned Badges</h3>
+                <div class="badges-grid">
+                    <!-- Example badges -->
+                    <div class="badge-item">
+                        <div class="badge-icon">🚀</div>
+                        <h4>Quick Learner</h4>
+                        <p>Learned 5 shortcuts in one day</p>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon">🔥</div>
+                        <h4>On Fire</h4>
+                        <p>7-day learning streak</p>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon">💻</div>
+                        <h4>Code Wizard</h4>
+                        <p>Mastered all VS Code shortcuts</p>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon">🏆</div>
+                        <h4>Champion</h4>
+                        <p>Ranked in top 10% of users</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="activity-tab">
+                <h3>Recent Activity</h3>
+                <div class="activity-timeline">
+                    <!-- Example activities -->
+                    <div class="activity-item">
+                        <div class="activity-date">Mar 15</div>
+                        <div class="activity-content">
+                            <p>Mastered the <strong>Ctrl+Shift+V</strong> shortcut for paste without formatting</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-date">Mar 14</div>
+                        <div class="activity-content">
+                            <p>Started learning the <strong>Photoshop Master</strong> collection</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-date">Mar 10</div>
+                        <div class="activity-content">
+                            <p>Earned the <strong>Quick Learner</strong> badge</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-date">Mar 8</div>
+                        <div class="activity-content">
+                            <p>Mastered the <strong>Alt+Tab</strong> shortcut for switching applications</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="saved-tab">
+                <h3>Saved Shortcuts</h3>
+                <div class="saved-shortcuts">
+                    <!-- Example saved shortcuts -->
+                    <div class="saved-shortcut">
+                        <div class="shortcut-key">Ctrl+Alt+Del</div>
+                        <div class="shortcut-details">
+                            <h4>Task Manager</h4>
+                            <p>Open task manager to manage running applications</p>
+                        </div>
+                        <button class="practice-btn">Practice</button>
+                    </div>
+                    <div class="saved-shortcut">
+                        <div class="shortcut-key">Ctrl+Z</div>
+                        <div class="shortcut-details">
+                            <h4>Undo</h4>
+                            <p>Reverse the last action performed</p>
+                        </div>
+                        <button class="practice-btn">Practice</button>
+                    </div>
+                    <div class="saved-shortcut">
+                        <div class="shortcut-key">Ctrl+Shift+Esc</div>
+                        <div class="shortcut-details">
+                            <h4>Task Manager Direct</h4>
+                            <p>Open task manager directly without security screen</p>
+                        </div>
+                        <button class="practice-btn">Practice</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Contributions tab with GitHub-style graph -->
+            <div class="tab-content" id="contributions-tab">
+                <h3>Your Learning Progress</h3>
+                <div class="contribution-section">
+                    <div class="contribution-header">
+                        <select id="contribution-year">
+                            <option value="2025">2025</option>
+                            <option value="2024" selected>2024</option>
+                        </select>
+                        <div class="contribution-legend">
+                            <span>Less</span>
+                            <div class="legend-item" style="background-color: #ebedf0;"></div
+
+
+
+
+
+
+
+
+
+
+
+<div class="legend-item" style="background-color: #ebedf0;"></div>
+                            <div class="legend-item" style="background-color: #c6e48b;"></div>
+                            <div class="legend-item" style="background-color: #7bc96f;"></div>
+                            <div class="legend-item" style="background-color: #239a3b;"></div>
+                            <div class="legend-item" style="background-color: #196127;"></div>
+                            <span>More</span>
+                        </div>
+                    </div>
+                    <div class="month-labels">
+                        <div class="month-label">Jan</div>
+                        <div class="month-label">Feb</div>
+                        <div class="month-label">Mar</div>
+                        <div class="month-label">Apr</div>
+                        <div class="month-label">May</div>
+                        <div class="month-label">Jun</div>
+                        <div class="month-label">Jul</div>
+                        <div class="month-label">Aug</div>
+                        <div class="month-label">Sep</div>
+                        <div class="month-label">Oct</div>
+                        <div class="month-label">Nov</div>
+                        <div class="month-label">Dec</div>
+                    </div>
+                    <div class="contribution-graph">
+                        <div class="days-column">
+                            <div class="day-label"></div>
+                            <div class="day-label">Mon</div>
+                            <div class="day-label">Wed</div>
+                            <div class="day-label">Fri</div>
+                            <div class="day-label"></div>
+                        </div>
+                        <!-- The contribution graph will be generated by JavaScript -->
+                        <div id="contribution-weeks"></div>
+                    </div>
+                    <div class="contribution-summary">
+                        <p>
+                            <strong><span id="total-contributions">327</span> total shortcuts practiced</strong> in the last year
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="edit-profile-modal" id="edit-profile-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="edit-profile-form">
+                <div class="form-group">
+                    <label for="edit-name">Display Name</label>
+                    <input type="text" id="edit-name" name="name" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="edit-handle">Handle</label>
+                    <input type="text" id="edit-handle" name="handle" placeholder="@username">
+                </div>
+                <div class="form-group">
+                    <label for="edit-bio">Bio</label>
+                    <textarea id="edit-bio" name="bio" placeholder="Tell us about yourself..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-location">Location</label>
+                    <input type="text" id="edit-location" name="location" placeholder="Your location">
+                </div>
+                <div class="form-group">
+                    <label for="edit-occupation">Occupation</label>
+                    <input type="text" id="edit-occupation" name="occupation" placeholder="Your job title">
+                </div>
+                <div class="form-group">
+                    <label for="edit-email">Email</label>
+                    <input type="email" id="edit-email" name="email" placeholder="Your email">
+                </div>
+                <div class="form-group">
+                    <label for="edit-website">Website</label>
+                    <input type="url" id="edit-website" name="website" placeholder="Your website URL">
+                </div>
+                
+                <div class="form-section-title">Social Media Links</div>
+                <div class="form-group">
+                    <label for="edit-instagram">Instagram</label>
+                    <input type="url" id="edit-instagram" name="instagram" placeholder="Your Instagram URL">
+                </div>
+                <div class="form-group">
+                    <label for="edit-linkedin">LinkedIn</label>
+                    <input type="url" id="edit-linkedin" name="linkedin" placeholder="Your LinkedIn URL">
+                </div>
+                <div class="form-group">
+                    <label for="edit-youtube">YouTube</label>
+                    <input type="url" id="edit-youtube" name="youtube" placeholder="Your YouTube channel URL">
+                </div>
+                
+                <div class="form-section-title">Profile Picture</div>
+                <div class="form-group">
+                    <label for="upload-image">Upload a new image</label>
+                    <input type="file" id="upload-image" name="profile-image" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label>Or choose a default avatar</label>
+                    <div class="default-avatars">
+                        <img src="avatar1.png" class="default-avatar" data-avatar="avatar1.png" alt="Default Avatar 1">
+                        <img src="avatar2.png" class="default-avatar" data-avatar="avatar2.png" alt="Default Avatar 2">
+                        <img src="avatar3.png" class="default-avatar" data-avatar="avatar3.png" alt="Default Avatar 3">
+                        <img src="avatar4.png" class="default-avatar" data-avatar="avatar4.png" alt="Default Avatar 4">
+                    </div>
+                </div>
+                
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Tab navigation
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and content
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                const tabId = btn.dataset.tab;
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+        
+        // Edit Profile Modal
+        const editProfileBtn = document.querySelector('.edit-profile-btn');
+        const editProfileModal = document.getElementById('edit-profile-modal');
+        const closeBtn = document.querySelector('.close-btn');
+        
+        editProfileBtn.addEventListener('click', () => {
+            // Pre-fill form with current values
+            document.getElementById('edit-name').value = document.getElementById('user-name').textContent;
+            document.getElementById('edit-handle').value = document.getElementById('user-handle').textContent.substring(1); // Remove @ symbol
+            document.getElementById('edit-bio').value = document.getElementById('user-bio').textContent;
+            document.getElementById('edit-location').value = document.getElementById('user-location').textContent;
+            document.getElementById('edit-occupation').value = document.getElementById('user-occupation').textContent;
+            document.getElementById('edit-email').value = document.getElementById('user-email').textContent;
+            document.getElementById('edit-website').value = document.getElementById('user-website').textContent;
+            
+            // Pre-fill social media links
+            document.getElementById('edit-instagram').value = document.getElementById('instagram-link').href;
+            document.getElementById('edit-linkedin').value = document.getElementById('linkedin-link').href;
+            document.getElementById('edit-youtube').value = document.getElementById('youtube-link').href;
+            
+            // Show the modal
+            editProfileModal.style.display = 'flex';
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            editProfileModal.style.display = 'none';
+        });
+        
+        // Close modal if clicking outside of it
+        window.addEventListener('click', (e) => {
+            if (e.target === editProfileModal) {
+                editProfileModal.style.display = 'none';
+            }
+        });
+        
+        // Profile Image Upload
+        const imageUpload = document.getElementById('image-upload');
+        const profileImage = document.getElementById('profile-image');
+        
+        imageUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    profileImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Default avatars selection
+        const defaultAvatars = document.querySelectorAll('.default-avatar');
+        
+        defaultAvatars.forEach(avatar => {
+            avatar.addEventListener('click', () => {
+                // Remove selected class from all avatars
+                defaultAvatars.forEach(a => a.classList.remove('selected'));
+                
+                // Add selected class to clicked avatar
+                avatar.classList.add('selected');
+                
+                // Store the selected avatar path
+                const avatarPath = avatar.dataset.avatar;
+                document.getElementById('upload-image').value = ''; // Clear any selected file
+            });
+        });
+        
+        // Save profile changes
+        const editProfileForm = document.getElementById('edit-profile-form');
+        
+        editProfileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Update profile with form values
+            document.getElementById('user-name').textContent = document.getElementById('edit-name').value;
+            document.getElementById('user-handle').textContent = '@' + document.getElementById('edit-handle').value;
+            document.getElementById('user-bio').textContent = document.getElementById('edit-bio').value;
+            document.getElementById('user-location').textContent = document.getElementById('edit-location').value;
+            document.getElementById('user-occupation').textContent = document.getElementById('edit-occupation').value;
+            document.getElementById('user-email').textContent = document.getElementById('edit-email').value;
+            document.getElementById('user-website').textContent = document.getElementById('edit-website').value;
+            
+            // Update social media links
+            const instagramLink = document.getElementById('edit-instagram').value;
+            const linkedinLink = document.getElementById('edit-linkedin').value;
+            const youtubeLink = document.getElementById('edit-youtube').value;
+            
+            document.getElementById('instagram-link').href = instagramLink;
+            document.getElementById('linkedin-link').href = linkedinLink;
+            document.getElementById('youtube-link').href = youtubeLink;
+            
+            // Handle profile image update from file upload
+            const uploadImage = document.getElementById('upload-image');
+            if (uploadImage.files && uploadImage.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    profileImage.src = e.target.result;
+                };
+                reader.readAsDataURL(uploadImage.files[0]);
+            }
+            
+            // Handle profile image update from default avatar
+            const selectedAvatar = document.querySelector('.default-avatar.selected');
+            if (selectedAvatar && !uploadImage.files[0]) {
+                profileImage.src = selectedAvatar.src;
+            }
+            
+            // Close the modal
+            editProfileModal.style.display = 'none';
+        });
+        
+        // Generate contribution graph
+        function generateContributionGraph() {
+            const contributionWeeks = document.getElementById('contribution-weeks');
+            contributionWeeks.innerHTML = '';
+            
+            // Generate 52 weeks (1 year)
+            for (let week = 0; week < 52; week++) {
+                const weekColumn = document.createElement('div');
+                weekColumn.classList.add('week-column');
+                
+                // Generate 7 days per week
+                for (let day = 0; day < 7; day++) {
+                    const contributionCube = document.createElement('div');
+                    contributionCube.classList.add('contribution-cube');
+                    
+                    // Randomly assign contribution levels
+                    const random = Math.random();
+                    if (random < 0.5) {
+                        contributionCube.style.backgroundColor = '#ebedf0'; // No/low contribution
+                    } else if (random < 0.7) {
+                        contributionCube.style.backgroundColor = '#c6e48b'; // Low contribution
+                    } else if (random < 0.85) {
+                        contributionCube.style.backgroundColor = '#7bc96f'; // Medium contribution
+                    } else if (random < 0.95) {
+                        contributionCube.style.backgroundColor = '#239a3b'; // High contribution
+                    } else {
+                        contributionCube.style.backgroundColor = '#196127'; // Very high contribution
+                    }
+                    
+                    // Add tooltip data (would be implemented with a tooltip library in production)
+                    contributionCube.setAttribute('data-date', `2024-${Math.floor(week/4) + 1}-${day + 1}`);
+                    contributionCube.setAttribute('data-count', Math.floor(random * 10));
+                    
+                    weekColumn.appendChild(contributionCube);
+                }
+                
+                contributionWeeks.appendChild(weekColumn);
+            }
+        }
+        
+        // Update contribution graph when year selection changes
+        document.getElementById('contribution-year').addEventListener('change', generateContributionGraph);
+        
+        // Initialize the page
+        window.addEventListener('DOMContentLoaded', () => {
+            generateContributionGraph();
+        });
+    </script>
+</body>
+</html>

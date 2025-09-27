@@ -10,6 +10,136 @@
     <!-- Gamification System Styles -->
     <link rel="stylesheet" href="styles/gamification.css">
     
+    <!-- Authentication Protection -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9FmWlWXqswDprmvaILZQnamrjBCsfgVs",
+            authDomain: "shortcut-sensei-1305f.firebaseapp.com",
+            projectId: "shortcut-sensei-1305f",
+            storageBucket: "shortcut-sensei-1305f.firebasestorage.app",
+            messagingSenderId: "598536091157",
+            appId: "1:598536091157:web:eff79326d42c5bba8e001c",
+            measurementId: "G-WZCS73D2W5"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Wait for DOM to load before setting up auth listener
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure page is visible once DOM is loaded
+            document.body.style.visibility = 'visible';
+            
+            // Set up authentication listener
+            setupAuthListener();
+        });
+        
+        function setupAuthListener() {
+            // Check authentication state and update UI
+            onAuthStateChanged(auth, (user) => {
+                const userMenuContainer = document.getElementById('userMenuContainer');
+                const loginButtonContainer = document.getElementById('loginButtonContainer');
+                const getStartedBtn = document.getElementById('heroGetStartedBtn');
+                
+                console.log('Auth state changed:', user ? 'authenticated' : 'not authenticated');
+                
+                if (user && user.emailVerified) {
+                    // User is authenticated, show user menu and hide login button
+                    if (userMenuContainer) {
+                        userMenuContainer.style.display = 'block';
+                        updateUserProfile(user);
+                    }
+                    if (loginButtonContainer) {
+                        loginButtonContainer.style.display = 'none';
+                    }
+                    // Keep the Join our Community button as is - user can access profile via menu
+                } else {
+                    // User not authenticated, hide user menu and show login button
+                    if (userMenuContainer) {
+                        userMenuContainer.style.display = 'none';
+                    }
+                    if (loginButtonContainer) {
+                        loginButtonContainer.style.display = 'block';
+                    }
+                }
+                
+                // Always show the page content
+                document.body.style.visibility = 'visible';
+            });
+        }
+        
+        // Manual test function - call this from browser console to test
+        window.testButtonUpdate = function() {
+            const getStartedBtn = document.getElementById('heroGetStartedBtn');
+            console.log('Manual test - Button found:', !!getStartedBtn);
+            if (getStartedBtn) {
+                getStartedBtn.textContent = 'My Profile';
+                getStartedBtn.href = 'pages/user/user_profile.htm';
+                console.log('Manual update successful');
+            }
+        };
+        
+        // Force check after a delay
+        setTimeout(() => {
+            const getStartedBtn = document.getElementById('heroGetStartedBtn');
+            console.log('Delayed check - Button found:', !!getStartedBtn);
+            if (getStartedBtn) {
+                console.log('Button text:', getStartedBtn.textContent);
+                console.log('Button href:', getStartedBtn.href);
+            }
+        }, 2000);
+        
+        // Update user profile data
+        function updateUserProfile(user) {
+            const headerAvatar = document.getElementById('headerAvatar');
+            if (headerAvatar) {
+                // Check for saved avatar first, then Firebase photo, then default
+                const savedAvatar = localStorage.getItem('userAvatarImage');
+                const avatar = savedAvatar || user.photoURL || 'https://via.placeholder.com/40/8B5FBF/FFFFFF?text=' + (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
+                headerAvatar.src = avatar;
+            }
+        }
+        
+        // Make logout function globally available
+        window.logout = async function() {
+            try {
+                await signOut(auth);
+                alert('Successfully logged out!');
+                window.location.href = 'login_page_firebase.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Failed to logout. Please try again.');
+            }
+        };
+        
+        window.toggleUserMenu = function() {
+            const menu = document.getElementById('userDropdownMenu');
+            if (menu) {
+                menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            }
+        };
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenuContainer');
+            const dropdown = document.getElementById('userDropdownMenu');
+            if (userMenu && dropdown && !userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+        
+        // Initially hide the page content until authentication check is complete
+        document.body.style.visibility = 'hidden';
+        
+        // Safety fallback: show page after 3 seconds if auth check doesn't complete
+        setTimeout(() => {
+            document.body.style.visibility = 'visible';
+        }, 3000);
+    </script>
+    
     <style>
 
 
@@ -33,9 +163,35 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 90%;
+    max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
-    flex-wrap: wrap;
+    padding: 0 40px;
+    flex-wrap: nowrap;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    padding-left: 0;
+    position: relative;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    margin-left: auto;
+    flex-shrink: 0;
+    padding-right: 0;
+}
+
+.logo {
+    padding-left: 0;
+    flex-shrink: 0;
+    margin-right: 100px;
 }
 
 .logo a {
@@ -44,10 +200,20 @@
     font-size: 1.8em;
     font-weight: bold;
     transition: color 0.3s;
+    display: block;
+    padding: 5px 0;
 }
 
 .logo a:hover {
     color: #9c27b0;
+}
+
+.main-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .main-nav ul {
@@ -55,8 +221,9 @@
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 20px;
+    gap: 40px;
     align-items: center;
+    justify-content: center;
 }
 
 .main-nav ul li {
@@ -193,6 +360,117 @@
     border-bottom: none;
 }
 
+/* User Menu Styles */
+.user-menu-container {
+    position: relative;
+    flex-shrink: 0;
+    margin-left: 15px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #9c27b0;
+    transition: all 0.3s ease;
+    object-fit: cover;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05);
+    border-color: #7b1fa2;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    padding: 10px 0;
+    min-width: 200px;
+    margin-top: 10px;
+    display: none;
+    z-index: 1001;
+}
+
+.user-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 15px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    border: none;
+    background: none;
+    width: calc(100% - 40px);
+    text-align: left;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.user-dropdown a:hover {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin: 0 8px;
+}
+
+.user-dropdown .dropdown-divider {
+    height: 1px;
+    background-color: #e9ecef;
+    margin: 5px 0;
+}
+
+/* Login Button Styles */
+.login-button-container {
+    position: relative;
+    flex-shrink: 0;
+    margin-left: 15px;
+}
+
+.login-btn {
+    background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.login-btn:hover {
+    background: linear-gradient(135deg, #7b1fa2, #4a148c);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.4);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+.login-btn i {
+    font-size: 16px;
+}
+
 /* Menu toggle for mobile */
 .menu-toggle {
     display: none;
@@ -214,10 +492,33 @@
 
 /* Responsive styles */
 @media (max-width: 992px) {
+    .main-header .container {
+        padding: 0 20px;
+        justify-content: space-between;
+    }
+    
+    .header-left {
+        gap: 20px;
+        position: static;
+        transform: none;
+        justify-content: flex-start;
+        flex: 1;
+    }
+    
+    .main-nav {
+        justify-content: flex-start;
+        margin: 0;
+    }
+    
+    .main-nav ul {
+        gap: 25px;
+    }
+    
     .search-container {
         order: 2;
         margin-left: auto;
         margin-right: 15px;
+        max-width: 200px;
     }
     
     .menu-toggle {
@@ -277,7 +578,11 @@
     }
     
     .main-header .container {
-        width: 95%;
+        padding: 0 15px;
+    }
+    
+    .header-left {
+        gap: 20px;
     }
 }
 
@@ -354,6 +659,14 @@ header {
 }
 
 @media (max-width: 768px) {
+    .header-left {
+        gap: 20px;
+    }
+    
+    .header-right {
+        gap: 10px;
+    }
+    
     .menu-toggle {
         display: block;
         order: 1;
@@ -487,8 +800,7 @@ header {
 
         /* Hero Section */
         .hero {
-            background: url('images/apps/vscode.jpeg') no-repeat center center/cover;
-            background-color: #4b4949;
+            background-color: #000000;
             color: #fff;
             text-align: center;
             padding: 100px 20px;
@@ -502,13 +814,16 @@ header {
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.1);
             z-index: 1;
         }
 
         .hero .content {
             position: relative;
             z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
         }
 
         .hero h1 {
@@ -1333,30 +1648,52 @@ header {
 
 <header class="main-header">
     <div class="container">
-        <div class="logo">
-            <a href="index.html">Shortcut Sensei</a>
+        <div class="header-left">
+            <div class="logo">
+                <a href="index.html">Shortcut Sensei</a>
+            </div>
+            
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="pages/blogs/blogs.html">Blogs</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li class="get-started"><a href="Applications.html">Get Started</a></li>
+                </ul>
+            </nav>
         </div>
 
         <div class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
             <i class="fa-solid fa-bars"></i>
         </div>
 
-        <nav class="main-nav" id="mainNav">
-            <ul>
-                                <li><a href="pages/blogs/blogs.html">Blogs</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="About.htm">About</a></li>
-                                    <li class="get-started"><a href="Applications.html">Get Started</a></li>
-            </ul>
-        </nav>
+        <div class="header-right">
+            <div class="search-container">
+                <input type="text" placeholder="Search new.." id="app" aria-label="Search applications">
+                <button type="button" id="btn" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div id="searchResults" class="search-results"></div>
+            </div>
 
-        <div class="search-container">
-            <input type="text" placeholder="Search new.." id="app" aria-label="Search applications">
-            <button type="button" id="btn" aria-label="Search">
-                <i class="fas fa-search"></i>
-            </button>
-            <div id="searchResults" class="search-results"></div>
+            <!-- User Menu -->
+            <div class="user-menu-container" id="userMenuContainer">
+                <img src="https://via.placeholder.com/40/8B5FBF/FFFFFF?text=U" alt="" class="user-avatar" id="headerAvatar" onclick="toggleUserMenu()">
+                <div class="user-dropdown" id="userDropdownMenu">
+                    <a href="pages/user/user_profile.htm"><i class="fas fa-user"></i> My Profile</a>
+                    <a href="pages/user/settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+
+            <!-- Login Button for non-authenticated users -->
+            <div class="login-button-container" id="loginButtonContainer" style="display: none;">
+                <button class="login-btn" onclick="window.location.href='pages/user/login_page_firebase.html'">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </div>
         </div>
     </div>
 </header>
@@ -1364,7 +1701,7 @@ header {
     <div  class="content">
         <h1>Welcome to Shortcut Sensei</h1>
         <p>Your ultimate guide to keyboard shortcuts and productivity tips.</p>
-        <a href="pages/user/user_com.htm" class="get-started-style">Join our Community</a>
+        <a href="pages/user/user_com.htm" class="get-started-style" id="heroGetStartedBtn">Join our Community</a>
 </section>
 
 <!-- Shortcut of the Day Section -->
@@ -1412,7 +1749,7 @@ header {
     <h2>What Our Users Say</h2>
     <blockquote>
         <p>"Shortcut Sensei has revolutionized the way I work. Highly recommended!"</p>
-er</cite>
+        <cite>- Sarah M., Project Manager</cite>
     </blockquote>
     <blockquote>
         <p>"A must-have tool for anyone looking to improve their productivity."</p>

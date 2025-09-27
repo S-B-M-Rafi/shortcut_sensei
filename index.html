@@ -71,34 +71,22 @@
 <body>
     <div class="welcome-container">
         <h1>🚀 Shortcut Sensei</h1>
-        <p>Master keyboard shortcuts and boost your productivity!</p>
-        <a href="pages/user/login_page_firebase.html" class="btn">Get Started</a>
-        <a href="home-page.html" class="btn btn-secondary">Browse Shortcuts</a>
+        <p>Redirecting to login...</p>
+        <div style="margin-top: 20px;">
+            <div style="width: 40px; height: 40px; border: 4px solid #ffffff20; border-top: 4px solid #FF416C; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+        </div>
     </div>
     
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    
     <script type="module">
-        // Check if user is already authenticated
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyDgzylhHW05EQLuJwVIHdXWbVVeJhpQHxU",
-            authDomain: "shortcut-sensei-1305f.firebaseapp.com",
-            projectId: "shortcut-sensei-1305f",
-            storageBucket: "shortcut-sensei-1305f.firebasestorage.app",
-            messagingSenderId: "598536091157",
-            appId: "1:598536091157:web:YOUR_APP_ID_HERE"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        
-        onAuthStateChanged(auth, (user) => {
-            if (user && user.emailVerified) {
-                // User is signed in and verified, redirect to main app
-                window.location.href = 'home-page_after-sign-up.html';
-            }
-        });
+        // Immediately redirect to login page
+        window.location.href = 'pages/user/login_page_firebase.html';
     </script>
 </body>
 </html>

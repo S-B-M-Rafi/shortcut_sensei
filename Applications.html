@@ -43,9 +43,34 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 90%;
+            max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
-            flex-wrap: wrap;
+            padding: 0 40px;
+            flex-wrap: nowrap;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex: 1;
+            min-width: 0;
+            padding-left: 0;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: auto;
+            flex-shrink: 0;
+            padding-right: 0;
+        }
+
+        .logo {
+            padding-left: 0;
+            flex-shrink: 0;
         }
 
         .logo a {
@@ -54,6 +79,8 @@
             font-size: 1.8em;
             font-weight: bold;
             transition: color 0.3s;
+            display: block;
+            padding: 5px 0;
         }
 
         .logo a:hover {
@@ -65,7 +92,7 @@
             margin: 0;
             padding: 0;
             display: flex;
-            gap: 20px;
+            gap: 25px;
             align-items: center;
         }
 
@@ -85,6 +112,20 @@
         .main-nav ul li a:hover {
             background-color: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
+        }
+
+        /* Get Started button styling */
+        .get-started a {
+            background-color: #9c27b0;
+            border-radius: 20px !important;
+            padding: 8px 20px !important;
+            font-weight: bold;
+            transition: all 0.3s !important;
+        }
+
+        .get-started a:hover {
+            background-color: #7b1fa2 !important;
+            box-shadow: 0 4px 8px rgba(156, 39, 176, 0.3);
         }
 
         /* Search container styles */
@@ -170,6 +211,97 @@
 
         .search-result-item:last-child {
             border-bottom: none;
+        }
+
+        /* User Menu Styles */
+        .user-menu-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #9c27b0;
+            transition: all 0.3s ease;
+            object-fit: cover;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            border-color: #7b1fa2;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            padding: 10px 0;
+            min-width: 200px;
+            margin-top: 10px;
+            display: none;
+            z-index: 1001;
+        }
+
+        .user-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: 15px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid white;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            border: none;
+            background: none;
+            width: calc(100% - 40px);
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            margin: 0 8px;
+        }
+
+        .user-dropdown .dropdown-divider {
+            height: 1px;
+            background-color: #e9ecef;
+            margin: 5px 0;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .menu-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         /* Menu toggle for mobile */
@@ -455,30 +587,14 @@
             margin: 20px 0 0;
         }
 
-        /* Responsive Styles */
-        @media (max-width: 1200px) {
-            .app-cards {
-                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-                gap: 15px;
-            }
-        }
-
+        /* Responsive styles */
         @media (max-width: 992px) {
-            .app-cards {
-                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-                gap: 15px;
-                padding: 15px;
-            }
-        }
-
-        @media (max-width: 768px) {
             .main-header .container {
-                width: 90%;
-                margin: 0 auto;
+                padding: 0 20px;
             }
             
-            .logo {
-                order: 1;
+            .header-left {
+                gap: 30px;
             }
             
             .search-container {
@@ -533,15 +649,43 @@
                 text-align: center;
                 margin: 0 20px;
             }
+        }
+
+        @media (max-width: 576px) {
+            .logo a {
+                font-size: 1.4em;
+            }
+            
+            .search-container {
+                max-width: 160px;
+            }
+            
+            .main-header .container {
+                padding: 0 15px;
+            }
+            
+            .header-left {
+                gap: 20px;
+            }
+        }
+
+        /* Additional responsive styles for app grid */
+        @media (max-width: 1200px) {
+            .app-cards {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-cards {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 15px;
+                padding: 15px;
+            }
 
             .page-title h1 {
                 font-size: 2em;
-            }
-
-            .app-cards {
-                grid-template-columns: 1fr;
-                gap: 15px;
-                padding: 15px 10px;
             }
 
             .app-card {
@@ -632,29 +776,45 @@
 <body>
     <header class="main-header">
         <div class="container">
-            <div class="logo">
-                <a href="home-page.html">Shortcut Sensei</a>
+            <div class="header-left">
+                <div class="logo">
+                    <a href="home-page.html">Shortcut Sensei</a>
+                </div>
+                
+                <nav class="main-nav" id="mainNav">
+                    <ul>
+                        <li><a href="pages/blogs/blogs.html">Blogs</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li class="get-started"><a href="quizs/quiz.html">Quizes</a></li>
+                    </ul>
+                </nav>
             </div>
 
             <div class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
                 <i class="fa-solid fa-bars"></i>
             </div>
 
-            <nav class="main-nav" id="mainNav">
-                <ul>
-                    <li><a href="pages/blogs/blogs.html">Blogs</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="About.html">About</a></li>
-                </ul>
-            </nav>
+            <div class="header-right">
+                <div class="search-container">
+                    <input type="text" placeholder="Search new.." id="app" aria-label="Search applications">
+                    <button type="button" id="btn" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div id="searchResults" class="search-results"></div>
+                </div>
 
-            <div class="search-container">
-                <input type="text" placeholder="Search new.." id="app" aria-label="Search applications">
-                <button type="button" id="btn" aria-label="Search">
-                    <i class="fas fa-search"></i>
-                </button>
-                <div id="searchResults" class="search-results"></div>
+                <!-- User Menu -->
+                <div class="user-menu-container" id="userMenuContainer">
+                    <img src="https://via.placeholder.com/40/8B5FBF/FFFFFF?text=U" alt="" class="user-avatar" id="headerAvatar" onclick="toggleUserMenu()">
+                    <div class="user-dropdown" id="userDropdownMenu">
+                        <a href="pages/user/user_profile.htm"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="pages/user/settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -1093,6 +1253,43 @@
                 });
             }
 
+            // Dark mode toggle functionality
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+            
+            // Load saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                updateDarkModeIcon(true);
+            }
+            
+            // Toggle theme
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', function() {
+                    body.classList.toggle('dark-mode');
+                    const isDarkMode = body.classList.contains('dark-mode');
+                    
+                    updateDarkModeIcon(isDarkMode);
+                    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+                });
+            }
+            
+            function updateDarkModeIcon(isDarkMode) {
+                const moonIcon = document.querySelector('.dark-mode-toggle .fa-moon');
+                const sunIcon = document.querySelector('.dark-mode-toggle .fa-sun');
+                
+                if (moonIcon && sunIcon) {
+                    if (isDarkMode) {
+                        moonIcon.style.display = 'none';
+                        sunIcon.style.display = 'block';
+                    } else {
+                        moonIcon.style.display = 'block';
+                        sunIcon.style.display = 'none';
+                    }
+                }
+            }
+
             // Live search functionality
             const searchInput = document.getElementById('searchInput');
             const searchButton = document.getElementById('searchButton');
@@ -1232,6 +1429,85 @@
                 });
             }
         });
+
+        // Firebase Authentication and User Menu functionality
+        // Toggle user menu
+        window.toggleUserMenu = function() {
+            const menu = document.getElementById('userDropdownMenu');
+            if (menu) {
+                menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            }
+        };
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenuContainer');
+            const dropdown = document.getElementById('userDropdownMenu');
+            if (userMenu && dropdown && !userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Logout function
+        window.logout = async function() {
+            try {
+                // Clear any stored user data
+                localStorage.removeItem('userAvatarImage');
+                alert('Successfully logged out!');
+                window.location.href = 'login_page_firebase.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Failed to logout. Please try again.');
+            }
+        };
+    </script>
+
+    <!-- Firebase Authentication Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9FmWlWXqswDprmvaILZQnamrjBCsfgVs",
+            authDomain: "shortcut-sensei-1305f.firebaseapp.com",
+            projectId: "shortcut-sensei-1305f",
+            storageBucket: "shortcut-sensei-1305f.firebasestorage.app",
+            messagingSenderId: "598536091157",
+            appId: "1:598536091157:web:eff79326d42c5bba8e001c",
+            measurementId: "G-WZCS73D2W5"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Check authentication state and update UI
+        onAuthStateChanged(auth, (user) => {
+            const userMenuContainer = document.getElementById('userMenuContainer');
+            
+            if (user && user.emailVerified) {
+                // User is authenticated, show user menu
+                if (userMenuContainer) {
+                    userMenuContainer.style.display = 'block';
+                    updateUserProfile(user);
+                }
+            } else {
+                // User not authenticated, hide user menu
+                if (userMenuContainer) {
+                    userMenuContainer.style.display = 'none';
+                }
+            }
+        });
+        
+        // Update user profile data
+        function updateUserProfile(user) {
+            const headerAvatar = document.getElementById('headerAvatar');
+            if (headerAvatar) {
+                // Check for saved avatar first, then Firebase photo, then default
+                const savedAvatar = localStorage.getItem('userAvatarImage');
+                const avatar = savedAvatar || user.photoURL || 'https://via.placeholder.com/40/8B5FBF/FFFFFF?text=' + (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
+                headerAvatar.src = avatar;
+            }
+        }
     </script>
 </body>
 </html>

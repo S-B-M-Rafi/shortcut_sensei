@@ -14,6 +14,45 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <!-- Authentication Protection -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDgzylhHW05EQLuJwVIHdXWbVVeJhpQHxU",
+            authDomain: "shortcut-sensei-1305f.firebaseapp.com",
+            projectId: "shortcut-sensei-1305f",
+            storageBucket: "shortcut-sensei-1305f.firebasestorage.app",
+            messagingSenderId: "598536091157",
+            appId: "1:598536091157:web:YOUR_APP_ID_HERE"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Protect this page - redirect to login if not authenticated
+        onAuthStateChanged(auth, (user) => {
+            if (!user || !user.emailVerified) {
+                // User is not signed in or email not verified, redirect to login
+                window.location.href = 'pages/user/login_page_firebase.html';
+                return;
+            }
+            
+            // User is authenticated, show the page content
+            document.body.style.visibility = 'visible';
+            
+            // Update user display if there's a user info section
+            const userElements = document.querySelectorAll('.user-display-name');
+            userElements.forEach(element => {
+                element.textContent = user.displayName || user.email.split('@')[0];
+            });
+        });
+        
+        // Initially hide the page content until authentication is verified
+        document.body.style.visibility = 'hidden';
+    </script>
     <style>
 
 
@@ -1552,6 +1591,41 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- Authentication System -->
 <script src="scripts/firebase-config.js"></script>
 <script src="scripts/auth.js"></script>
+
+<!-- Logout functionality -->
+<script type="module">
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    
+    // Make logout function globally available
+    window.logout = async function() {
+        const auth = getAuth();
+        try {
+            await signOut(auth);
+            // Redirect to login page after logout
+            window.location.href = 'pages/user/login_page_firebase.html';
+        } catch (error) {
+            console.error('Logout error:', error);
+            alert('Failed to logout. Please try again.');
+        }
+    };
+    
+    // Update profile display when authenticated
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    onAuthStateChanged(getAuth(), (user) => {
+        if (user && user.emailVerified) {
+            // Show profile dropdown and hide get started button
+            const profileDropdown = document.getElementById('profileDropdown');
+            const getStartedButton = document.querySelector('.get-started');
+            const profileName = document.getElementById('profileName');
+            
+            if (profileDropdown && getStartedButton && profileName) {
+                profileDropdown.style.display = 'block';
+                getStartedButton.style.display = 'none';
+                profileName.textContent = user.displayName || user.email.split('@')[0];
+            }
+        }
+    });
+</script>
 
 </body>
 </html>
