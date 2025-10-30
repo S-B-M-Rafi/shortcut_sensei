@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - Shortcut Sensei</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9FmWlWXqswDprmvaILZQnamrjBCsfgVs",
+            authDomain: "shortcut-sensei-1305f.firebaseapp.com",
+            projectId: "shortcut-sensei-1305f",
+            storageBucket: "shortcut-sensei-1305f.firebasestorage.app",
+            messagingSenderId: "598536091157",
+            appId: "1:598536091157:web:eff79326d42c5bba8e001c",
+            measurementId: "G-WZCS73D2W5"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user || !user.emailVerified) {
+                window.location.href = '../pages/user/login_page_firebase.html';
+                return;
+            }
+            document.body.style.visibility = 'visible';
+            updateUserProfile(user);
+        });
+
+        function updateUserProfile(user) {
+            const headerAvatar = document.getElementById('headerAvatar');
+            if (headerAvatar) {
+                const savedAvatar = localStorage.getItem('userAvatarImage');
+                const avatar = savedAvatar || user.photoURL || 'https://via.placeholder.com/40/8B5FBF/FFFFFF?text=' + (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
+                headerAvatar.src = avatar;
+            }
+        }
+
+        window.logout = async function() {
+            try {
+                await signOut(auth);
+                window.location.href = '../pages/user/login_page_firebase.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        };
+
+        window.toggleUserMenu = function() {
+            const menu = document.getElementById('userDropdownMenu');
+            if (menu) {
+                menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            }
+        };
+
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenuContainer');
+            const dropdown = document.getElementById('userDropdownMenu');
+            if (userMenu && dropdown && !userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        document.body.style.visibility = 'hidden';
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background-color: #000;
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .logo a:hover {
+            color: #00d4ff;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .main-nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .main-nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #00d4ff;
+            transition: all 0.3s;
+            object-fit: cover;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            padding: 10px 0;
+            min-width: 200px;
+            margin-top: 10px;
+            display: none;
+            z-index: 1001;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Community Container */
+        .community-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .community-sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 90px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .sidebar-section h3 {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .category-item {
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+        }
+
+        .category-item:hover,
+        .category-item.active {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .category-item i {
+            width: 20px;
+        }
+
+        /* Main Content */
+        .community-main {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .community-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .community-header h1 {
+            font-size: 32px;
+            color: #333;
+        }
+
+        .btn-new-post {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-new-post:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Filters */
+        .filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            border-color: #00d4ff;
+        }
+
+        /* Post Card */
+        .post-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .post-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 212, 255, 0.2);
+            border-left-color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .post-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .post-author-info h4 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .post-meta {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .post-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .post-content {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        .action-btn:hover {
+            background: #f5f5f5;
+            color: #00d4ff;
+        }
+
+        .action-btn.liked {
+            color: #ff4757;
+        }
+
+        /* Right Sidebar */
+        .community-widgets {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .widget {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .widget h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .trending-item {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .trending-item:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+
+        .trending-item h4 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .trending-item p {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .close-modal {
+            font-size: 28px;
+            color: #999;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .community-container {
+                grid-template-columns: 200px 1fr 250px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .community-container {
+                grid-template-columns: 1fr;
+            }
+
+            .community-sidebar,
+            .community-widgets {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header .container {
+                padding: 0 20px;
+            }
+
+            .header-left {
+                gap: 20px;
+            }
+
+            .main-nav ul {
+                gap: 10px;
+            }
+
+            .community-container {
+                padding: 0 15px;
+                margin: 20px auto;
+            }
+
+            .community-main {
+                padding: 20px;
+            }
+
+            .community-header h1 {
+                font-size: 24px;
+            }
+
+            .post-card {
+                padding: 15px;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo a {
+                font-size: 1.4em;
+            }
+
+            .main-nav {
+                display: none;
+            }
+
+            .filter-bar {
+                gap: 8px;
+            }
+
+            .filter-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #00d4ff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../home-page.html">Shortcut Sensei</a>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="../home-page.html">Home</a></li>
+                        <li><a href="../blogs.html">Blogs</a></li>
+                        <li><a href="../Applications.html">Applications</a></li>
+                        <li><a href="community.html" style="color: #00d4ff;">Community</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="user-menu-container" id="userMenuContainer" style="position: relative;">
+                    <img src="https://via.placeholder.com/40" alt="User" class="user-avatar" id="headerAvatar" onclick="toggleUserMenu()">
+                    <div class="user-dropdown" id="userDropdownMenu">
+                        <a href="../pages/user/user_profile.htm"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="../pages/user/settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Community Container -->
+    <div class="community-container">
+        <!-- Left Sidebar -->
+        <aside class="community-sidebar">
+            <div class="sidebar-section">
+                <h3>Categories</h3>
+                <div class="category-item active" data-category="all">
+                    <i class="fas fa-th"></i>
+                    <span>All Posts</span>
+                </div>
+                <div class="category-item" data-category="tips">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Tips & Tricks</span>
+                </div>
+                <div class="category-item" data-category="questions">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Questions</span>
+                </div>
+                <div class="category-item" data-category="showcase">
+                    <i class="fas fa-trophy"></i>
+                    <span>Showcase</span>
+                </div>
+                <div class="category-item" data-category="discussions">
+                    <i class="fas fa-comments"></i>
+                    <span>Discussions</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="community-main">
+            <div class="community-header">
+                <h1>Community Forum</h1>
+                <button class="btn-new-post" onclick="openNewPostModal()">
+                    <i class="fas fa-plus"></i>
+                    New Post
+                </button>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="recent">Recent</button>
+                <button class="filter-btn" data-filter="popular">Popular</button>
+                <button class="filter-btn" data-filter="trending">Trending</button>
+                <button class="filter-btn" data-filter="unanswered">Unanswered</button>
+            </div>
+
+            <div id="postsContainer">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading posts...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="community-widgets">
+            <div class="widget">
+                <h3><i class="fas fa-fire"></i> Trending Topics</h3>
+                <div class="trending-item">
+                    <h4>VS Code Pro Tips</h4>
+                    <p>24 discussions</p>
+                </div>
+                <div class="trending-item">
+                    <h4>Chrome Extensions</h4>
+                    <p>18 discussions</p>
+                </div>
+                <div class="trending-item">
+                    <h4>Excel Formulas</h4>
+                    <p>15 discussions</p>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3><i class="fas fa-users"></i> Active Members</h3>
+                <div class="trending-item">
+                    <h4>Top Contributors</h4>
+                    <p>This week's stars</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- New Post Modal -->
+    <div class="modal" id="newPostModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Post</h2>
+                <button class="close-modal" onclick="closeNewPostModal()">&times;</button>
+            </div>
+            <form id="newPostForm" onsubmit="handleSubmitPost(event)">
+                <div class="form-group">
+                    <label for="postTitle">Title</label>
+                    <input type="text" id="postTitle" required placeholder="What's your post about?">
+                </div>
+                <div class="form-group">
+                    <label for="postCategory">Category</label>
+                    <select id="postCategory" required>
+                        <option value="tips">Tips & Tricks</option>
+                        <option value="questions">Questions</option>
+                        <option value="showcase">Showcase</option>
+                        <option value="discussions">Discussions</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="postContent">Content</label>
+                    <textarea id="postContent" required placeholder="Share your thoughts..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="postTags">Tags (comma separated)</label>
+                    <input type="text" id="postTags" placeholder="vscode, shortcuts, productivity">
+                </div>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-paper-plane"></i>
+                    Post to Community
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="../scripts/community-handler.js"></script>
+</body>
+</html>

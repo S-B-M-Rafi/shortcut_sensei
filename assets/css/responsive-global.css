@@ -1,0 +1,453 @@
+/* Global Responsive Design System for ShortcutSensei */
+
+/* Base Responsive Breakpoints */
+:root {
+    --mobile-max: 576px;
+    --tablet-max: 768px;
+    --desktop-min: 992px;
+    --large-desktop-min: 1200px;
+
+    --primary-color: #8B5FBF;
+    --secondary-color: #9c27b0;
+    --accent-color: #00d4ff;
+    --text-color: #333;
+    --bg-color: #f4f4f4;
+}
+
+/* Mobile First Approach - Base styles for mobile */
+@media (max-width: 576px) {
+    /* Typography Adjustments */
+    body {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    h1 {
+        font-size: 24px !important;
+    }
+
+    h2 {
+        font-size: 20px !important;
+    }
+
+    h3 {
+        font-size: 18px !important;
+    }
+
+    /* Header Adjustments */
+    .main-header .container {
+        padding: 0 15px !important;
+        flex-wrap: wrap;
+    }
+
+    .logo a {
+        font-size: 1.3em !important;
+    }
+
+    /* Hide desktop navigation on mobile */
+    .main-nav {
+        display: none;
+        width: 100%;
+        order: 10;
+    }
+
+    .main-nav.active {
+        display: block;
+        margin-top: 15px;
+    }
+
+    .main-nav ul {
+        flex-direction: column !important;
+        gap: 0 !important;
+        background: rgba(0, 0, 0, 0.9);
+        border-radius: 8px;
+        padding: 10px 0;
+    }
+
+    .main-nav ul li {
+        width: 100%;
+    }
+
+    .main-nav ul li a {
+        display: block;
+        padding: 12px 20px !important;
+        text-align: left;
+    }
+
+    /* Show mobile menu toggle */
+    .menu-toggle {
+        display: flex !important;
+        order: 2;
+    }
+
+    /* Search Container */
+    .search-container {
+        max-width: 150px !important;
+        margin: 10px 0;
+        order: 3;
+    }
+
+    .search-container input {
+        font-size: 14px !important;
+        padding: 6px 10px !important;
+    }
+
+    /* Grid Layouts */
+    .grid-layout,
+    .quiz-grid,
+    .post-grid,
+    .application-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    /* Cards */
+    .card,
+    .post-card,
+    .quiz-card {
+        padding: 15px !important;
+        margin-bottom: 15px;
+    }
+
+    /* Buttons */
+    button,
+    .btn {
+        width: 100%;
+        padding: 12px 20px !important;
+        font-size: 14px !important;
+    }
+
+    /* Forms */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+        width: 100% !important;
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        padding: 12px !important;
+    }
+
+    /* Modals */
+    .modal-content {
+        width: 95% !important;
+        padding: 20px !important;
+        margin: 20px auto;
+    }
+
+    /* Tables */
+    table {
+        font-size: 12px !important;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px !important;
+        border: none;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    /* Hide certain elements on mobile */
+    .hide-mobile {
+        display: none !important;
+    }
+
+    /* User Menu */
+    .user-dropdown {
+        right: 0 !important;
+        left: auto !important;
+        min-width: 180px !important;
+    }
+
+    /* Footer */
+    footer {
+        padding: 20px 15px !important;
+        font-size: 12px !important;
+    }
+
+    .footer-content {
+        text-align: center;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Spacing */
+    .container {
+        padding: 0 15px !important;
+    }
+
+    section {
+        padding: 30px 0 !important;
+    }
+
+    /* Touch Targets - Minimum 44x44px */
+    a, button, input[type="submit"], input[type="button"] {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Tablet Styles */
+@media (min-width: 577px) and (max-width: 768px) {
+    body {
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 28px !important;
+    }
+
+    h2 {
+        font-size: 24px !important;
+    }
+
+    .main-header .container {
+        padding: 0 20px !important;
+    }
+
+    .logo a {
+        font-size: 1.5em !important;
+    }
+
+    .main-nav ul {
+        gap: 15px !important;
+    }
+
+    .search-container {
+        max-width: 200px !important;
+    }
+
+    .grid-layout,
+    .quiz-grid,
+    .post-grid,
+    .application-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+
+    .modal-content {
+        width: 90% !important;
+        padding: 25px !important;
+    }
+
+    .hide-tablet {
+        display: none !important;
+    }
+}
+
+/* Desktop Styles */
+@media (min-width: 769px) and (max-width: 1199px) {
+    .main-header .container {
+        padding: 0 30px !important;
+    }
+
+    .grid-layout,
+    .quiz-grid,
+    .post-grid,
+    .application-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 25px !important;
+    }
+
+    .modal-content {
+        width: 80% !important;
+        max-width: 700px !important;
+    }
+
+    .hide-desktop-sm {
+        display: none !important;
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+    .grid-layout,
+    .quiz-grid,
+    .post-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    .application-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+
+    .modal-content {
+        width: 60% !important;
+        max-width: 800px !important;
+    }
+}
+
+/* Utility Classes */
+.show-mobile {
+    display: none !important;
+}
+
+@media (max-width: 576px) {
+    .show-mobile {
+        display: block !important;
+    }
+}
+
+.show-tablet {
+    display: none !important;
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+    .show-tablet {
+        display: block !important;
+    }
+}
+
+.show-desktop {
+    display: none !important;
+}
+
+@media (min-width: 769px) {
+    .show-desktop {
+        display: block !important;
+    }
+}
+
+/* Responsive Images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Accessibility - Focus Styles */
+*:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .main-header,
+    .menu-toggle,
+    .user-menu,
+    .search-container,
+    button,
+    .btn,
+    footer {
+        display: none !important;
+    }
+
+    body {
+        font-size: 12pt;
+        color: black;
+        background: white;
+    }
+
+    a {
+        text-decoration: underline;
+        color: black;
+    }
+
+    .card,
+    .post-card,
+    .quiz-card {
+        page-break-inside: avoid;
+        border: 1px solid #ddd;
+    }
+}
+
+/* Performance Optimizations */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth Transitions */
+*,
+*::before,
+*::after {
+    transition-timing-function: ease-in-out;
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: wait;
+}
+
+/* Skeleton Screens */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e0e0e0 50%,
+        #f0f0f0 75%
+    );
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #f4f4f4;
+        --bg-color: #1e1e1e;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+
+    .card,
+    .post-card,
+    .quiz-card {
+        background-color: #2d2d2d;
+        color: var(--text-color);
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
